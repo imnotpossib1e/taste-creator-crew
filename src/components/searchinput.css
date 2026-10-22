@@ -1,0 +1,21 @@
+/* 돋보기 아이콘 기준 */
+.searchInput {
+  position: relative;
+  width: 100%;
+}
+
+/* 돋보기 아이콘 input안으로 넣기 */
+.searchInput > span {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  color: #b0abab;
+  pointer-events: none;
+}
+
+/* 글자와 돋보기 아이콘 겹치지 않게 하기 */
+.searchInput .textInput {
+  padding-left: 45px;
+}
