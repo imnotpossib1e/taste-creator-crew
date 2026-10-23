@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addRestaurant, reset } from '../redux/store';
+import './MainMap.css';
+import { Apple, ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
+
+const CATEGORY_MAP = {
+  한식: <CookingPot />,
+  중식: <Soup />,
+  일식: <ChefHat />,
+  양식: <Utensils />,
+};
 
 export default function MainMap() {
   const mapRef = useRef(null);
@@ -20,6 +29,8 @@ export default function MainMap() {
     };
     getCurrentPosition();
   }, []);
+
+  console.log(lat, lon);
 
   useEffect(() => {
     // 좌표가 바뀌었을 때 리스트 초기화
@@ -50,8 +61,17 @@ export default function MainMap() {
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
-    const iwContent = name => {
-      return `<div style="padding:5px;">${name}</div>`;
+    const iwContent = (category, name) => {
+      // const category_img = CATEGORY_MAP[category?.split(' > ')[1]] ?? <Apple />;
+      return `
+        <div class="map-marker-wrap">
+          <div class="map-marker">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils preview-icon"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+            ${name}
+          </div>
+          <div class="map-point"></div>
+        </div>
+      `;
     };
 
     // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -96,10 +116,10 @@ export default function MainMap() {
 
     // 지도에 마커를 표시하는 함수입니다
     function displayMarker(place) {
-      var infowindow = new kakao.maps.InfoWindow({
+      var infowindow = new kakao.maps.CustomOverlay({
         map: map, // 인포윈도우가 표시될 지도
         position: new kakao.maps.LatLng(place.y, place.x),
-        content: iwContent(place.place_name),
+        content: iwContent(place.category_name, place.place_name),
       });
 
       //   // 마커에 클릭이벤트를 등록합니다
