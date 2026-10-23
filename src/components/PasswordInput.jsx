@@ -1,5 +1,4 @@
 import { Eye, EyeOff } from 'lucide-react';
-import TextInput from './TextInput';
 import { useState } from 'react';
 import './passwordinput.css';
 
@@ -9,7 +8,7 @@ function PasswordInput({ placeholder, value, onChange, onKeyDown }) {
 
   return (
     <div className="passwordInput">
-      <TextInput
+      <input
         type={isVisible === true ? 'text' : 'password'}
         placeholder={placeholder}
         value={value}

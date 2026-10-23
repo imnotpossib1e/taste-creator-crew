@@ -1,6 +1,5 @@
 import { Search } from 'lucide-react';
 import './searchinput.css';
-import TextInput from './TextInput';
 
 // 검색창
 function SearchInput({ placeholder, value, onChange, onKeyDown }) {
@@ -9,7 +8,7 @@ function SearchInput({ placeholder, value, onChange, onKeyDown }) {
       <span>
         <Search color={'#b0abab'} size={20} />
       </span>
-      <TextInput
+      <input
         type="text"
         placeholder={placeholder}
         value={value}
