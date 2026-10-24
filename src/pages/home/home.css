@@ -1,0 +1,10 @@
+/* 홈 페이지 전체 */
+.home {
+  /* 공통 탭바 높이 - 탭바 컴포넌트 완성 후 실제 값으로 맞추기 */
+  --tabbar-height: 74px;
+}
+
+/* 하단 고정 탭바에 마지막 섹션이 가려지지 않도록 여백 확보 */
+.homeContent {
+  padding-bottom: var(--tabbar-height);
+}
