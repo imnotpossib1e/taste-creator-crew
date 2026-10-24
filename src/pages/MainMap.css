@@ -1,25 +1,31 @@
 .map-marker {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border: 2px solid #0f766e;
   border-radius: 50px;
-  padding: 6px 8px;
+  padding: 0.25rem 0.5rem;
   background-color: #fff;
-  font-size: 12px;
+  font-size: 0.625rem;
+  font-weight: bold;
+  box-sizing: border-box;
 }
 
 .map-point {
-  width: 8px;
-  height: 8px;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
   background-color: #0f766e;
   border: 2px solid white;
+  box-sizing: border-box;
 }
 
 .map-marker-wrap {
+  position: absolute;
+  transform: translate(-50%, calc(-100% + 6px));
+  white-space: nowrap;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   align-items: center;
 }
