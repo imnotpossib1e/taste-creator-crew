@@ -1,0 +1,22 @@
+.homeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.homeHeader > button {
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.homeLocation {
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

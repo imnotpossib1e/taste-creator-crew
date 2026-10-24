@@ -1,0 +1,74 @@
+/* 이번 주 좋아요 많은 곳 섹션 - 카드가 화면 끝까지 스크롤되도록 좌우 padding은 안쪽에서 */
+.homeWeeklyBest {
+  padding: 32px 0;
+}
+
+/* 제목 + 전체 */
+.homeWeeklyBestHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 12px;
+}
+
+.homeWeeklyBestHeader > h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+.homeWeeklyBestHeader > button {
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  color: #888;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 카드 목록 - 가로 스크롤 */
+.homeWeeklyBest ul {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0 20px;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+/* 카드 하나 */
+.homeWeeklyBestCard {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 130px;
+}
+
+.homeWeeklyBestThumb {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 4px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.homeWeeklyBestCard > strong {
+  overflow: hidden;
+  font-size: 15px;
+  color: #222;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.homeWeeklyBestCard > p {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: #888;
+}
