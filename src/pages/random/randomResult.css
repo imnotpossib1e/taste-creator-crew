@@ -1,0 +1,80 @@
+/* 추천 결과 - 피그마 result, 위쪽 구분선 */
+.randomResult {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.randomResultCount {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #6b7280;
+}
+
+/* 이미지 자리 - 세로 flex라 폭은 자동으로 꽉 참 */
+.randomResultThumb {
+  height: 200px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.randomResult > h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #111827;
+}
+
+/* 메뉴 · 도보 · 별점 - 메뉴만 진하게 */
+.randomResultMeta {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #6b7280;
+}
+
+.randomResultMeta > span:first-child {
+  color: #111827;
+}
+
+/* 버튼 두 개 - flex: 1로 반반 */
+.randomResultActions {
+  display: flex;
+  gap: 8px;
+  padding: 14px 0;
+}
+
+.randomResultActions > button {
+  flex: 1;
+  height: 50px;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.randomResultRetry {
+  font-weight: 500;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+}
+
+.randomResultView {
+  font-weight: 700;
+  color: #ffffff;
+  background: #0f766e;
+  border: none;
+}
