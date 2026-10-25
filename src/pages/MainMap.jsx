@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { addRestaurant, reset } from '../redux/store';
 import './MainMap.css';
-import { Apple, ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
+import { ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
+import { getKakaoRestaurants } from '../hook/kakaoApi';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -14,160 +14,127 @@ const CATEGORY_MAP = {
 
 export default function MainMap() {
   const mapRef = useRef(null);
-  const [lat, setLat] = useState(37.566826);
-  const [lon, setLon] = useState(126.9786567);
+  const markers = useRef([]);
+  const mapInstance = useRef(null);
+  const [position, setPosition] = useState({});
+  const [res, setRes] = useState([]);
+  const selectedMarker = useRef(null);
 
   const dispatch = useDispatch();
+
+  // 내 위치 불러오기
   useEffect(() => {
-    const getCurrentPosition = () => {
-      navigator.geolocation.getCurrentPosition(position => {
-        // console.log(position);
-        // position 매개 변수는 현재 위치정보를 포함하고 있습니다.
-        // position에서 위도값과 경도값을 구합니다.
-        setLat(position.coords.latitude);
-        setLon(position.coords.longitude);
-      });
-    };
-    getCurrentPosition();
+    navigator.geolocation.getCurrentPosition(
+      pos => setPosition({ y: pos.coords.latitude, x: pos.coords.longitude }),
+      () => setPosition({ y: 37.566826, x: 126.9786567 }), // 실패 시 서울시청
+    );
   }, []);
 
-  console.log(lat, lon);
-
+  // 지도 생성
   useEffect(() => {
-    // 좌표가 바뀌었을 때 리스트 초기화
-    dispatch(reset());
+    const { naver } = window;
 
-    const kakao = window.kakao;
-    if (!kakao) {
-      console.log('Kakao Map API is not load');
-      return;
-    }
-    // console.log(kakao);
+    mapInstance.current = new naver.maps.Map(mapRef.current, {
+      center: new naver.maps.LatLng(position.y, position.x),
+      zoom: 17,
+    });
+  }, []);
 
-    // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-    // var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  // 위치 바뀌면 중심 이동
+  useEffect(() => {
+    const { naver } = window;
+    if (!naver || !mapInstance.current) return;
+    mapInstance.current.setCenter(
+      new naver.maps.LatLng(position.y, position.x),
+    );
+  }, [position]);
 
-    // var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-    //   mapOption = {
-    //     center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-    //     level: 3, // 지도의 확대 레벨
-    //   };
-    var mapContainer = mapRef.current;
+  // 상점 리스트 불러오기
+  useEffect(() => {
+    if (!position) return;
+    // 위치가 빨리 바뀌는 경우 이전 응답이 최신 결과를 덮어쓰는 것 방지
+    let ignore = false;
 
-    var mapOption = {
-      center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
-      level: 5, // 지도의 확대 레벨
-    };
+    const fetchList = async () => {
+      try {
+        const items = await getKakaoRestaurants({
+          x: position.x,
+          y: position.y,
+        });
+        // 응답 결과 저장
+        if (ignore) return;
 
-    // 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
+        setRes(items);
+        dispatch(reset());
 
-    const iwContent = (category, name) => {
-      // const category_img = CATEGORY_MAP[category?.split(' > ')[1]] ?? <Apple />;
-      return `
-        <div class="map-marker-wrap">
-          <div class="map-marker">
-<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils preview-icon"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-            ${name}
-          </div>
-          <div class="map-point"></div>
-        </div>
-      `;
-    };
-
-    // var iwContent = '<div style="padding:5px;">Hello World!</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    // var iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
-
-    /* var myLocation =
-      '<div style="width:5px; height:5px; background-color: green; border-radius:50%;"></div>'; */
-
-    // if (!kakao.maps.services) {
-    //   console.error('Kakao Maps services is not available');
-    //   return;
-    // }
-    // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places(map);
-
-    // 카테고리로 음식점을 검색합니다
-    ps.categorySearch('FD6', placesSearchCB, { useMapBounds: true });
-
-    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-    function placesSearchCB(data, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        for (var i = 0; i < data.length; i++) {
-          displayMarker(data[i]);
-
-          const newRestaurant = {
-            id: data[i].id,
-            name: data[i].place_name,
-            phone: data[i].phone,
-            category_group: data[i].category_group_name,
-            category: data[i].category_name,
-            address: data[i].raod_address_name,
-            lat: data[i].x,
-            lon: data[i].y,
-          };
-
-          // store에 장소 담기
-          dispatch(addRestaurant(newRestaurant));
-        }
-      }
-      displayMyLoc();
-    }
-
-    // 지도에 마커를 표시하는 함수입니다
-    function displayMarker(place) {
-      var infowindow = new kakao.maps.CustomOverlay({
-        map: map, // 인포윈도우가 표시될 지도
-        position: new kakao.maps.LatLng(place.y, place.x),
-        content: iwContent(place.category_name, place.place_name),
-      });
-
-      //   // 마커에 클릭이벤트를 등록합니다
-      kakao.maps.event.addListener(infowindow, 'click', function () {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent(
-          '<div style="padding:5px;font-size:12px;">' +
-            place.place_name +
-            '</div>',
+        items.forEach(item =>
+          dispatch(
+            addRestaurant({
+              id: item.id,
+              name: item.place_name,
+              description: item.category_name.split(' > ')[1],
+              category: item.category_group_name,
+              address: item.road_address_name,
+              distance: item.distance,
+              x: item.x,
+              y: item.y,
+            }),
+          ),
         );
-        infowindow.open(map, infowindow);
+        items.forEach(item => console.log(item));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchList();
+
+    return () => {
+      ignore = true;
+    };
+  }, [position, dispatch]);
+
+  // 마크 그리기
+  useEffect(() => {
+    const { naver } = window;
+    if (!naver || !mapInstance.current) return;
+
+    // 이전 마커 제거
+    markers.current.forEach(m => m.setMap(null));
+    selectedMarker.current = null;
+
+    markers.current = res.map(item => {
+      const marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(item.y, item.x),
+        map: mapInstance.current,
+        zIndex: 100,
+        icon: {
+          content: `
+              <div id="${item.id}" class="map-marker-wrap">
+                <div class="map-marker">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils preview-icon"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+                  ${item.place_name}
+                </div>
+              </div>`,
+          anchor: new naver.maps.Point(0, 0),
+        },
       });
-    }
-
-    // 내 위치 표시
-    function displayMyLoc() {
-      // 마커를 생성하고 지도에 표시합니다
-      /*  var infowindow = new kakao.maps.InfoWindow({
-        map: map, // 인포윈도우가 표시될 지도
-        position: new kakao.maps.LatLng(lat, lon),
-        content: myLocation,
-      }); */
-
-      // 마커를 생성하고 지도에 표시합니다
-      var marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(lat, lon),
+      naver.maps.Event.addListener(marker, 'click', () => {
+        if (selectedMarker.current && selectedMarker.current !== marker) {
+          selectedMarker.current.setZIndex(100);
+        }
+        marker.setZIndex(1000);
+        selectedMarker.current = marker;
+        mapInstance.current.setCenter(marker.getPosition());
       });
 
-      marker.open(map, marker);
-    }
-  }, [lat, lon]);
-  // let list = useSelector(state => state.restaurant);
-  // console.log(list);
+      return marker;
+    });
+  }, [res]);
 
   return (
     <>
       {/* <h1>지도</h1> */}
-      <div ref={mapRef} style={{ width: '390px', height: '360px' }}></div>
-      {/* 임시: Page6~10 확인용 버튼 */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, padding: 12 }}>
-        {[6, 7, 8, 9, 10].map(n => (
-          <Link key={n} to={`/page${n}`}>
-            <button type="button">Page{n}</button>
-          </Link>
-        ))}
-      </div>
+      <div ref={mapRef} style={{ width: '100%', height: '400px' }}></div>
     </>
   );
 }
