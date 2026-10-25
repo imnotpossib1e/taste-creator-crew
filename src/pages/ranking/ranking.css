@@ -1,0 +1,10 @@
+/* 인기 순위 페이지 전체 */
+.ranking {
+  /* 공통 탭바 높이 - 탭바 컴포넌트 완성 후 실제 값으로 맞추기 */
+  --tabbar-height: 74px;
+}
+
+/* 피그마 Content 프레임: 좌우 패딩 20 + 하단 고정 탭바만큼 여백 확보 */
+.rankingContent {
+  padding: 0 20px var(--tabbar-height);
+}
