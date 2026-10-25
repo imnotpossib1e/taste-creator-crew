@@ -1,0 +1,46 @@
+/* 별점 - 피그마 rating */
+.reviewRating {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reviewRating > h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+/* 별 + 점수 문구 */
+.reviewRatingRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 별끼리는 간격 없음 - 버튼(44)이 아이콘(34)보다 커서 자연스럽게 띄어짐 */
+.reviewRatingStars {
+  display: flex;
+}
+
+.reviewRatingStars > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.reviewRatingRow > span {
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
