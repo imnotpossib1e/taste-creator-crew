@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addRestaurant, reset } from '../redux/store';
 import './MainMap.css';
 import { Apple, ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
@@ -159,6 +160,14 @@ export default function MainMap() {
     <>
       {/* <h1>지도</h1> */}
       <div ref={mapRef} style={{ width: '390px', height: '360px' }}></div>
+      {/* 임시: Page6~10 확인용 버튼 */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, padding: 12 }}>
+        {[6, 7, 8, 9, 10].map(n => (
+          <Link key={n} to={`/page${n}`}>
+            <button type="button">Page{n}</button>
+          </Link>
+        ))}
+      </div>
     </>
   );
 }
