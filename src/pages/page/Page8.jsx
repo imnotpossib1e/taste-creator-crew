@@ -142,7 +142,7 @@ export function Component1() {
             className="frame-17"
             aria-label="뒤로가기"
             style={{ border: 0, background: 'transparent', padding: 0, cursor: 'pointer' }}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/')}
           >
             <div className="vector"></div>
           </button>

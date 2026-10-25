@@ -170,7 +170,7 @@ export function Component1() {
             <div className="vector-6"></div>
             <div className="frame-8-8">
               <p className="layer--11">이메일</p>
-              <p className="yeonnam-example-com-2">yeonnam@example.com</p>
+              <p className="yeonnam-example-com-2">{getSession()?.email ?? ''}</p>
             </div>
             <div className="vector-7"></div>
             <button

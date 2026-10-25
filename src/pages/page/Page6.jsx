@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { logIn } from '../../auth';
 import './Page6.css';
@@ -41,6 +42,23 @@ export function Component2() {
 
   return (
     <div className="layer-2 page6">
+      <button
+        type="button"
+        aria-label="뒤로가기"
+        style={{
+          position: 'absolute',
+          top: 20,
+          left: 12,
+          border: 0,
+          background: 'transparent',
+          padding: 8,
+          cursor: 'pointer',
+          lineHeight: 0,
+        }}
+        onClick={() => navigate('/')}
+      >
+        <ChevronLeft size={24} color="#111827" />
+      </button>
       <div className="frame-10">
         <div className="frame-10-2">
           <p className="layer-">로그인</p>

@@ -8,7 +8,7 @@ import MainMap from './pages/MainMap.jsx';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 
-// 임시: Page6~10 확인용 라우트 (export 이름이 파일마다 달라서 맞춰준다)
+// 메인 하단 메뉴 버튼과 연결되는 페이지 라우트 (export 이름이 파일마다 달라서 맞춰준다)
 const pageRoutes = [
   { path: 'page6', lazy: () => import('./pages/page/Page6.jsx').then(m => ({ Component: m.Component2 })) },
   { path: 'page7', lazy: () => import('./pages/page/Page7.jsx').then(m => ({ Component: m.Component1 })) },
