@@ -1,23 +1,12 @@
 import { useState } from 'react';
 import { Bookmark } from 'lucide-react';
 import { categories } from './homeConstants';
+import { stores } from '../../data/stores';
 import './homeRanking.css';
 
 // 인기 순위에 보여줄 최대 개수
 const RANKING_LIMIT = 3;
 const ALL_CATEGORY = categories[0];
-
-// 가게 목록 - API 연결 전까지 임시 데이터
-const stores = [
-  { id: 1, type: '음식점', category: '한식', name: '연남 국밥집', walkMinutes: 5, likes: 312, reviews: 128 },
-  { id: 2, type: '음식점', category: '일식', name: '라멘 키요', walkMinutes: 4, likes: 165, reviews: 74 },
-  { id: 3, type: '음식점', category: '중식', name: '홍반점', walkMinutes: 7, likes: 143, reviews: 73 },
-  { id: 4, type: '음식점', category: '일식', name: '소소한 스시', walkMinutes: 6, likes: 120, reviews: 96 },
-  { id: 5, type: '음식점', category: '양식', name: '파스타 공방', walkMinutes: 8, likes: 98, reviews: 84 },
-  { id: 6, type: '음식점', category: '한식', name: '할매 손칼국수', walkMinutes: 3, likes: 90, reviews: 150 },
-  { id: 7, type: '음식점', category: '분식', name: '떡볶이 연구소', walkMinutes: 5, likes: 72, reviews: 61 },
-  { id: 8, type: '카페', category: '카페', name: '온기 카페', walkMinutes: 2, likes: 210, reviews: 211 },
-];
 
 // 선택된 탭/카테고리에 맞는 가게를 좋아요 순으로 정렬
 function getRankedStores(selectedTab, selectedCategory) {
