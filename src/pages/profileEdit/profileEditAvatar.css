@@ -48,28 +48,8 @@
   background: #111827;
   border: 2px solid #ffffff;
 }
-.page9 .group {
+.page9 .camera-icon {
   position: absolute;
-  left: 12px;
-  top: 12.75px;
-  width: 12px;
-  height: 10.5px;
-}
-.page9 .vector-4 {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 12px;
-  height: 10.5px;
-  border-radius: 2px;
-  border: 1.35px solid #ffffff;
-}
-.page9 .vector-5 {
-  position: absolute;
-  left: 3.38px;
-  top: 3.38px;
-  width: 5.25px;
-  height: 5.25px;
-  border-radius: 50%;
-  border: 1.35px solid #ffffff;
+  left: 9px;
+  top: 9px;
 }

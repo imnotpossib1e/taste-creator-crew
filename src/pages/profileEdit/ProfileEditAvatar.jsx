@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Camera } from 'lucide-react';
 import './profileEditAvatar.css';
 
 // 프로필 아바타 + 카메라 아이콘 (로컬 이미지 추가 기능)
@@ -74,10 +75,7 @@ function ProfileEditAvatar({ profileImage, onImageChange }) {
         onKeyDown={handleKeyDown}
       >
         <div className="vector-3"></div>
-        <div className="group">
-          <div className="vector-4"></div>
-          <div className="vector-5"></div>
-        </div>
+        <Camera className="camera-icon" size={18} color="#ffffff" />
       </div>
     </div>
   );
