@@ -60,11 +60,12 @@ const saveSession = (user) =>
       email: user.email,
       nickname: user.nickname,
       foods: user.foods,
+      profileImage: user.profileImage,
     }),
   );
 
-// 현재 로그인한 사용자의 프로필(닉네임, 좋아하는 음식)을 저장 (users 목록과 세션 둘 다 갱신)
-export const updateProfile = ({ nickname, foods }) => {
+// 현재 로그인한 사용자의 프로필(닉네임, 좋아하는 음식, 프로필 이미지)을 저장 (users 목록과 세션 둘 다 갱신)
+export const updateProfile = ({ nickname, foods, profileImage }) => {
   const session = getSession();
   if (!session) return { ok: false, message: '로그인이 필요합니다.' };
   const users = read(USERS_KEY, []);
@@ -72,6 +73,9 @@ export const updateProfile = ({ nickname, foods }) => {
   if (!user) return { ok: false, message: '계정을 찾을 수 없습니다.' };
   user.nickname = nickname.trim();
   user.foods = foods;
+  if (profileImage !== undefined) {
+    user.profileImage = profileImage;
+  }
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
   saveSession(user);
   return { ok: true };

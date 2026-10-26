@@ -11,6 +11,17 @@
   height: 88px;
   border-radius: 50%;
   background: #f3f4f6;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page9 .vector-2 .profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 .page9 .group-8 {
   position: absolute;
@@ -18,6 +29,14 @@
   top: 56px;
   width: 36px;
   height: 36px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.page9 .group-8:hover,
+.page9 .group-8:focus-visible {
+  transform: scale(1.08);
+  filter: brightness(1.15);
 }
 .page9 .vector-3 {
   position: absolute;

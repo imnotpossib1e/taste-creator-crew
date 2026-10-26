@@ -14,6 +14,7 @@ function MyPage() {
   const [activeTab, setActiveTab] = useState('reviews');
   const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
   const [neighborhood, setNeighborhood] = useState('내 동네 연남동');
+  const [profileImage] = useState(getSession()?.profileImage ?? null);
   const [profileEditing, setProfileEditing] = useState(false);
   const [reviews, setReviews] = useState(initialReviews);
   const [editingReviewId, setEditingReviewId] = useState(null);
@@ -95,6 +96,7 @@ function MyPage() {
             profileEditing={profileEditing}
             setProfileEditing={setProfileEditing}
             setFeedback={setFeedback}
+            profileImage={profileImage}
           />
           <div className="frame-8-6">
             <MyPageTabs
