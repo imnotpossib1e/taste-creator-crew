@@ -1,0 +1,4 @@
+/* 하단 고정 바(위 padding 10 + 버튼 50 + 아래 padding 18 + 선 1 = 79px)에 마지막 리뷰가 가려지지 않도록 */
+.storeDetailContent {
+  padding-bottom: 79px;
+}

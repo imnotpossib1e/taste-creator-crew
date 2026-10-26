@@ -1,0 +1,7 @@
+/* 외부 가게 페이지 - 높이는 피그마 hero-photo 기준 */
+.storeInfoFrame {
+  display: block;
+  width: 100%;
+  height: 373px;
+  border: none;
+}
