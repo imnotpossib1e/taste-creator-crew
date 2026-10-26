@@ -1,0 +1,56 @@
+.page9 .group-9 {
+  width: 92px;
+  height: 92px;
+  position: relative;
+}
+.page9 .vector-2 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #f3f4f6;
+}
+.page9 .group-8 {
+  position: absolute;
+  left: 56px;
+  top: 56px;
+  width: 36px;
+  height: 36px;
+}
+.page9 .vector-3 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #111827;
+  border: 2px solid #ffffff;
+}
+.page9 .group {
+  position: absolute;
+  left: 12px;
+  top: 12.75px;
+  width: 12px;
+  height: 10.5px;
+}
+.page9 .vector-4 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 12px;
+  height: 10.5px;
+  border-radius: 2px;
+  border: 1.35px solid #ffffff;
+}
+.page9 .vector-5 {
+  position: absolute;
+  left: 3.38px;
+  top: 3.38px;
+  width: 5.25px;
+  height: 5.25px;
+  border-radius: 50%;
+  border: 1.35px solid #ffffff;
+}

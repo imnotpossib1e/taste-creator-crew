@@ -16,13 +16,13 @@ import { useNavigate } from 'react-router-dom';
 import { getKakaoRestaurants } from '../hook/kakaoApi';
 import { getSession } from '../auth';
 
-// 하단 메뉴: 로그인 안 되어 있으면 page6(로그인), 되어 있으면 to 로 이동
+// 하단 메뉴: 로그인 안 되어 있으면 /login(로그인), 되어 있으면 to 로 이동
 // to 가 없는 메뉴(홈·랜덤)는 아직 연결된 페이지가 없다
 const MENUS = [
   { label: '지도', icon: <MapIcon />, to: '/' },
   { label: '홈', icon: <House /> },
   { label: '랜덤', icon: <Shuffle /> },
-  { label: '저장', icon: <Bookmark />, to: '/page8' },
+  { label: '마이페이지', icon: <Bookmark />, to: '/mypage' },
 ];
 
 const CATEGORY_MAP = {
@@ -45,7 +45,7 @@ export default function MainMap() {
 
   const handleMenu = to => {
     if (!to) return;
-    navigate(to === '/' || getSession() ? to : '/page6');
+    navigate(to === '/' || getSession() ? to : '/login');
   };
 
   // 내 위치 불러오기

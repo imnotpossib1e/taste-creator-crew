@@ -8,13 +8,14 @@ import MainMap from './pages/MainMap.jsx';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 
-// 메인 하단 메뉴 버튼과 연결되는 페이지 라우트 (export 이름이 파일마다 달라서 맞춰준다)
+// 로그인/회원가입/마이페이지/프로필 수정/비밀번호 변경 라우트
+// (path는 각 페이지 폴더 이름과 같게 맞춘다)
 const pageRoutes = [
-  { path: 'page6', lazy: () => import('./pages/page/Page6.jsx').then(m => ({ Component: m.Component2 })) },
-  { path: 'page7', lazy: () => import('./pages/page/Page7.jsx').then(m => ({ Component: m.Component1 })) },
-  { path: 'page8', lazy: () => import('./pages/page/Page8.jsx').then(m => ({ Component: m.Component1 })) },
-  { path: 'page9', lazy: () => import('./pages/page/Page9.jsx').then(m => ({ Component: m.Component1 })) },
-  { path: 'page10', lazy: () => import('./pages/page/Page10.jsx').then(m => ({ Component: m.Component2 })) },
+  { path: 'login', lazy: () => import('./pages/login/Login.jsx').then(m => ({ Component: m.default })) },
+  { path: 'signup', lazy: () => import('./pages/signup/Signup.jsx').then(m => ({ Component: m.default })) },
+  { path: 'mypage', lazy: () => import('./pages/mypage/MyPage.jsx').then(m => ({ Component: m.default })) },
+  { path: 'profileEdit', lazy: () => import('./pages/profileEdit/ProfileEdit.jsx').then(m => ({ Component: m.default })) },
+  { path: 'passwordChange', lazy: () => import('./pages/passwordChange/PasswordChange.jsx').then(m => ({ Component: m.default })) },
 ];
 
 // router 설계

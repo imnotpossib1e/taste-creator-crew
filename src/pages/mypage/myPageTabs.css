@@ -1,0 +1,90 @@
+.page8 .tabs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-7 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-8 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-9 {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-10 {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .layer-3 {
+  width: auto;
+  height: 18px;
+  white-space: nowrap;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 700;
+}
+.page8 .vector-2 {
+  width: 100%;
+  height: 2px;
+  background: #0f766e;
+}
+.page8 .layer-3-2,
+.page8 .layer-5 {
+  white-space: nowrap;
+}
+.page8 .layer-3-2 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}
+.page8 .layer-5 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}
+.page8 .vector-3 {
+  width: calc(100% + 40px);
+  margin: 0 -20px;
+  height: 1px;
+  background: #e5e7eb;
+  border: 0;
+}
+.page8 .tabs [role='tab'] {
+  position: relative;
+  padding-bottom: 10px;
+}
+.page8 .tabs [role='tab'][aria-selected='true'] {
+  z-index: 1;
+  box-shadow: 0 1px 0 #0f766e;
+}
