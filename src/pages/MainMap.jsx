@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getKakaoRestaurants } from '../hook/kakaoApi';
-import { getSession } from '../auth';
+import { selectIsLoggedIn } from '../redux/authSlice';
 
 // 하단 메뉴: 로그인 안 되어 있으면 /login(로그인), 되어 있으면 to 로 이동
 // to 가 없는 메뉴(홈·랜덤)는 아직 연결된 페이지가 없다
@@ -42,10 +42,11 @@ export default function MainMap() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const handleMenu = to => {
     if (!to) return;
-    navigate(to === '/' || getSession() ? to : '/login');
+    navigate(to === '/' || isLoggedIn ? to : '/login');
   };
 
   // 내 위치 불러오기

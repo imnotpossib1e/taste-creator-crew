@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logIn } from '../../auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, selectAuthLoading } from '../../redux/authSlice';
 import LoginTitle from './LoginTitle';
 import LoginFields from './LoginFields';
 import LoginSocial from './LoginSocial';
-import LoginSignupLink from './LoginSignupLink';
 import './login.css';
 
 // 로그인 페이지 - 섹션 컴포넌트를 순서대로 조립
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectAuthLoading);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -28,12 +31,12 @@ function Login() {
       return;
     }
 
-    const result = await logIn({ email, password });
-    if (!result.ok) {
-      setFeedback(result.message);
-      return;
+    const action = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(action)) {
+      navigate('/mypage');
+    } else {
+      setFeedback(action.payload || '로그인에 실패했습니다.');
     }
-    navigate('/mypage');
   };
 
   const handlePasswordRecovery = () => {
@@ -68,8 +71,10 @@ function Login() {
           <button
             className="component-2"
             type="submit"
+            disabled={loading}
+            style={loading ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
           >
-            <p className="layer--6">로그인</p>
+            <p className="layer--6">{loading ? '로그인 중...' : '로그인'}</p>
           </button>
           <button
             type="button"
@@ -78,13 +83,12 @@ function Login() {
           >
             비밀번호를 잊으셨나요?
           </button>
-          <LoginSocial setFeedback={setFeedback} />
+          <LoginSocial />
           <p className="layer--7" role="status" aria-live="polite">
             {feedback}
           </p>
         </form>
       </div>
-      <LoginSignupLink />
     </div>
   );
 }

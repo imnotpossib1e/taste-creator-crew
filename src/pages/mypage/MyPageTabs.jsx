@@ -1,7 +1,7 @@
 import './myPageTabs.css';
-import { likedPlaces, bookmarkedPlaces, buttonStyle } from './myPageConstants';
+import { bookmarkedPlaces, buttonStyle } from './myPageConstants';
 
-// 탭 - 내 리뷰 / 좋아요 누른 곳 / 북마크
+// 탭 - 내 리뷰 / 북마크
 function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
   const tabStyle = (selected) => ({
     ...buttonStyle,
@@ -32,16 +32,6 @@ function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
               >
                 내 리뷰 {reviewCount}
               </span>
-            </button>
-            <button
-              type="button"
-              className="layer-3-2"
-              role="tab"
-              aria-selected={activeTab === 'liked'}
-              style={tabStyle(activeTab === 'liked')}
-              onClick={() => setActiveTab('liked')}
-            >
-              좋아요 누른 곳 {likedPlaces.length}
             </button>
             <button
               type="button"

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { getSession, updateProfile } from '../../auth';
+import { updateUser } from '../../redux/authSlice';
 import ProfileEditAppBar from './ProfileEditAppBar';
 import ProfileEditAvatar from './ProfileEditAvatar';
 import ProfileEditNickname from './ProfileEditNickname';
@@ -11,6 +13,7 @@ import './profileEdit.css';
 // 프로필 수정 페이지 - 섹션 컴포넌트를 순서대로 조립
 function ProfileEdit() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
   const [selectedFoods, setSelectedFoods] = useState(getSession()?.foods ?? ['한식', '일식']);
   const [profileImage, setProfileImage] = useState(getSession()?.profileImage ?? null);
@@ -67,6 +70,7 @@ function ProfileEdit() {
       setFeedback(result.message);
       return;
     }
+    dispatch(updateUser({ nickname, foods: selectedFoods, profileImage }));
     window.alert('프로필이 저장되었습니다.');
     navigate('/mypage');
   };

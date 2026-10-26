@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import authReducer from './authSlice';
 
 const initialState = [];
 
@@ -23,5 +24,7 @@ export const { addRestaurant, reset } = restaurantSlice.actions;
 export default configureStore({
   reducer: {
     restaurant: restaurantSlice.reducer,
+    auth: authReducer,
   },
 });
+
