@@ -1,0 +1,43 @@
+/* 내용 - 피그마 text */
+.reviewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reviewContent > label {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+/* border-box가 없으면 width 100%에 padding/테두리가 더해져 삐져나옴 */
+.reviewContent > textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 120px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  resize: none;
+}
+
+.reviewContent > textarea::placeholder {
+  color: #6b7280;
+}
+
+/* 글자 수 - 오른쪽 정렬 */
+.reviewContentCount {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #6b7280;
+  text-align: right;
+}

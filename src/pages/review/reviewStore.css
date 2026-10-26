@@ -1,0 +1,35 @@
+/* 가게 썸네일 + 정보 - 피그마 place */
+.reviewStore {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 썸네일 (사진 연결 전까지 회색 박스) */
+.reviewStoreThumb {
+  width: 44px;
+  height: 44px;
+  background: #f3f4f6;
+  border-radius: 6px;
+}
+
+/* 이름 위, 종류 아래 */
+.reviewStoreInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewStoreInfo > strong {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.reviewStoreInfo > span {
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #6b7280;
+}
