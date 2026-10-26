@@ -1,0 +1,107 @@
+.page8 .settings-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-27 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-28 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer--17 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}
+.page8 .frame-20 {
+  width: 44px;
+  height: 26px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 3px 3px 3px 21px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 50px;
+  background: #0f766e;
+}
+.page8 .vector-21 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+.page8 .vector-22 {
+  width: 100%;
+  height: 1px;
+  background: #f3f4f6;
+  border: 0;
+}
+.page8 .frame-8-29 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer--18 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}
+.page8 .group {
+  display: block;
+  width: 9px;
+  height: 9px;
+  position: relative;
+}
+.page8 .vector-23 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-top: 1.2px solid #6b7280;
+  border-right: 1.2px solid #6b7280;
+  transform: rotate(45deg);
+}
+.page8 .vector-24 {
+  width: 100%;
+  height: 1px;
+  background: #f3f4f6;
+  border: 0;
+}
+.page8 .layer--19 {
+  align-self: stretch;
+  width: 100%;
+  text-align: left;
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}/* 좋아요 / 북마크 목록 */

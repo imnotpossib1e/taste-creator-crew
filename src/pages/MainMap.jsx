@@ -2,8 +2,28 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRestaurant, reset } from '../redux/store';
 import './MainMap.css';
-import { ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
+import {
+  Bookmark,
+  ChefHat,
+  CookingPot,
+  House,
+  Map as MapIcon,
+  Shuffle,
+  Soup,
+  Utensils,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { getKakaoRestaurants } from '../hook/kakaoApi';
+import { getSession } from '../auth';
+
+// 하단 메뉴: 로그인 안 되어 있으면 /login(로그인), 되어 있으면 to 로 이동
+// to 가 없는 메뉴(홈·랜덤)는 아직 연결된 페이지가 없다
+const MENUS = [
+  { label: '지도', icon: <MapIcon />, to: '/' },
+  { label: '홈', icon: <House /> },
+  { label: '랜덤', icon: <Shuffle /> },
+  { label: '마이페이지', icon: <Bookmark />, to: '/mypage' },
+];
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -21,6 +41,12 @@ export default function MainMap() {
   const selectedMarker = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleMenu = to => {
+    if (!to) return;
+    navigate(to === '/' || getSession() ? to : '/login');
+  };
 
   // 내 위치 불러오기
   useEffect(() => {
@@ -33,6 +59,8 @@ export default function MainMap() {
   // 지도 생성
   useEffect(() => {
     const { naver } = window;
+    // 네이버 SDK 인증 실패 시 naver.maps 가 null 이라 페이지 전체가 죽는 것 방지
+    if (!naver?.maps) return;
 
     mapInstance.current = new naver.maps.Map(mapRef.current, {
       center: new naver.maps.LatLng(position.y, position.x),
@@ -135,6 +163,19 @@ export default function MainMap() {
     <>
       {/* <h1>지도</h1> */}
       <div ref={mapRef} style={{ width: '100%', height: '400px' }}></div>
+      <nav className="bottom-menu">
+        {MENUS.map(({ label, icon, to }) => (
+          <button
+            key={label}
+            type="button"
+            className={`bottom-menu-item${to === '/' ? ' active' : ''}`}
+            onClick={() => handleMenu(to)}
+          >
+            {icon}
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
     </>
   );
 }

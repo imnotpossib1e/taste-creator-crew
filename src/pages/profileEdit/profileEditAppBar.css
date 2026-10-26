@@ -1,0 +1,47 @@
+.page9 .app-bar {
+  align-self: stretch;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  padding: 0px 8px 0px 8px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+.page9 .frame {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 0px 0px 0px 0px;
+  justify-content: center;
+  align-items: center;
+}
+.page9 .vector {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background:
+    linear-gradient(45deg, transparent 45%, #111827 45% 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, #111827 45% 55%, transparent 55%);
+}
+.page9 .layer- {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+.page9 .spacer {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  padding: 0px 0px 0px 0px;
+  justify-content: center;
+  align-items: center;
+}
