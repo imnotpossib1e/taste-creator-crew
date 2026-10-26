@@ -1,7 +1,0 @@
-/* 피그마 content: 섹션 사이 28px, 바깥 여백 20/20/24 + 하단 고정 버튼(79px)만큼 여백 */
-.reviewFormContent {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding: 20px 20px calc(24px + 79px);
-}
