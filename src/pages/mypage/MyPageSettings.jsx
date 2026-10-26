@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { logOut } from '../../auth';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/authSlice';
 import './myPageSettings.css';
 import { buttonStyle } from './myPageConstants';
 
@@ -12,6 +13,7 @@ function MyPageSettings({
   feedback,
 }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div className="settings-menu">
       <div className="frame-8-27">
@@ -60,7 +62,7 @@ function MyPageSettings({
           className="layer--19"
           style={buttonStyle}
           onClick={() => {
-            logOut();
+            dispatch(logout());
             navigate('/login');
           }}
         >
