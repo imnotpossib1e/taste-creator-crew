@@ -19,34 +19,7 @@ export const initialReviews = [
   },
 ];
 
-// 좋아요/북마크 목록은 API 연결 전까지 시안용 고정 데이터
-export const likedPlaces = [
-  {
-    id: 1,
-    name: '연남 국밥집',
-    category: '한식',
-    rating: 4.6,
-    reviewCount: 128,
-    likes: 312,
-  },
-  {
-    id: 2,
-    name: '성수 수육집',
-    category: '한식',
-    rating: 4.3,
-    reviewCount: 87,
-    likes: 194,
-  },
-  {
-    id: 3,
-    name: '망원 칼국수',
-    category: '한식',
-    rating: 4.8,
-    reviewCount: 205,
-    likes: 441,
-  },
-];
-
+// 북마크 목록은 API 연결 전까지 시안용 고정 데이터
 export const bookmarkedPlaces = [
   {
     id: 1,
