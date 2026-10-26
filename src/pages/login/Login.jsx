@@ -5,7 +5,6 @@ import { loginUser, selectAuthLoading } from '../../redux/authSlice';
 import LoginTitle from './LoginTitle';
 import LoginFields from './LoginFields';
 import LoginSocial from './LoginSocial';
-import LoginSignupLink from './LoginSignupLink';
 import './login.css';
 
 // 로그인 페이지 - 섹션 컴포넌트를 순서대로 조립
@@ -84,13 +83,12 @@ function Login() {
           >
             비밀번호를 잊으셨나요?
           </button>
-          <LoginSocial setFeedback={setFeedback} />
+          <LoginSocial />
           <p className="layer--7" role="status" aria-live="polite">
             {feedback}
           </p>
         </form>
       </div>
-      <LoginSignupLink />
     </div>
   );
 }
