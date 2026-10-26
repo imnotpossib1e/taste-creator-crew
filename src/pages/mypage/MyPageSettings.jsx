@@ -32,11 +32,7 @@ function MyPageSettings({
             aria-label="새 투표 알림"
             onClick={() => {
               setNotificationsEnabled((enabled) => !enabled);
-              setFeedback(
-                notificationsEnabled
-                  ? '화면 내 새 투표 알림 설정을 껐습니다. 실제 알림은 연결되지 않았습니다.'
-                  : '화면 내 새 투표 알림 설정을 켰습니다. 실제 알림은 연결되지 않았습니다.',
-              );
+
             }}
           >
             <div className="vector-21"></div>

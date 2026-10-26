@@ -10,12 +10,21 @@ function MyPageProfile({
   profileEditing,
   setProfileEditing,
   setFeedback,
+  profileImage,
 }) {
   const navigate = useNavigate();
   return (
     <div className="frame-8-3">
       <div className="frame-8-4">
-        <div className="avatar"></div>
+        <div className="avatar">
+          {profileImage ? (
+            <img
+              src={profileImage}
+              alt={nickname}
+              className="avatar-image"
+            />
+          ) : null}
+        </div>
         <div className="frame-8-5">
           {profileEditing ? (
             <>

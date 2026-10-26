@@ -13,6 +13,7 @@ function ProfileEdit() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
   const [selectedFoods, setSelectedFoods] = useState(getSession()?.foods ?? ['한식', '일식']);
+  const [profileImage, setProfileImage] = useState(getSession()?.profileImage ?? null);
   const [passwordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -57,7 +58,11 @@ function ProfileEdit() {
       setFeedback('닉네임을 입력해 주세요.');
       return;
     }
-    const result = updateProfile({ nickname, foods: selectedFoods });
+    const result = updateProfile({
+      nickname,
+      foods: selectedFoods,
+      profileImage,
+    });
     if (!result.ok) {
       setFeedback(result.message);
       return;
@@ -71,7 +76,10 @@ function ProfileEdit() {
       <ProfileEditAppBar />
       <div className="frame-10">
         <div className="frame-11">
-          <ProfileEditAvatar />
+          <ProfileEditAvatar
+            profileImage={profileImage}
+            onImageChange={setProfileImage}
+          />
           <div className="frame-8">
             <ProfileEditNickname nickname={nickname} setNickname={setNickname} />
             <ProfileEditFoodSelect selectedFoods={selectedFoods} toggleFood={toggleFood} />
