@@ -56,7 +56,7 @@ function ReviewItem({ review }) {
         <span>{review.date}</span>
       </div>
       <ReviewStars rating={review.rating} />
-      <p className="reviewContent">{review.content}</p>
+      <p className="reviewText">{review.content}</p>
       <div className="reviewPhotos">
         {range(review.photoCount).map(index => (
           <div key={index} />
