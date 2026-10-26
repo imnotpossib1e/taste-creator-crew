@@ -1,9 +1,6 @@
-import { stores } from '../../data/stores';
 import './reviewStore.css';
 
-function ReviewStore() {
-  const store = stores.find(item => item.id === 1);
-
+function ReviewStore({ store }) {
   return (
     <div className="reviewStore">
       <div className="reviewStoreThumb" />

@@ -17,3 +17,9 @@ export const reviewTags = [
   '혼밥하기 좋아요',
   '대화하기 좋아요',
 ];
+
+// 정보입력 카테고리 칩 목록 (하나만 선택)
+export const storeCategories = ['한식', '카페', '중식', '일식', '양식', '분식'];
+
+// 정보입력 이름을 비우고 등록했을 때 안내 문구
+export const storeNameErrorMessage = '음식점 이름을 입력해 주세요';
