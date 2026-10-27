@@ -29,3 +29,9 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+/* 저장 중 - 회색으로 눌리지 않는 상태임을 보여줌 */
+.reviewSubmit > button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}

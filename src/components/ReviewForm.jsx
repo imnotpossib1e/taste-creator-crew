@@ -17,7 +17,7 @@ function toggleItem(list, item) {
     : [...list, item];
 }
 
-function ReviewForm({ title, submitLabel, onSubmit, restaurant }) {
+function ReviewForm({ title, submitLabel, onSubmit, restaurant, isSaving }) {
   // 등록할 때 한꺼번에 모아야 해서 폼에서 관리
   const [rating, setRating] = useState(0);
   const [tags, setTags] = useState([]);
@@ -97,7 +97,7 @@ function ReviewForm({ title, submitLabel, onSubmit, restaurant }) {
         <ReviewContent content={content} setContent={setContent} />
       </main>
 
-      <ReviewSubmit label={submitLabel} />
+      <ReviewSubmit label={submitLabel} disabled={isSaving} />
     </form>
   );
 }
