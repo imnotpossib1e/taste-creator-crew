@@ -6,11 +6,16 @@ import './storeDetail.css';
 import { useState } from 'react';
 import BookmarkSheet from './BookmarkSheet';
 import { stores } from '../../data/stores.js';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function StoreDetail() {
   const [isBookmarkSheetOpen, setIsBookmarkSheetOpen] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleWriteReview = () => {
+    navigate(`/reviewWrite/${id}`);
+  };
 
   return (
     <div className="storeDetail">
@@ -18,10 +23,13 @@ function StoreDetail() {
 
       <div className="storeDetailContent">
         <StoreInfo placeId={id} />
-        <StoreReviews />
+        <StoreReviews onWriteReview={handleWriteReview} />
       </div>
 
-      <StoreBottomBar onBookmarkClick={() => setIsBookmarkSheetOpen(true)} />
+      <StoreBottomBar
+        onBookmarkClick={() => setIsBookmarkSheetOpen(true)}
+        onWriteReview={handleWriteReview}
+      />
       {isBookmarkSheetOpen && (
         <BookmarkSheet
           store={stores[0]}

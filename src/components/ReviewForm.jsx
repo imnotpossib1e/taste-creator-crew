@@ -8,7 +8,6 @@ import ReviewContent from './ReviewContent';
 import ReviewSubmit from './ReviewSubmit';
 import './reviewForm.css';
 import ReviewStoreNameInput from './ReviewStoreNameInput';
-import { stores } from '../data/stores.js';
 import { MIN_RATING } from './reviewConstants';
 
 // 배열에 있으면 빼고, 없으면 추가한 새 배열을 반환
@@ -18,14 +17,13 @@ function toggleItem(list, item) {
     : [...list, item];
 }
 
-function ReviewForm({ title, submitLabel, onSubmit }) {
-  const store = stores.find(item => item.id === 1);
+function ReviewForm({ title, submitLabel, onSubmit, restaurant }) {
   // 등록할 때 한꺼번에 모아야 해서 폼에서 관리
   const [rating, setRating] = useState(0);
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [storeName, setStoreName] = useState('');
-  const [category, setCategory] = useState(store.category);
+  const [category, setCategory] = useState(restaurant.description);
   const [storeNameError, setStoreNameError] = useState(false);
   const [ratingError, setRatingError] = useState(false);
 
@@ -65,7 +63,7 @@ function ReviewForm({ title, submitLabel, onSubmit }) {
     }
 
     const review = {
-      storeId: store.id,
+      storeId: restaurant.id,
       storeName,
       category,
       rating,
@@ -80,9 +78,9 @@ function ReviewForm({ title, submitLabel, onSubmit }) {
       <ReviewHeader title={title} />
 
       <main className="reviewFormContent">
-        <ReviewStore store={store} />
+        <ReviewStore restaurant={restaurant} />
         <ReviewStoreNameInput
-          placeholder={store.name}
+          placeholder={restaurant.name}
           storeName={storeName}
           onStoreNameChange={handleStoreNameChange}
           storeNameError={storeNameError}

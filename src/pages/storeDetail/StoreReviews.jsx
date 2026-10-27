@@ -66,7 +66,7 @@ function ReviewItem({ review }) {
   );
 }
 
-function StoreReviews() {
+function StoreReviews({ onWriteReview }) {
   // 임시 연남 국밥집(id 1)
   const store = stores.find(item => item.id === 1);
 
@@ -74,7 +74,9 @@ function StoreReviews() {
     <section className="storeReviews">
       <div className="storeReviewsHeader">
         <h2>리뷰 {store.reviews}</h2>
-        <button type="button">리뷰 쓰기</button>
+        <button type="button" onClick={onWriteReview}>
+          리뷰 쓰기
+        </button>
       </div>
 
       <ul>
