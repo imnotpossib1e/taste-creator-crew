@@ -6,20 +6,30 @@ import './storeDetail.css';
 import { useState } from 'react';
 import BookmarkSheet from './BookmarkSheet';
 import { stores } from '../../data/stores.js';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function StoreDetail() {
   const [isBookmarkSheetOpen, setIsBookmarkSheetOpen] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const handleWriteReview = () => {
+    navigate(`/reviewWrite/${id}`);
+  };
 
   return (
     <div className="storeDetail">
       <StoreDetailHeader />
 
-      <main className="storeDetailContent">
-        <StoreInfo />
-        <StoreReviews />
-      </main>
+      <div className="storeDetailContent">
+        <StoreInfo placeId={id} />
+        <StoreReviews placeId={id} onWriteReview={handleWriteReview} />
+      </div>
 
-      <StoreBottomBar onBookmarkClick={() => setIsBookmarkSheetOpen(true)} />
+      <StoreBottomBar
+        onBookmarkClick={() => setIsBookmarkSheetOpen(true)}
+        onWriteReview={handleWriteReview}
+      />
       {isBookmarkSheetOpen && (
         <BookmarkSheet
           store={stores[0]}
