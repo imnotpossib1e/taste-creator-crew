@@ -24,12 +24,20 @@ export default function PlaceCard({ place }) {
               className="itemImg"
             />
             <div className="infoWrap">
-              <div className="placeTitle">{place.name}</div>
+              <div className="placeTitle">
+                {place.name}
+                <span>
+                  {place.descroption ?? <span>{place.description}</span>}
+                </span>
+              </div>
               <div className="infoDesWrap">
                 {place.category_group && <span>{place.category_group}</span>}
                 <span>{place.distance}m</span>
+                <div style={{ display: 'flex', gap: '4px' }}>
+                  <span style={{ color: '#F59E0B' }}>★</span>
+                  <span>{place.rating_avg.toFixed(1)}</span>
+                </div>
               </div>
-              <div>리뷰키워드</div>
             </div>
           </div>
         </Link>

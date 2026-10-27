@@ -1,5 +1,7 @@
+import { useDispatch } from 'react-redux';
 import { supabase } from '../utils/superbase';
 import { ensureRestaurant } from './review';
+import { updateStats } from '../redux/store';
 
 export async function insertBookmark({ userId, placeId, placeName, content }) {
   ensureRestaurant({ placeId, placeName });
@@ -17,5 +19,6 @@ export async function insertBookmark({ userId, placeId, placeName, content }) {
     .select();
 
   if (error) throw error;
+
   return data[0];
 }

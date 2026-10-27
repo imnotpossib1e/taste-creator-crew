@@ -19,6 +19,7 @@ import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
 import CategoryButton from './categoryButton';
 import PlaceCard from './PlaceCard';
+import { getRestaurantStats } from '../../hook/restaurant';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -90,23 +91,25 @@ export default function MainMap() {
           getKakaoRestaurants({ x: position.x, y: position.y }),
           getKakaoCafes({ x: position.x, y: position.y }),
         ]);
+
+        const restaurants = await getRestaurantStats(
+          [...food, ...cafe].map(item => {
+            const [, group = '', desc = ''] = item.category_name.split(' > ');
+            return {
+              id: item.id,
+              name: item.place_name,
+              category: item.category_group_name, // 음식점 / 카페
+              category_group: group, // 한식/중식/
+              description: desc, // 커피전문점
+              address: item.road_address_name,
+              distance: item.distance,
+              x: item.x,
+              y: item.y,
+            };
+          }),
+        );
         // 응답 결과 저장
         if (ignore) return;
-
-        const restaurants = [...food, ...cafe].map(item => {
-          const [, group = '', desc = ''] = item.category_name.split(' > ');
-          return {
-            id: item.id,
-            name: item.place_name,
-            category: item.category_group_name, // 음식점 / 카페
-            category_group: group, // 한식/중식/
-            description: desc, // 커피전문점
-            address: item.road_address_name,
-            distance: item.distance,
-            x: item.x,
-            y: item.y,
-          };
-        });
 
         // restaurants.forEach(item => console.log(item));
 
