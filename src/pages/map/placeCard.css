@@ -1,0 +1,59 @@
+.storeInfoFrame {
+  display: block;
+  width: 100%;
+  height: 500px;
+  border: none;
+  pointer-events: none;
+  margin-top: -60px;
+}
+
+.frameWrap {
+  /* position: relative; */
+  overflow: hidden;
+  padding: 20px;
+  background-color: #f8faf9;
+  border: 2px solid #0f766e;
+  border-radius: 15px;
+}
+
+.placeWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.placeWrap span {
+  font-size: 14px;
+  color: gray;
+}
+.placeLink {
+  color: black;
+  text-decoration: none;
+}
+
+.itemImg {
+  width: 58px;
+  height: 58px;
+}
+
+.linkWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+
+.infoWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoDesWrap {
+  display: flex;
+  gap: 4px;
+}
+
+.placeTitle {
+  font-weight: bold;
+}
