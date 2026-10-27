@@ -1,7 +1,9 @@
-import { useState } from 'react';
 import { Bookmark } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { categories } from './homeConstants';
 import { WALK_METERS_PER_MINUTE } from '../random/randomConstants';
+import BookmarkSheet from '../storeDetail/BookmarkSheet';
+import { useBookmark } from '../../hook/useBookmark';
 import './homeRanking.css';
 
 // 인기 순위에 보여줄 최대 개수
@@ -31,18 +33,12 @@ function getRankedStores(restaurants, selectedTab, selectedCategory) {
     .slice(0, RANKING_LIMIT);
 }
 
-// 저장 목록에 id가 있으면 빼고, 없으면 추가한 새 배열을 반환
-function toggleSavedId(savedIds, id) {
-  return savedIds.includes(id)
-    ? savedIds.filter(savedId => savedId !== id)
-    : [...savedIds, id];
-}
-
-// 인기 순위 한 줄
-function RankingItem({ store, isSaved, onToggleSave }) {
+// 인기 순위 한 줄 - 가게 정보를 누르면 상세(/store/:id)로 이동
+// 북마크 버튼은 링크 밖에 둔다 (링크 안에 버튼을 넣으면 북마크를 눌러도 이동해 버림)
+function RankingItem({ store, isSaved, onBookmarkClick }) {
   return (
     <li className="homeRankingItem">
-      <div className="homeRankingInfo">
+      <Link to={`/store/${store.id}`} className="homeRankingInfo">
         <div className="homeRankingTitle">
           <div className="homeRankingThumb" />
           <strong>{store.name}</strong>
@@ -55,12 +51,12 @@ function RankingItem({ store, isSaved, onToggleSave }) {
           <span>별점 {store.rating_avg.toFixed(RATING_DIGITS)}</span>
           <span>리뷰 {store.review_count}</span>
         </p>
-      </div>
+      </Link>
       <button
         type="button"
         aria-label={`${store.name} 저장`}
         aria-pressed={isSaved}
-        onClick={() => onToggleSave(store.id)}
+        onClick={() => onBookmarkClick(store)}
       >
         <Bookmark fill={isSaved ? 'currentColor' : 'none'} />
       </button>
@@ -74,18 +70,19 @@ function HomeRanking({ restaurants, selectedTab, selectedCategory }) {
     selectedTab,
     selectedCategory,
   );
-  // 화면 확인용 저장 상태 - 새로고침하면 초기화됨
-  const [savedIds, setSavedIds] = useState([]);
-
-  const handleToggleSave = id => {
-    setSavedIds(prev => toggleSavedId(prev, id));
-  };
+  const {
+    savedIds,
+    sheetStore,
+    handleBookmarkClick,
+    closeSheet,
+    saveBookmark,
+  } = useBookmark();
 
   return (
     <section className="homeRanking">
       <div className="homeRankingHeader">
         <h2>인기 순위</h2>
-        <button type="button">전체보기</button>
+        <Link to="/ranking">전체보기</Link>
       </div>
 
       {rankedStores.length === 0 ? (
@@ -97,10 +94,18 @@ function HomeRanking({ restaurants, selectedTab, selectedCategory }) {
               key={store.id}
               store={store}
               isSaved={savedIds.includes(store.id)}
-              onToggleSave={handleToggleSave}
+              onBookmarkClick={handleBookmarkClick}
             />
           ))}
         </ul>
+      )}
+
+      {sheetStore && (
+        <BookmarkSheet
+          restaurant={sheetStore}
+          onClose={closeSheet}
+          onSave={saveBookmark}
+        />
       )}
     </section>
   );

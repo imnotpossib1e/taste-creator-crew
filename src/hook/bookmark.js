@@ -15,7 +15,7 @@ export async function getMyBookmarks(userId) {
 
 // insert
 export async function insertBookmark({ userId, placeId, placeName, content }) {
-  await ensureRestaurant({ placeId, placeName });
+  await ensureRestaurant({ placeId });
 
   const { data, error } = await supabase
     .from('bookmarks')
@@ -54,4 +54,18 @@ export async function deleteBookmark(bookmarkId) {
     .eq('id', bookmarkId);
 
   if (error) throw error;
+}
+
+// delete - 가게 기준으로 내 북마크 삭제 (홈처럼 북마크 id 없이 가게만 알 때)
+// RLS에 막히면 에러 없이 0건이 지워져서, 지워진 행이 없으면 실패로 본다
+export async function deleteBookmarkByPlace({ userId, placeId }) {
+  const { data, error } = await supabase
+    .from('bookmarks')
+    .delete()
+    .eq('user_id', userId)
+    .eq('place_id', placeId)
+    .select('id');
+
+  if (error) throw error;
+  if (data.length === 0) throw new Error('삭제된 북마크가 없어요.');
 }
