@@ -8,8 +8,8 @@ const restaurantSlice = createSlice({
   initialState,
   reducers: {
     // 리스트 담기
-    addRestaurant(state, action) {
-      state.push(action.payload);
+    setRestaurant(state, action) {
+      return action.payload;
     },
 
     // 초기화
@@ -19,7 +19,7 @@ const restaurantSlice = createSlice({
   },
 });
 
-export const { addRestaurant, reset } = restaurantSlice.actions;
+export const { setRestaurant, reset } = restaurantSlice.actions;
 
 export default configureStore({
   reducer: {
@@ -27,4 +27,3 @@ export default configureStore({
     auth: authReducer,
   },
 });
-
