@@ -7,7 +7,7 @@ import MyPageReviews from './MyPageReviews';
 import MyPagePlaces from './MyPagelists';
 import MyPageSettings from './MyPageSettings';
 import './myPage.css';
-import { initialReviews } from './myPageConstants';
+import { getMyReviews, updateMyReview, deleteMyReview } from '../../hook/review';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
@@ -16,7 +16,7 @@ function MyPage() {
   const [neighborhood, setNeighborhood] = useState('내 동네 연남동');
   const [profileImage, setProfileImage] = useState(null);
   const [profileEditing, setProfileEditing] = useState(false);
-  const [reviews, setReviews] = useState(initialReviews);
+  const [reviews, setReviews] = useState([]);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [draftReview, setDraftReview] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -33,7 +33,7 @@ function MyPage() {
       if (!user) return;
       const { data, error } = await supabase
         .from('users')
-        .select('nickname, profile_image')
+        .select('id, nickname, profile_image')
         .eq('auth_id', user.id)
         .single();
       if (error) {
@@ -42,6 +42,23 @@ function MyPage() {
       }
       setNickname(data.nickname);
       setProfileImage(data.profile_image);
+
+      try {
+        const myReviews = await getMyReviews(data.id);
+        setReviews(
+          myReviews.map((review) => {
+            const created = new Date(review.created_at);
+            return {
+              id: review.id,
+              restaurant: review.place_name ?? '가게 정보 없음',
+              text: review.content,
+              date: `${created.getMonth() + 1}월 ${created.getDate()}일`,
+            };
+          }),
+        );
+      } catch {
+        setFeedback('리뷰를 불러오지 못했습니다.');
+      }
     };
     loadProfile();
   }, []);
@@ -67,9 +84,15 @@ function MyPage() {
     setFeedback('');
   };
 
-  const saveReview = (reviewId) => {
+  const saveReview = async (reviewId) => {
     if (!draftReview.trim()) {
       setFeedback('리뷰 내용을 입력해 주세요.');
+      return;
+    }
+    try {
+      await updateMyReview(reviewId, draftReview.trim());
+    } catch {
+      setFeedback('리뷰 수정에 실패했습니다.');
       return;
     }
 
@@ -83,10 +106,16 @@ function MyPage() {
     setEditingReviewId(null);
   };
 
-  const deleteReview = (reviewId) => {
+  const deleteReview = async (reviewId) => {
+    try {
+      await deleteMyReview(reviewId);
+    } catch {
+      setFeedback('리뷰 삭제에 실패했습니다.');
+      return;
+    }
     setReviews((current) => current.filter((review) => review.id !== reviewId));
     if (editingReviewId === reviewId) setEditingReviewId(null);
-    setFeedback('리뷰를 이 화면에서 삭제했습니다.');
+    setFeedback('리뷰를 삭제했습니다.');
   };
 
   const handleInstall = async () => {

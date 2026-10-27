@@ -11,7 +11,9 @@
   position: relative;
   width: 100%;
   max-width: 430px;
-  min-height: 100vh;
+  /* .App이 높이 100dvh + overflow:hidden이라 이 페이지 안에서 스크롤 */
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0;
