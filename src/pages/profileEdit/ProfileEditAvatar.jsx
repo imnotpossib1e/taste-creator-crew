@@ -38,6 +38,9 @@ function ProfileEditAvatar({ profileImage, onImageChange }) {
         onImageChange(event.target.result);
       }
     };
+    reader.onerror = () => {
+      alert('이미지를 읽지 못했습니다. 다른 파일을 선택해 주세요.');
+    };
     reader.readAsDataURL(file);
 
     // 같은 파일 다시 선택할 수 있도록 초기화

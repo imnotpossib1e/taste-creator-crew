@@ -31,7 +31,7 @@ function Login() {
       return;
     }
 
-    const action = await dispatch(loginUser({ email, password }));
+    const action = await dispatch(loginUser({ email: email.trim(), password }));
     if (loginUser.fulfilled.match(action)) {
       navigate('/mypage');
     } else {

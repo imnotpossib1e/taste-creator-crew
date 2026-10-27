@@ -15,7 +15,9 @@ function ProfileEdit() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
-  const [selectedFoods, setSelectedFoods] = useState(getSession()?.foods ?? ['한식', '일식']);
+  const [selectedFoods, setSelectedFoods] = useState(
+    Array.isArray(getSession()?.foods) ? getSession().foods : ['한식', '일식'],
+  );
   const [profileImage, setProfileImage] = useState(getSession()?.profileImage ?? null);
   const [passwordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
@@ -56,12 +58,12 @@ function ProfileEdit() {
     setFeedback('비밀번호 변경 서버가 연결되지 않아 저장되지 않았습니다.');
   };
 
-  const handleProfileSave = () => {
+  const handleProfileSave = async () => {
     if (!nickname.trim()) {
       setFeedback('닉네임을 입력해 주세요.');
       return;
     }
-    const result = updateProfile({
+    const result = await updateProfile({
       nickname,
       foods: selectedFoods,
       profileImage,
