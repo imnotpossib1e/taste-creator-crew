@@ -1,7 +1,6 @@
 import './homeCategory.css';
-import { categories } from './homeConstants';
-
-function HomeCategory({ selectedCategory, setSelectedCategory }) {
+// categories: 보여줄 칩 목록 - 탭에 따라 Home에서 정해서 내려준다
+function HomeCategory({ categories, selectedCategory, setSelectedCategory }) {
   return (
     <div className="homeCategory">
       {categories.map(item => (

@@ -1,13 +1,14 @@
-/* 랜덤 추천 페이지 전체 */
+/* 랜덤 추천 페이지 전체 - App(100dvh) 안에서 탭바를 뺀 남은 높이만 차지하고, 넘치면 여기서 스크롤 */
 .random {
-  /* 피그마 탭바 높이 */
-  --tabbar-height: 74px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
-/* 피그마 content: 섹션 사이 22px, 바깥 여백 22/20/24 + 하단 고정 탭바만큼 여백 */
+/* 피그마 content: 섹션 사이 22px, 바깥 여백 22/20/24 */
 .random > main {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  padding: 22px 20px calc(24px + var(--tabbar-height));
+  padding: 22px 20px 24px;
 }

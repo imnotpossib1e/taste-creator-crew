@@ -1,10 +1,6 @@
-/* 홈 페이지 전체 */
+/* 홈 페이지 전체 - App(100dvh) 안에서 탭바를 뺀 남은 높이만 차지하고, 넘치는 내용은 여기서 스크롤 */
 .home {
-  /* 공통 탭바 높이 - 탭바 컴포넌트 완성 후 실제 값으로 맞추기 */
-  --tabbar-height: 74px;
-}
-
-/* 하단 고정 탭바에 마지막 섹션이 가려지지 않도록 여백 확보 */
-.homeContent {
-  padding-bottom: var(--tabbar-height);
+  flex: 1;
+  min-height: 0; /* 이게 없으면 내용 높이만큼 늘어나서 탭바를 화면 밖으로 밀어냄 */
+  overflow-y: auto;
 }

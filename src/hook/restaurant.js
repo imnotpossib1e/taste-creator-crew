@@ -38,14 +38,12 @@ export async function getRestaurantStats(places) {
 
 // insert
 // reviews/bookmarks의 place_id가 restaurants.id를 참조해서, 저장 전에 가게가 먼저 있어야 한다
-// place_name은 not null이라 처음 등록되는 가게는 이름이 꼭 필요 (이미 있으면 아무것도 안 함)
-export async function ensureRestaurant({ placeId, placeName }) {
+// restaurants에는 place_name 컬럼이 없어서 id만 넣는다 (이미 있으면 아무것도 안 함)
+// 가게 이름은 reviews/bookmarks의 place_name에 각각 저장된다
+export async function ensureRestaurant({ placeId }) {
   const { error } = await supabase
     .from('restaurants')
-    .upsert(
-      { id: placeId, place_name: placeName },
-      { onConflict: 'id', ignoreDuplicates: true },
-    );
+    .upsert({ id: placeId }, { onConflict: 'id', ignoreDuplicates: true });
 
   if (error) throw error;
 }

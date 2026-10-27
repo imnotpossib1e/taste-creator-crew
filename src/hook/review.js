@@ -19,7 +19,9 @@ export async function getStoreReviews(placeId) {
 export async function getMyReviews(userId) {
   const { data, error } = await supabase
     .from('reviews')
-    .select('id, place_id, place_name, rating, good_points, content, created_at')
+    .select(
+      'id, place_id, place_name, rating, good_points, content, created_at',
+    )
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
@@ -41,10 +43,7 @@ export async function getReview(reviewId) {
 
 // insert
 export async function insertMyReview(review) {
-  await ensureRestaurant({
-    placeId: review.storeId,
-    placeName: review.placeName,
-  });
+  await ensureRestaurant({ placeId: review.storeId });
 
   const { data, error } = await supabase
     .from('reviews')

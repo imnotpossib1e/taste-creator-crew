@@ -1,22 +1,11 @@
 .homeHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 20px;
 }
 
-.homeHeader > button {
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.homeLocation {
+/* 페이지 제목 - 기존 위치 버튼(연남동)과 같은 글자 크기 */
+.homeTitle {
+  margin: 0;
   font-size: 24px;
   line-height: 1.4;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
