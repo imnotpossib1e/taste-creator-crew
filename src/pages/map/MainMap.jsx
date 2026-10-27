@@ -1,11 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { reset, setRestaurant } from '../../redux/store';
+import {
+  reset,
+  resetSearch,
+  selectVisibleRestaurants,
+  setRestaurant,
+  setSearchRestaurant,
+} from '../../redux/store';
 import './mainMap.css';
 import { ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
-import { getKakaoCafes, getKakaoRestaurants } from '../../hook/kakaoApi';
-import SearchBar from './SearchBar';
+import {
+  getKakaoCafes,
+  getKakaoRestaurants,
+  getKakaoSearchCafe,
+  getKakaoSearchRes,
+} from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
+import SearchInput from '../../components/SearchInput';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -19,8 +30,12 @@ export default function MainMap() {
   const markers = useRef([]);
   const mapInstance = useRef(null);
   const [position, setPosition] = useState(null);
-  const res = useSelector(state => state.restaurant);
+  // MainMap.jsx
+  const res = useSelector(selectVisibleRestaurants);
+  const isSearching = useSelector(state => state.searchRestaurant !== null);
   const selectedMarker = useRef(null);
+  const [search, setSearch] = useState('');
+  const contentRef = useRef();
   // const [selectedGroup, setSelectedGroup] = useState(null);
 
   const dispatch = useDispatch();
@@ -83,7 +98,7 @@ export default function MainMap() {
           };
         });
 
-        restaurants.forEach(item => console.log(item));
+        // restaurants.forEach(item => console.log(item));
 
         dispatch(setRestaurant(restaurants));
       } catch (err) {
@@ -215,12 +230,90 @@ export default function MainMap() {
     };
   }, [res]);
 
+  const searchRes = () => {
+    if (search === '') {
+      contentRef.current.focus();
+      return;
+    }
+    if (!position) return;
+    // 위치가 빨리 바뀌는 경우 이전 응답이 최신 결과를 덮어쓰는 것 방지
+    let ignore = false;
+
+    const fetchList = async () => {
+      try {
+        const [food, cafe] = await Promise.all([
+          getKakaoSearchRes({ query: search, x: position.x, y: position.y }),
+          getKakaoSearchCafe({ query: search, x: position.x, y: position.y }),
+        ]);
+        // 응답 결과 저장
+        if (ignore) return;
+
+        const restaurants = [...food, ...cafe].map(item => {
+          const [, group = '', desc = ''] = item.category_name.split(' > ');
+          return {
+            id: item.id,
+            name: item.place_name,
+            category: item.category_group_name,
+            category_group: group,
+            description: desc,
+            address: item.road_address_name,
+            distance: item.distance,
+            x: item.x,
+            y: item.y,
+          };
+        });
+
+        restaurants.forEach(item => console.log(item));
+
+        dispatch(setSearchRestaurant(restaurants));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchList();
+  };
+
+  // 엔터 제출 이벤트
+  const onKeyDown = e => {
+    if (e.keyCode === 13) {
+      //검색
+      searchRes();
+    }
+  };
+
+  const clearSearch = () => {
+    setSearch('');
+    dispatch(resetSearch());
+
+    const { naver } = window;
+    if (naver && mapInstance.current && position) {
+      mapInstance.current.setCenter(
+        new naver.maps.LatLng(position.y, position.x),
+      );
+    }
+    contentRef.current?.focus();
+  };
+
   return (
-    <>
-      {/* <h1>지도</h1> */}
-      <SearchBar />
-      <div ref={mapRef} style={{ width: '100%', height: '400px' }}></div>
+    <main className="main-map-page">
+      <div className="map-area">
+        <div ref={mapRef} className="main-map"></div>
+        <div className="search-bar-wrap">
+          <SearchInput
+            ref={contentRef}
+            placeholder={'내 주변 식당 찾기'}
+            value={search}
+            onChange={e => {
+              setSearch(e.target.value);
+              if (e.target.value === '') dispatch(resetSearch());
+            }}
+            onKeyDown={onKeyDown}
+            clearSearch={clearSearch}
+            isSearching={isSearching}
+          />
+        </div>
+      </div>
       <RestaurantList />
-    </>
+    </main>
   );
 }
