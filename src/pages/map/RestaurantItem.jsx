@@ -19,10 +19,10 @@ export default function RestaurantItem({ data }) {
       <div className="resItem">
         <div className="itemName">
           {data.name}
-          <span>{data.description}</span>
+          {data.descroption ?? <span>{data.description}</span>}
         </div>
         <div className="resInfo">
-          <span>{data.category_group}</span>
+          {data.category_group ?? <span>{data.category_group}</span>}
           <span>{data.distance}m</span>
           <span>별점</span>
         </div>

@@ -1,6 +1,7 @@
 .resItemWrap {
   padding: 10px 0;
   display: flex;
+  align-items: center;
   gap: 16px;
 }
 
@@ -39,6 +40,6 @@
 }
 
 .itemImg {
-  width: 43px;
-  height: 43px;
+  width: 48px;
+  height: 48px;
 }
