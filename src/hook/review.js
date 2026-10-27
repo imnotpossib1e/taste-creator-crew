@@ -15,6 +15,7 @@ export async function insertMyReview(review) {
     .from('reviews')
     .insert([
       {
+        user_id: review.userId,
         place_id: review.storeId,
         rating: review.rating,
         good_points: review.tags.join(','),

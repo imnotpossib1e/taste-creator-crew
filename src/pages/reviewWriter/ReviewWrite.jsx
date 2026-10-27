@@ -4,6 +4,7 @@ import ReviewForm from '../../components/ReviewForm.jsx';
 import { selectRestaurants } from '../../redux/store.js';
 import { useState } from 'react';
 import { insertMyReview } from '../../hook/review.js';
+import { selectCurrentUser } from '../../redux/authSlice.js';
 
 function ReviewWrite() {
   const [isSaving, setIsSaving] = useState(false);
@@ -13,15 +14,22 @@ function ReviewWrite() {
   const { id } = useParams();
   const restaurants = useSelector(selectRestaurants);
   const restaurant = restaurants.find(item => item.id === id);
+  const user = useSelector(selectCurrentUser);
 
   // 새 리뷰를 Supabase에 저장하고, 성공하면 이 가게 상세로 돌아간다
   // 저장 중에 Enter 등으로 다시 제출되면 무시 (중복 등록 방지)
   const handleSubmit = async review => {
+    if (!user) {
+      alert('로그인이 필요해요.');
+      navigate('/login');
+      return;
+    }
+
     if (isSaving) return;
 
     setIsSaving(true);
     try {
-      await insertMyReview(review);
+      await insertMyReview({ ...review, userId: user.id });
       navigate(`/store/${id}`);
     } catch (err) {
       console.error(err);
