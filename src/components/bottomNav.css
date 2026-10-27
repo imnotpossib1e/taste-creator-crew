@@ -1,10 +1,5 @@
 .bottom-menu {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 430px;
-  max-width: 100%;
-  bottom: 0;
+  width: 100%;
   z-index: 2000;
   display: flex;
   background-color: #fff;
