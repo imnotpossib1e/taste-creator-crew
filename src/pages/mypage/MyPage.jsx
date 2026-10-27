@@ -21,7 +21,10 @@ function MyPage() {
   const [draftReview, setDraftReview] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [installPrompt, setInstallPrompt] = useState(null);
-  const [feedback, setFeedback] = useState('');
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = (message) => {
+    if (message) window.alert(message);
+  };
 
   // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
   useEffect(() => {
@@ -146,9 +149,7 @@ function MyPage() {
       <MyPageSettings
         notificationsEnabled={notificationsEnabled}
         setNotificationsEnabled={setNotificationsEnabled}
-        setFeedback={setFeedback}
         handleInstall={handleInstall}
-        feedback={feedback}
       />
     </div>
   );

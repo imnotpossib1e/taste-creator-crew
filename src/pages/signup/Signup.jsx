@@ -22,7 +22,10 @@ function Signup() {
     privacy: false,
     location: false,
   });
-  const [feedback, setFeedback] = useState('');
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = (message) => {
+    if (message) window.alert(message);
+  };
 
   const passwordRules = {
     longEnough: password.length >= 8,
@@ -143,9 +146,6 @@ function Signup() {
           >
             <p className="layer--16">가입하기</p>
           </button>
-          <p role="status" aria-live="polite">
-            {feedback}
-          </p>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ function ProfileEditAccount({
   passwordConfirmation,
   setPasswordConfirmation,
   handlePasswordChange,
-  setFeedback,
+  onWithdraw,
 }) {
   const navigate = useNavigate();
   return (
@@ -116,9 +116,7 @@ function ProfileEditAccount({
         type="button"
         className="layer--13"
         style={buttonStyle}
-        onClick={() =>
-          setFeedback('회원 탈퇴 서버가 연결되지 않았습니다.')
-        }
+        onClick={onWithdraw}
       >
         회원 탈퇴
       </button>

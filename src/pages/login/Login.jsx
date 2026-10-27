@@ -17,7 +17,10 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [feedback, setFeedback] = useState('');
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = (message) => {
+    if (message) window.alert(message);
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -116,9 +119,6 @@ function Login() {
             비밀번호를 잊으셨나요?
           </button>
           <LoginSocial />
-          <p className="layer--7" role="status" aria-live="polite">
-            {feedback}
-          </p>
         </form>
       </div>
     </div>
