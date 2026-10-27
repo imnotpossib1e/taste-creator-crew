@@ -8,7 +8,8 @@ import PlaceCard from './PlaceCard';
 const SORTERS = {
   distance: (a, b) => Number(a.distance) - Number(b.distance),
   bookmark: (a, b) => (b.bookmark_count ?? 0) - (a.bookmark_count ?? 0),
-  review: (a, b) => (b.review_count ?? 0) - (a.review_count ?? 0),
+  review_count: (a, b) => (b.review_count ?? 0) - (a.review_count ?? 0),
+  review: (a, b) => (b.review_avg ?? 0) - (a.review_avg ?? 0),
 };
 
 export default function RestaurantList({ place }) {
@@ -32,7 +33,8 @@ export default function RestaurantList({ place }) {
             가까운 순
           </option>
           <option value="bookmark">북마크 순</option>
-          <option value="review">리뷰 많은 순</option>
+          <option value="review">별점 높은 순</option>
+          <option value="review_count">리뷰 많은 순</option>
         </select>
       </div>
       {place && <PlaceCard place={place} />}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import './restaurantItem.css';
+import { Bookmark } from 'lucide-react';
 const CATEGORY_IMG = {
   한식: 'korean.svg',
   중식: 'chinese.svg',
@@ -29,6 +30,10 @@ export default function RestaurantItem({ data }) {
             <div style={{ display: 'flex', gap: '4px' }}>
               <span style={{ color: '#F59E0B' }}>★</span>
               {data.rating_avg.toFixed(1)}
+            </div>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <Bookmark size={'14px'} />
+              {data.bookmark_count}
             </div>
           </div>
         </div>
