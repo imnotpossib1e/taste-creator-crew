@@ -63,11 +63,17 @@ function ProfileEdit() {
       setFeedback('닉네임을 입력해 주세요.');
       return;
     }
-    const result = await updateProfile({
-      nickname,
-      foods: selectedFoods,
-      profileImage,
-    });
+    let result;
+    try {
+      result = await updateProfile({
+        nickname,
+        foods: selectedFoods,
+        profileImage,
+      });
+    } catch {
+      setFeedback('이미지 용량이 큽니다. 다른 이미지를 선택해 주세요.');
+      return;
+    }
     if (!result.ok) {
       setFeedback(result.message);
       return;

@@ -34,9 +34,20 @@ function ProfileEditAvatar({ profileImage, onImageChange }) {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === 'string') {
-        onImageChange(event.target.result);
-      }
+      const dataUrl = event.target?.result;
+      if (typeof dataUrl !== 'string') return;
+      // localStorage 용량(약 5MB) 보호: 이미지를 256px 이하 JPEG로 줄여서 저장
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 256 / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        onImageChange(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => alert('이미지를 읽지 못했습니다. 다른 파일을 선택해 주세요.');
+      img.src = dataUrl;
     };
     reader.onerror = () => {
       alert('이미지를 읽지 못했습니다. 다른 파일을 선택해 주세요.');
