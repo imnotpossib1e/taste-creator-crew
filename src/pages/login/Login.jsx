@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, selectAuthLoading } from '../../redux/authSlice';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../redux/authSlice';
+import { supabase } from '../../utils/superbase';
 import LoginTitle from './LoginTitle';
 import LoginFields from './LoginFields';
 import LoginSocial from './LoginSocial';
@@ -11,7 +12,7 @@ import './login.css';
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loading = useSelector(selectAuthLoading);
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,11 +32,42 @@ function Login() {
       return;
     }
 
-    const action = await dispatch(loginUser({ email: email.trim(), password }));
-    if (loginUser.fulfilled.match(action)) {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim().toLowerCase(),
+        password,
+      });
+      if (error) {
+        // 이메일 없음 / 비밀번호 틀림을 구분하지 않는다
+        setFeedback('이메일 또는 비밀번호가 올바르지 않습니다.');
+        return;
+      }
+
+      const { data: profile, error: profileError } = await supabase
+        .from('users')
+        .select('id, nickname, category, profile_image')
+        .eq('auth_id', data.user.id)
+        .single();
+      if (profileError) {
+        setFeedback('회원 정보를 불러오지 못했습니다.');
+        return;
+      }
+
+      dispatch(
+        setCredentials({
+          id: profile.id,
+          email: data.user.email,
+          nickname: profile.nickname,
+          foods: profile.category,
+          profileImage: profile.profile_image,
+        }),
+      );
       navigate('/mypage');
-    } else {
-      setFeedback(action.payload || '로그인에 실패했습니다.');
+    } catch (err) {
+      setFeedback(err.message || '로그인 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
     }
   };
 

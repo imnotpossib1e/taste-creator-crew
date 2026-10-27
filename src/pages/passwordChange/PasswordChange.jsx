@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { changePassword } from '../../auth';
+import { supabase } from '../../utils/superbase';
 import PasswordChangeAppBar from './PasswordChangeAppBar';
 import PasswordChangeIntro from './PasswordChangeIntro';
 import PasswordChangeCurrent from './PasswordChangeCurrent';
@@ -49,9 +49,23 @@ function PasswordChange() {
       return;
     }
 
-    const result = await changePassword({ currentPassword, newPassword });
-    if (!result.ok) {
-      setFeedback(result.message);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setFeedback('로그인이 필요합니다.');
+      return;
+    }
+    // 현재 비밀번호 확인: 같은 계정으로 다시 로그인해 본다
+    const { error: verifyError } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: currentPassword,
+    });
+    if (verifyError) {
+      setFeedback('현재 비밀번호가 올바르지 않습니다.');
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) {
+      setFeedback(error.message || '비밀번호 변경에 실패했습니다.');
       return;
     }
     window.alert('비밀번호가 변경되었습니다.');
