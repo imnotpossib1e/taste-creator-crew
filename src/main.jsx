@@ -55,6 +55,13 @@ const pageRoutes = [
       import('./pages/home/Home.jsx').then(m => ({ Component: m.default })),
   },
   {
+    path: 'ranking',
+    lazy: () =>
+      import('./pages/ranking/Ranking.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
+  {
     path: 'random',
     lazy: () =>
       import('./pages/random/Random.jsx').then(m => ({ Component: m.default })),
