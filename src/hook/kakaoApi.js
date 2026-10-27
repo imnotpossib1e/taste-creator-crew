@@ -30,3 +30,27 @@ export async function getKakaoRestaurants({ x, y }) {
 
   return results;
 }
+export async function getKakaoCafes({ x, y }) {
+  const results = [];
+  let page = 1;
+
+  while (true) {
+    const { data } = await kakao.get('/search/category.json', {
+      params: {
+        category_group_code: 'CE7',
+        x: x, // 경도
+        y: y, // 위도
+        radius: '500',
+        size: '15',
+        page,
+        sort: 'distance',
+      },
+    });
+
+    results.push(...data.documents);
+    if (data.meta.is_end) break;
+    page += 1;
+  }
+
+  return results;
+}

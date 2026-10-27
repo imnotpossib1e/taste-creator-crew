@@ -4,18 +4,42 @@ import './index.css';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './pages/NotFound';
-import MainMap from './pages/MainMap.jsx';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
+import MainMap from './pages/map/MainMap';
 
 // 로그인/회원가입/마이페이지/프로필 수정/비밀번호 변경 라우트
 // (path는 각 페이지 폴더 이름과 같게 맞춘다)
 const pageRoutes = [
-  { path: 'login', lazy: () => import('./pages/login/Login.jsx').then(m => ({ Component: m.default })) },
-  { path: 'signup', lazy: () => import('./pages/signup/Signup.jsx').then(m => ({ Component: m.default })) },
-  { path: 'mypage', lazy: () => import('./pages/mypage/MyPage.jsx').then(m => ({ Component: m.default })) },
-  { path: 'profileEdit', lazy: () => import('./pages/profileEdit/ProfileEdit.jsx').then(m => ({ Component: m.default })) },
-  { path: 'passwordChange', lazy: () => import('./pages/passwordChange/PasswordChange.jsx').then(m => ({ Component: m.default })) },
+  {
+    path: 'login',
+    lazy: () =>
+      import('./pages/login/Login.jsx').then(m => ({ Component: m.default })),
+  },
+  {
+    path: 'signup',
+    lazy: () =>
+      import('./pages/signup/Signup.jsx').then(m => ({ Component: m.default })),
+  },
+  {
+    path: 'mypage',
+    lazy: () =>
+      import('./pages/mypage/MyPage.jsx').then(m => ({ Component: m.default })),
+  },
+  {
+    path: 'profileEdit',
+    lazy: () =>
+      import('./pages/profileEdit/ProfileEdit.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
+  {
+    path: 'passwordChange',
+    lazy: () =>
+      import('./pages/passwordChange/PasswordChange.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
 ];
 
 // router 설계

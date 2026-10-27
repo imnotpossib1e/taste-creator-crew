@@ -1,0 +1,22 @@
+.map-marker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 2px solid #0f766e;
+  border-radius: 50px;
+  padding: 0.25rem 0.5rem;
+  background-color: #fff;
+  font-size: 0.625rem;
+  font-weight: bold;
+  box-sizing: border-box;
+  position: absolute;
+  transform: translate(-50%, calc(-100%));
+  white-space: nowrap;
+}
+.hide-labels .map-marker-label {
+  display: none;
+}
+.hide-labels .map-marker {
+  padding: 0.25rem;
+  gap: 0;
+}

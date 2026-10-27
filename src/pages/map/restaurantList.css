@@ -1,0 +1,24 @@
+.resList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
+.listTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listTitle select {
+  border: none;
+}
+
+.resItems {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
