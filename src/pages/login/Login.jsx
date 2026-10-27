@@ -66,7 +66,7 @@ function Login() {
           profileImage: profile.profile_image,
         }),
       );
-      navigate('/mypage');
+      navigate('/');
     } catch (err) {
       setFeedback(err.message || '로그인 중 오류가 발생했습니다.');
     } finally {
