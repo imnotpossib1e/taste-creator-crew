@@ -5,3 +5,13 @@
   gap: 28px;
   padding: 20px 20px calc(24px + 79px);
 }
+
+/* 가게를 못 찾았을 때 안내 - 화면 가운데 회색 문구 */
+.reviewFormEmpty {
+  margin: 0;
+  padding: 80px 20px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #6b7280;
+  text-align: center;
+}

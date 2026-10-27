@@ -23,3 +23,7 @@ export const storeCategories = ['한식', '카페', '중식', '일식', '양식'
 
 // 정보입력 이름을 비우고 등록했을 때 안내 문구
 export const storeNameErrorMessage = '음식점 이름을 입력해 주세요';
+
+export const MIN_RATING = 1;
+
+export const ratingErrorMessage = '별점을 선택해 주세요';

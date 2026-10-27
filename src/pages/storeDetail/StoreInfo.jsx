@@ -1,11 +1,13 @@
 import './storeInfo.css';
 
-const PLACE_URL = '';
-
-function StoreInfo() {
+function StoreInfo({ placeId }) {
   return (
     <section className="storeInfo">
-      <iframe className="storeInfoFrame" src={PLACE_URL} title="가게 정보" />
+      <iframe
+        className="storeInfoFrame"
+        src={`https://place.map.kakao.com/${placeId}`}
+        title="가게 정보"
+      />
     </section>
   );
 }

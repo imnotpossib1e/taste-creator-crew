@@ -41,6 +41,8 @@ export const { setSearchRestaurant, resetSearch } =
 export const selectVisibleRestaurants = state =>
   state.searchRestaurant ?? state.restaurant;
 
+export const selectRestaurants = state => state.restaurant;
+
 export default configureStore({
   reducer: {
     restaurant: restaurantSlice.reducer,

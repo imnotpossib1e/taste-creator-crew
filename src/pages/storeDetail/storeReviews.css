@@ -1,6 +1,11 @@
 /* 리뷰 섹션 - 위쪽 8px 회색 띠는 피그마 divider */
+/* 카카오 iframe 맨 아래 "앱 열기" 배너(약 84px)를 덮도록 위로 끌어올림 - iframe 안은 직접 숨길 수 없음 */
+/* iframe 높이(storeInfo.css)를 바꾸면 이 값도 같이 확인 */
 .storeReviews {
+  position: relative; /* iframe보다 위에 그려지도록 */
+  margin-top: -90px;
   padding: 22px 20px 28px;
+  background: #ffffff; /* 배경이 없으면 덮어도 아래 배너가 비쳐 보임 */
   border-top: 8px solid #f3f4f6;
 }
 
@@ -95,4 +100,14 @@
   height: 76px;
   background: #f3f4f6;
   border-radius: 6px;
+}
+
+/* 리뷰가 하나도 없을 때 안내 - 날짜(.reviewAuthor > span)와 같은 회색 */
+.storeReviewsEmpty {
+  margin: 0;
+  padding: 24px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #6b7280;
+  text-align: center;
 }
