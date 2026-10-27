@@ -2,7 +2,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
+import { supabase } from './utils/superbase';
 import NotFound from './pages/NotFound';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
@@ -23,6 +24,13 @@ const pageRoutes = [
   },
   {
     path: 'mypage',
+    // 비로그인 접근 차단: alert 후 로그인 페이지로 이동
+    loader: async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) return null;
+      window.alert('로그인 후 사용 가능한 서비스 입니다');
+      return redirect('/login');
+    },
     lazy: () =>
       import('./pages/mypage/MyPage.jsx').then(m => ({ Component: m.default })),
   },
