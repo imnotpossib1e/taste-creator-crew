@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { supabase } from '../../utils/superbase';
-import { updateUser as updateUserRow } from '../../hook/user';
-import { updateUser } from '../../redux/authSlice';
+import { updateUser as updateUserRow, deleteUser } from '../../hook/user';
+import { updateUser, logout } from '../../redux/authSlice';
 import ProfileEditAppBar from './ProfileEditAppBar';
 import ProfileEditAvatar from './ProfileEditAvatar';
 import ProfileEditNickname from './ProfileEditNickname';
@@ -11,20 +11,36 @@ import ProfileEditFoodSelect from './ProfileEditFoodSelect';
 import ProfileEditAccount from './ProfileEditAccount';
 import './profileEdit.css';
 
+// category 컬럼이 text면 배열이 '["한식","일식"]' 문자열로 돌아오므로 배열로 변환
+function parseCategory(category) {
+  if (Array.isArray(category)) return category;
+  if (typeof category !== 'string' || !category) return [];
+  try {
+    const parsed = JSON.parse(category);
+    if (Array.isArray(parsed)) return parsed;
+  } catch {
+    // postgres 배열 문자열 '{한식,일식}' 형태
+  }
+  return category.replace(/^\{|\}$/g, '').split(',').map((item) => item.replace(/"/g, '').trim()).filter(Boolean);
+}
+
 // 프로필 수정 페이지 - 섹션 컴포넌트를 순서대로 조립
 function ProfileEdit() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userId, setUserId] = useState(null);
   const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('연남산책');
-  const [selectedFoods, setSelectedFoods] = useState(['한식', '일식']);
+  const [nickname, setNickname] = useState('');
+  const [selectedFoods, setSelectedFoods] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [passwordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [feedback, setFeedback] = useState('');
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = (message) => {
+    if (message) window.alert(message);
+  };
 
   // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
   useEffect(() => {
@@ -43,7 +59,7 @@ function ProfileEdit() {
       }
       setUserId(data.id);
       setNickname(data.nickname);
-      if (Array.isArray(data.category)) setSelectedFoods(data.category);
+      setSelectedFoods(parseCategory(data.category));
       setProfileImage(data.profile_image);
     };
     loadProfile();
@@ -106,6 +122,26 @@ function ProfileEdit() {
     navigate('/mypage');
   };
 
+  // 회원 탈퇴 - users 테이블의 회원 행을 삭제하고 로그아웃
+  // ponytail: auth 계정은 anon 키로 못 지워 남음(같은 이메일 재가입 불가), 지우려면 DB에 security definer RPC 추가
+  const handleWithdraw = async () => {
+    if (!userId) {
+      setFeedback('로그인이 필요합니다.');
+      return;
+    }
+    if (!window.confirm('정말 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.')) return;
+    try {
+      await deleteUser(userId);
+    } catch (err) {
+      setFeedback(err.message || '회원 탈퇴에 실패했습니다.');
+      return;
+    }
+    await supabase.auth.signOut();
+    dispatch(logout());
+    window.alert('회원 탈퇴가 완료되었습니다.');
+    navigate('/login');
+  };
+
   return (
     <div className="layer-1 page9">
       <ProfileEditAppBar />
@@ -131,7 +167,7 @@ function ProfileEdit() {
             passwordConfirmation={passwordConfirmation}
             setPasswordConfirmation={setPasswordConfirmation}
             handlePasswordChange={handlePasswordChange}
-            setFeedback={setFeedback}
+            onWithdraw={handleWithdraw}
           />
           <button
             type="button"
@@ -141,9 +177,6 @@ function ProfileEdit() {
           >
             <p className="layer--14">저장하기</p>
           </button>
-          <p role="status" aria-live="polite">
-            {feedback}
-          </p>
         </div>
       </div>
     </div>

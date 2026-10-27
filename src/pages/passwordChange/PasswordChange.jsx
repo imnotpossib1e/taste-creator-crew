@@ -16,7 +16,12 @@ function PasswordChange() {
   const [newPassword, setNewPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [showPasswords, setShowPasswords] = useState(false);
-  const [feedback, setFeedback] = useState('');
+  // 현재 비밀번호가 DB와 다를 때 입력칸에 ✗ 표시
+  const [currentPasswordWrong, setCurrentPasswordWrong] = useState(false);
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = (message) => {
+    if (message) window.alert(message);
+  };
 
   const passwordRules = {
     longEnough: newPassword.length >= 8,
@@ -26,6 +31,7 @@ function PasswordChange() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setCurrentPasswordWrong(false);
 
     if (!currentPassword) {
       setFeedback('현재 비밀번호를 입력해 주세요.');
@@ -60,6 +66,7 @@ function PasswordChange() {
       password: currentPassword,
     });
     if (verifyError) {
+      setCurrentPasswordWrong(true);
       setFeedback('현재 비밀번호가 올바르지 않습니다.');
       return;
     }
@@ -83,8 +90,12 @@ function PasswordChange() {
               <div className="frame-10">
                 <PasswordChangeCurrent
                   currentPassword={currentPassword}
-                  setCurrentPassword={setCurrentPassword}
+                  setCurrentPassword={(value) => {
+                    setCurrentPassword(value);
+                    setCurrentPasswordWrong(false);
+                  }}
                   showPasswords={showPasswords}
+                  wrong={currentPasswordWrong}
                 />
                 <PasswordChangeNew
                   newPassword={newPassword}
@@ -112,9 +123,6 @@ function PasswordChange() {
           >
             <p className="layer--9">수정하기</p>
           </button>
-          <p role="status" aria-live="polite">
-            {feedback}
-          </p>
         </form>
       </div>
     </div>

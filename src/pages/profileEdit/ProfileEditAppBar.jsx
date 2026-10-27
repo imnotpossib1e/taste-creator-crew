@@ -11,7 +11,7 @@ function ProfileEditAppBar() {
         className="frame"
         aria-label="뒤로가기"
         style={{ border: 0, background: 'transparent', padding: 0, cursor: 'pointer' }}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate('/mypage', { replace: true })}
       >
         <div className="vector"></div>
       </button>

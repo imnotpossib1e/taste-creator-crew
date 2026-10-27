@@ -9,9 +9,7 @@ import { buttonStyle } from './myPageConstants';
 function MyPageSettings({
   notificationsEnabled,
   setNotificationsEnabled,
-  setFeedback,
   handleInstall,
-  feedback,
 }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -70,9 +68,6 @@ function MyPageSettings({
         >
           로그아웃
         </button>
-        <p role="status" aria-live="polite">
-          {feedback}
-        </p>
       </div>
     </div>
   );

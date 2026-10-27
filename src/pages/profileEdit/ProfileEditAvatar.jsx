@@ -36,19 +36,27 @@ function ProfileEditAvatar({ profileImage, onImageChange }) {
     reader.onload = (event) => {
       const dataUrl = event.target?.result;
       if (typeof dataUrl !== 'string') return;
-      // DB(profile_image) 저장 용량을 줄이기 위해 이미지를 256px 이하 JPEG로 줄여서 저장
+      // profile_image 컬럼이 varchar(500)이라 500자 안에 들어갈 때까지 크기·화질을 낮춘다
+      // ponytail: 화질이 매우 낮음, 컬럼을 text로 바꾸거나 Storage URL 저장으로 바꾸면 해결
       const img = new Image();
       img.onload = () => {
-        const scale = Math.min(1, 256 / Math.max(img.width, img.height));
         const canvas = document.createElement('canvas');
-        canvas.width = Math.round(img.width * scale);
-        canvas.height = Math.round(img.height * scale);
         const ctx = canvas.getContext('2d');
-        // JPEG는 투명을 지원하지 않아 검은 배경이 되므로 흰색으로 먼저 채움
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        onImageChange(canvas.toDataURL('image/jpeg', 0.85));
+        // webp/jpeg는 헤더만 700자 이상이라 500자에 못 들어감 → 작은 png만 가능
+        for (const size of [16, 14, 12, 10, 8]) {
+          // 가운데를 정사각형으로 잘라 size x size로 축소
+          const side = Math.min(img.width, img.height);
+          canvas.width = size;
+          canvas.height = size;
+          ctx.clearRect(0, 0, size, size);
+          ctx.drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, size, size);
+          const result = canvas.toDataURL('image/png');
+          if (result.length <= 500) {
+            onImageChange(result);
+            return;
+          }
+        }
+        alert('이미지를 충분히 줄이지 못했습니다. 단순한 이미지를 선택해 주세요.');
       };
       img.onerror = () => alert('이미지를 읽지 못했습니다. 다른 파일을 선택해 주세요.');
       img.src = dataUrl;
