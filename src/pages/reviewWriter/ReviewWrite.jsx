@@ -29,7 +29,12 @@ function ReviewWrite() {
 
     setIsSaving(true);
     try {
-      await insertMyReview({ ...review, userId: user.id });
+      // placeName: restaurants 등록용 카카오 공식 이름 (폼의 storeName은 사용자가 입력한 이름)
+      await insertMyReview({
+        ...review,
+        userId: user.id,
+        placeName: restaurant.name,
+      });
       navigate(`/store/${id}`);
     } catch (err) {
       console.error(err);
