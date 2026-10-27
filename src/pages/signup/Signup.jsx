@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../auth';
+import { supabase } from '../../utils/superbase';
+import { createUser } from '../../hook/user';
 import SignupAppBar from './SignupAppBar';
 import SignupEmailField from './SignupEmailField';
 import SignupPasswordField from './SignupPasswordField';
@@ -63,11 +64,38 @@ function Signup() {
       return;
     }
 
-    const result = await signUp({ email: email.trim(), password, nickname });
-    if (!result.ok) {
-      setFeedback(result.message);
+    const normalizedEmail = email.trim().toLowerCase();
+    const { data, error } = await supabase.auth.signUp({
+      email: normalizedEmail,
+      password,
+    });
+    // 이메일 인증이 켜져 있으면 중복 가입 시 error 없이 identities 가 빈 배열로 온다
+    if (error?.code === 'user_already_exists' || data?.user?.identities?.length === 0) {
+      setFeedback('이미 가입된 이메일입니다.');
       return;
     }
+    // supabase 서버가 실제로 메일을 받을 수 없는 주소로 판단하면 거부한다
+    if (error?.code === 'email_address_invalid') {
+      setFeedback('사용할 수 없는 이메일 주소입니다. 실제로 사용하는 이메일을 입력해 주세요.');
+      return;
+    }
+    if (error) {
+      setFeedback(error.message || '회원가입에 실패했습니다.');
+      return;
+    }
+
+    try {
+      await createUser({
+        authId: data.user.id,
+        email: normalizedEmail,
+        nickname: nickname.trim(),
+      });
+    } catch (err) {
+      setFeedback(err.message || '회원 정보 저장에 실패했습니다.');
+      return;
+    }
+    // 가입 후 자동 로그인된 세션은 정리하고 로그인 화면으로 보낸다
+    await supabase.auth.signOut();
     navigate('/login');
   };
 
@@ -79,10 +107,11 @@ function Signup() {
     <div className="layer-1 page7">
       <div className="frame-8">
         <SignupAppBar />
-        <form className="frame-8-2" onSubmit={handleSubmit}>
+        <div className="frame-8-2">
           <div className="frame-8-3">
             <div className="frame-8-4">
-              <div className="frame-10">
+              {/* 입력 필드만 폼으로 묶고, 약관 동의는 폼 밖에 둔다 */}
+              <form id="signup-form" className="frame-10" onSubmit={handleSubmit}>
                 <SignupEmailField email={email} setEmail={setEmail} />
                 <SignupPasswordField
                   password={password}
@@ -95,7 +124,7 @@ function Signup() {
                   setPasswordConfirmation={setPasswordConfirmation}
                 />
                 <SignupNicknameField nickname={nickname} setNickname={setNickname} />
-              </div>
+              </form>
               <SignupAgreements
                 agreements={agreements}
                 setAgreements={setAgreements}
@@ -109,6 +138,7 @@ function Signup() {
           <button
             className="component-1"
             type="submit"
+            form="signup-form"
             style={{ border: 0, cursor: 'pointer', font: 'inherit' }}
           >
             <p className="layer--16">가입하기</p>
@@ -116,7 +146,7 @@ function Signup() {
           <p role="status" aria-live="polite">
             {feedback}
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );

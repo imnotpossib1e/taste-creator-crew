@@ -36,7 +36,7 @@ function ProfileEditAvatar({ profileImage, onImageChange }) {
     reader.onload = (event) => {
       const dataUrl = event.target?.result;
       if (typeof dataUrl !== 'string') return;
-      // localStorage 용량(약 5MB) 보호: 이미지를 256px 이하 JPEG로 줄여서 저장
+      // DB(profile_image) 저장 용량을 줄이기 위해 이미지를 256px 이하 JPEG로 줄여서 저장
       const img = new Image();
       img.onload = () => {
         const scale = Math.min(1, 256 / Math.max(img.width, img.height));
