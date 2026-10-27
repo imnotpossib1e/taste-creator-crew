@@ -83,7 +83,7 @@ function Signup() {
       return;
     }
     if (error) {
-      setFeedback(error.message || '회원가입에 실패했습니다.');
+      window.alert('회원가입에 실패했습니다.');
       return;
     }
 
@@ -94,7 +94,7 @@ function Signup() {
         nickname: nickname.trim(),
       });
     } catch (err) {
-      setFeedback(err.message || '회원 정보 저장에 실패했습니다.');
+      window.alert('회원 정보 저장에 실패했습니다.');
       return;
     }
     // 가입 후 자동 로그인된 세션은 정리하고 로그인 화면으로 보낸다
