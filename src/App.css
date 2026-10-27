@@ -1,7 +1,10 @@
 .App {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 430px;
   margin: 0 auto;
   background-color: lightblue;
-  min-height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
 }

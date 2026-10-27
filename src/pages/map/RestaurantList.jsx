@@ -1,18 +1,32 @@
 import { shallowEqual, useSelector } from 'react-redux';
 import './restaurantList.css';
 import RestaurantItem from './RestaurantItem';
+import { selectVisibleRestaurants } from '../../redux/store';
+import { useMemo, useState } from 'react';
+
+const SORTERS = {
+  distance: (a, b) => Number(a.distance) - Number(b.distance),
+  bookmark: (a, b) => (b.bookmark_count ?? 0) - (a.bookmark_count ?? 0),
+  review: (a, b) => (b.review_count ?? 0) - (a.review_count ?? 0),
+};
 
 export default function RestaurantList() {
-  const datas = useSelector(state => {
-    return state.restaurant;
-  }, shallowEqual);
+  const datas = useSelector(selectVisibleRestaurants);
+  const [sort, setSort] = useState('distance');
+
+  const sorted = useMemo(() => [...datas].sort(SORTERS[sort]), [datas, sort]);
 
   return (
     <div className="resList">
       <div className="listTitle">
         <span>주변 식당 목록</span>
-        <select name="sort" id="sort" size="1">
-          <option value="distance" selected>
+        <select
+          name="sort"
+          id="sort"
+          onChange={e => setSort(e.target.value)}
+          value={sort}
+        >
+          <option value="distance" defaultValue>
             가까운 순
           </option>
           <option value="bookmark">북마크 순</option>
@@ -20,21 +34,8 @@ export default function RestaurantList() {
         </select>
       </div>
       <div className="resItems">
-        {datas.map((data, index) => (
-          <div key={data.id}>
-            <RestaurantItem data={data} />
-
-            {index < datas.length - 1 && (
-              <hr
-                style={{
-                  width: '100%',
-                  backgroundColor: 'lightgray',
-                  height: '1px',
-                  border: '0',
-                }}
-              />
-            )}
-          </div>
+        {sorted.map(data => (
+          <RestaurantItem key={data.id} data={data} />
         ))}
       </div>
     </div>

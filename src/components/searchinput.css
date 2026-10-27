@@ -41,3 +41,11 @@
 .searchInput input:focus {
   outline: none;
 }
+.searchInput-clear {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}

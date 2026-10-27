@@ -54,3 +54,53 @@ export async function getKakaoCafes({ x, y }) {
 
   return results;
 }
+export async function getKakaoSearchRes({ query, x, y }) {
+  const results = [];
+  let page = 1;
+
+  while (true) {
+    const { data } = await kakao.get('/search/keyword.json', {
+      params: {
+        query,
+        category_group_code: 'FD6',
+        x: x, // 경도
+        y: y, // 위도
+        radius: '500',
+        size: '15',
+        page,
+        sort: 'distance',
+      },
+    });
+
+    results.push(...data.documents);
+    if (data.meta.is_end) break;
+    page += 1;
+  }
+
+  return results;
+}
+export async function getKakaoSearchCafe({ query, x, y }) {
+  const results = [];
+  let page = 1;
+
+  while (true) {
+    const { data } = await kakao.get('/search/keyword.json', {
+      params: {
+        query,
+        category_group_code: 'CE7',
+        x: x, // 경도
+        y: y, // 위도
+        radius: '500',
+        size: '15',
+        page,
+        sort: 'distance',
+      },
+    });
+
+    results.push(...data.documents);
+    if (data.meta.is_end) break;
+    page += 1;
+  }
+
+  return results;
+}

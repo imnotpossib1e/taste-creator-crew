@@ -1,4 +1,8 @@
 .resItemWrap {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .resItem {
@@ -36,6 +40,10 @@
 }
 
 .itemImg {
-  width: 43px;
-  height: 43px;
+  width: 48px;
+  height: 48px;
+}
+.resItemLink {
+  color: inherit;
+  text-decoration: none;
 }

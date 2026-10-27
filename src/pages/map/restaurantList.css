@@ -1,18 +1,23 @@
 .resList {
   display: flex;
   flex-direction: column;
-
   gap: 20px;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   background-color: white;
+  flex: 1;
+  min-height: 0; /* 이게 없으면 flex 자식이 안 줄어들어서 스크롤이 안 생김 */
 }
 
 .listTitle {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
+.listTitle span {
+  font-weight: bold;
+}
 .listTitle select {
   border: none;
 }
@@ -20,5 +25,8 @@
 .resItems {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
