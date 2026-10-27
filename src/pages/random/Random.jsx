@@ -7,12 +7,12 @@ import { ALL_CATEGORY, randomCategories } from './randomConstants';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-// 종류가 '전체'면 그대로, 아니면 description(카카오 분류 두 번째 칸: 한식/중식 …)이 같은 가게만
+// 종류가 '전체'면 그대로, 아니면 category_group(카카오 분류 두 번째 칸: 한식/중식 …)이 같은 가게만
 function filterByCategory(list, category) {
   if (category === ALL_CATEGORY) {
     return list;
   }
-  return list.filter(item => item.description === category);
+  return list.filter(item => item.category_group === category);
 }
 
 //무작위 하나 고르기
