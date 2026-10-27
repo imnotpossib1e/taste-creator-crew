@@ -78,3 +78,14 @@
   background: #0f766e;
   border: none;
 }
+
+/* 후보가 없을 때 안내 - 추천 개수 문구와 같은 회색, 결과 영역 가운데 */
+.randomResultEmpty {
+  margin: 0;
+  padding: 40px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #6b7280;
+  text-align: center;
+}
