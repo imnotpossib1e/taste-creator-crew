@@ -62,6 +62,7 @@ function MyPage() {
 
   const deleteReview = (reviewId) => {
     setReviews((current) => current.filter((review) => review.id !== reviewId));
+    if (editingReviewId === reviewId) setEditingReviewId(null);
     setFeedback('리뷰를 이 화면에서 삭제했습니다.');
   };
 

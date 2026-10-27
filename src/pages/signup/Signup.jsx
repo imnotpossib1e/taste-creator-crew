@@ -63,7 +63,7 @@ function Signup() {
       return;
     }
 
-    const result = await signUp({ email, password, nickname });
+    const result = await signUp({ email: email.trim(), password, nickname });
     if (!result.ok) {
       setFeedback(result.message);
       return;
