@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import './restaurantItem.css';
 const CATEGORY_IMG = {
   한식: 'korean.svg',
@@ -10,23 +11,25 @@ const CATEGORY_IMG = {
 };
 export default function RestaurantItem({ data }) {
   return (
-    <div className="resItemWrap">
-      <img
-        src={`/${CATEGORY_IMG[data.category_group] ?? 'default.svg'}`}
-        alt={data.category_group}
-        className="itemImg"
-      />
-      <div className="resItem">
-        <div className="itemName">
-          {data.name}
-          {data.descroption ?? <span>{data.description}</span>}
-        </div>
-        <div className="resInfo">
-          {data.category_group ?? <span>{data.category_group}</span>}
-          <span>{data.distance}m</span>
-          <span>별점</span>
+    <Link to={`/store/${data.id}`} className="resItemLink">
+      <div className="resItemWrap">
+        <img
+          src={`/${CATEGORY_IMG[data.category_group] ?? 'default.svg'}`}
+          alt={data.category_group}
+          className="itemImg"
+        />
+        <div className="resItem">
+          <div className="itemName">
+            {data.name}
+            {data.descroption ?? <span>{data.description}</span>}
+          </div>
+          <div className="resInfo">
+            {data.category_group ?? <span>{data.category_group}</span>}
+            <span>{data.distance}m</span>
+            <span>별점</span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

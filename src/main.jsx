@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import MainMap from './pages/map/MainMap';
+import StoreDetail from './pages/storeDetail/StoreDetail';
 
 // 로그인/회원가입/마이페이지/프로필 수정/비밀번호 변경 라우트
 // (path는 각 페이지 폴더 이름과 같게 맞춘다)
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainMap />,
+      },
+      {
+        path: 'store/:id',
+        element: <StoreDetail />,
       },
       ...pageRoutes,
       {

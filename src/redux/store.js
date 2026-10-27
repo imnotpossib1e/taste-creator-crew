@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { configureStore, createSelector, createSlice } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 
 const initialState = [];
@@ -33,13 +33,28 @@ const restaurantSearchSlice = createSlice({
     resetSearch: () => null,
   },
 });
+const categorySlice = createSlice({
+  name: 'category',
+  initialState: '전체',
+  reducers: {
+    setCategory: (state, action) => action.payload,
+  },
+});
 
+export const { setCategory } = categorySlice.actions;
 export const { setRestaurant, reset } = restaurantSlice.actions;
 export const { setSearchRestaurant, resetSearch } =
   restaurantSearchSlice.actions;
-
-export const selectVisibleRestaurants = state =>
+const selectBaseRestaurants = state =>
   state.searchRestaurant ?? state.restaurant;
+
+export const selectVisibleRestaurants = createSelector(
+  [selectBaseRestaurants, state => state.category],
+  (list, category) =>
+    category === '전체'
+      ? list
+      : list.filter(p => p.category_group === category),
+);
 
 export const selectRestaurants = state => state.restaurant;
 
@@ -47,6 +62,7 @@ export default configureStore({
   reducer: {
     restaurant: restaurantSlice.reducer,
     searchRestaurant: restaurantSearchSlice.reducer,
+    category: categorySlice.reducer, //
     auth: authReducer,
   },
 });

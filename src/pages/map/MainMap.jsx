@@ -17,6 +17,7 @@ import {
 } from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
+import CategoryButton from './categoryButton';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -56,6 +57,11 @@ export default function MainMap() {
     mapInstance.current = new naver.maps.Map(mapRef.current, {
       center: new naver.maps.LatLng(position.y, position.x),
       zoom: 18,
+      logoControlOptions: {
+        position: naver.maps.Position.TOP_LEFT,
+      },
+      zoomControl: false,
+      mapDataControl: false,
     });
   }, [position]);
 
@@ -88,9 +94,9 @@ export default function MainMap() {
           return {
             id: item.id,
             name: item.place_name,
-            category: item.category_group_name,
-            category_group: group,
-            description: desc,
+            category: item.category_group_name, // 음식점 / 카페
+            category_group: group, // 한식/중식/
+            description: desc, // 커피전문점
             address: item.road_address_name,
             distance: item.distance,
             x: item.x,
@@ -311,6 +317,7 @@ export default function MainMap() {
             clearSearch={clearSearch}
             isSearching={isSearching}
           />
+          <CategoryButton />
         </div>
       </div>
       <RestaurantList />
