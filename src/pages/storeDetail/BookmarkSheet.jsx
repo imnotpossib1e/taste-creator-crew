@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './bookmarkSheet.css';
 
-function BookmarkSheet({ store, onClose, onSave }) {
+function BookmarkSheet({ restaurant, onClose, onSave }) {
   const [memo, setMemo] = useState('');
   const [nameMemo, setNameMemo] = useState('');
 
@@ -12,23 +12,21 @@ function BookmarkSheet({ store, onClose, onSave }) {
   const handleSaveClick = () => {
     onSave({
       memo,
-      nameMemo,
     });
-    onClose();
   };
 
   return (
     <div className="bookmarkSheetOverlay" onClick={handleOverlayClick}>
       <dialog className="bookmarkSheet" aria-modal="true">
         <div className="bookmarkSheetHandle" aria-hidden="true" />
-        <h2>{store.name}</h2>
+        <h2>{restaurant.name}</h2>
         <input
           type="text"
           placeholder="음식점 이름"
           value={nameMemo}
           onChange={e => setNameMemo(e.target.value)}
         />
-        <p>{store.address}</p>
+        <p>{restaurant.address}</p>
         <label htmlFor="memo">메모</label>
         <textarea
           id="memo"
