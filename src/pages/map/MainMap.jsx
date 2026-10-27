@@ -18,6 +18,8 @@ import {
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
 import CategoryButton from './categoryButton';
+import PlaceCard from './PlaceCard';
+import { getRestaurantStats } from '../../hook/restaurant';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
@@ -35,6 +37,8 @@ export default function MainMap() {
   const res = useSelector(selectVisibleRestaurants);
   const isSearching = useSelector(state => state.searchRestaurant !== null);
   const selectedMarker = useRef(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const layoutRef = useRef(null);
   const [search, setSearch] = useState('');
   const contentRef = useRef();
   // const [selectedGroup, setSelectedGroup] = useState(null);
@@ -61,6 +65,7 @@ export default function MainMap() {
         position: naver.maps.Position.TOP_LEFT,
       },
       zoomControl: false,
+      scaleControl: false, // 축척 숨김
       mapDataControl: false,
     });
   }, [position]);
@@ -86,23 +91,25 @@ export default function MainMap() {
           getKakaoRestaurants({ x: position.x, y: position.y }),
           getKakaoCafes({ x: position.x, y: position.y }),
         ]);
+
+        const restaurants = await getRestaurantStats(
+          [...food, ...cafe].map(item => {
+            const [, group = '', desc = ''] = item.category_name.split(' > ');
+            return {
+              id: item.id,
+              name: item.place_name,
+              category: item.category_group_name, // 음식점 / 카페
+              category_group: group, // 한식/중식/
+              description: desc, // 커피전문점
+              address: item.road_address_name,
+              distance: item.distance,
+              x: item.x,
+              y: item.y,
+            };
+          }),
+        );
         // 응답 결과 저장
         if (ignore) return;
-
-        const restaurants = [...food, ...cafe].map(item => {
-          const [, group = '', desc = ''] = item.category_name.split(' > ');
-          return {
-            id: item.id,
-            name: item.place_name,
-            category: item.category_group_name, // 음식점 / 카페
-            category_group: group, // 한식/중식/
-            description: desc, // 커피전문점
-            address: item.road_address_name,
-            distance: item.distance,
-            x: item.x,
-            y: item.y,
-          };
-        });
 
         // restaurants.forEach(item => console.log(item));
 
@@ -127,6 +134,7 @@ export default function MainMap() {
     // 이전 마커 제거
     markers.current.forEach(m => m.setMap(null));
     selectedMarker.current = null;
+    setSelectedPlace(null);
 
     const PIN = 20; // 핀 크기(px)
     const DOT = 8; // 점 크기(px)
@@ -171,6 +179,7 @@ export default function MainMap() {
         // 클릭하면 선택 → 무조건 이름표로 보이게
         naver.maps.Event.addListener(marker, 'click', () => {
           selectedMarker.current = marker;
+          setSelectedPlace(place);
           map.panTo(marker.getPosition()); // 이동 끝나면 idle에서 layout 실행
           layout();
         });
@@ -229,10 +238,18 @@ export default function MainMap() {
     }
 
     layout();
+    layoutRef.current = layout; // 추가
     const idleListener = naver.maps.Event.addListener(map, 'idle', layout);
+    // 지도 빈 곳 누르면 선택 해제
+    const mapClickListener = naver.maps.Event.addListener(map, 'click', () => {
+      selectedMarker.current = null;
+      setSelectedPlace(null);
+      layout();
+    });
 
     return () => {
       naver.maps.Event.removeListener(idleListener);
+      naver.maps.Event.removeListener(mapClickListener);
     };
   }, [res]);
 
@@ -269,7 +286,7 @@ export default function MainMap() {
           };
         });
 
-        restaurants.forEach(item => console.log(item));
+        // restaurants.forEach(item => console.log(item));
 
         dispatch(setSearchRestaurant(restaurants));
       } catch (err) {
@@ -299,6 +316,12 @@ export default function MainMap() {
     }
     contentRef.current?.focus();
   };
+  // 선택 해제 (카드 닫기 버튼용)
+  /*   const closePlace = () => {
+    selectedMarker.current = null;
+    setSelectedPlace(null);
+    layoutRef.current?.(); // 마커 강조도 원래대로
+  }; */
 
   return (
     <main className="main-map-page">
@@ -320,7 +343,7 @@ export default function MainMap() {
           <CategoryButton />
         </div>
       </div>
-      <RestaurantList />
+      <RestaurantList place={selectedPlace} />
     </main>
   );
 }

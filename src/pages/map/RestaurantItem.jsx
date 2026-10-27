@@ -26,7 +26,10 @@ export default function RestaurantItem({ data }) {
           <div className="resInfo">
             {data.category_group ?? <span>{data.category_group}</span>}
             <span>{data.distance}m</span>
-            <span>별점</span>
+            <div style={{ display: 'flex', gap: '4px' }}>
+              <span style={{ color: '#F59E0B' }}>★</span>
+              {data.rating_avg.toFixed(1)}
+            </div>
           </div>
         </div>
       </div>

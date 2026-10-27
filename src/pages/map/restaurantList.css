@@ -6,6 +6,11 @@
   background-color: white;
   flex: 1;
   min-height: 0; /* 이게 없으면 flex 자식이 안 줄어들어서 스크롤이 안 생김 */
+  position: relative;
+  z-index: 20; /* 지도(와 검색창)보다 위로 */
+  margin-top: -20px; /* 지도 아래를 20px 덮음 */
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .listTitle {
@@ -17,6 +22,7 @@
 
 .listTitle span {
   font-weight: bold;
+  font-size: 16px;
 }
 .listTitle select {
   border: none;

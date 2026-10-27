@@ -3,6 +3,7 @@ import './restaurantList.css';
 import RestaurantItem from './RestaurantItem';
 import { selectVisibleRestaurants } from '../../redux/store';
 import { useMemo, useState } from 'react';
+import PlaceCard from './PlaceCard';
 
 const SORTERS = {
   distance: (a, b) => Number(a.distance) - Number(b.distance),
@@ -10,9 +11,10 @@ const SORTERS = {
   review: (a, b) => (b.review_count ?? 0) - (a.review_count ?? 0),
 };
 
-export default function RestaurantList() {
+export default function RestaurantList({ place }) {
   const datas = useSelector(selectVisibleRestaurants);
   const [sort, setSort] = useState('distance');
+  // console.log(place);
 
   const sorted = useMemo(() => [...datas].sort(SORTERS[sort]), [datas, sort]);
 
@@ -33,6 +35,7 @@ export default function RestaurantList() {
           <option value="review">리뷰 많은 순</option>
         </select>
       </div>
+      {place && <PlaceCard place={place} />}
       <div className="resItems">
         {sorted.map(data => (
           <RestaurantItem key={data.id} data={data} />
