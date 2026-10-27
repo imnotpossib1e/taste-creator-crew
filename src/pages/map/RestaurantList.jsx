@@ -12,7 +12,7 @@ export default function RestaurantList() {
       <div className="listTitle">
         <span>주변 식당 목록</span>
         <select name="sort" id="sort" size="1">
-          <option value="distance" selected>
+          <option value="distance" defaultValue>
             가까운 순
           </option>
           <option value="bookmark">북마크 순</option>
@@ -20,21 +20,8 @@ export default function RestaurantList() {
         </select>
       </div>
       <div className="resItems">
-        {datas.map((data, index) => (
-          <div key={data.id}>
-            <RestaurantItem data={data} />
-
-            {index < datas.length - 1 && (
-              <hr
-                style={{
-                  width: '100%',
-                  backgroundColor: 'lightgray',
-                  height: '1px',
-                  border: '0',
-                }}
-              />
-            )}
-          </div>
+        {datas.map(data => (
+          <RestaurantItem key={data.id} data={data} />
         ))}
       </div>
     </div>

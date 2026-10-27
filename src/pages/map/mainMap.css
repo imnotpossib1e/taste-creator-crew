@@ -1,22 +1,51 @@
-.map-marker {
+.kmarker {
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 2px solid #0f766e;
-  border-radius: 50px;
-  padding: 0.25rem 0.5rem;
-  background-color: #fff;
-  font-size: 0.625rem;
-  font-weight: bold;
-  box-sizing: border-box;
-  position: absolute;
-  transform: translate(-50%, calc(-100%));
   white-space: nowrap;
+  cursor: pointer;
 }
-.hide-labels .map-marker-label {
-  display: none;
+
+.kmarker-pin {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0f766e;
+  border: 2px solid #fff;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
-.hide-labels .map-marker {
-  padding: 0.25rem;
-  gap: 0;
+
+.kmarker-label {
+  font: 600 12px sans-serif;
+  color: #222;
+  text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+}
+
+.kmarker.is-selected .kmarker-pin {
+  background: #0f766e;
+  transform: scale(1.2);
+}
+
+.kmarker.is-selected .kmarker-label {
+  color: #0f766e;
+}
+
+.map-dot {
+  box-sizing: border-box;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f766e;
+  border: 1.5px solid #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
 }
