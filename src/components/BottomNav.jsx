@@ -1,4 +1,4 @@
-import { Bookmark, House, MapIcon, Shuffle } from 'lucide-react';
+import { CircleUser, House, MapIcon, Shuffle } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectIsLoggedIn } from '../redux/authSlice';
@@ -8,7 +8,7 @@ const MENUS = [
   { label: '지도', icon: <MapIcon />, to: '/' },
   { label: '홈', icon: <House /> },
   { label: '랜덤', icon: <Shuffle /> },
-  { label: '마이페이지', icon: <Bookmark />, to: '/mypage' },
+  { label: '마이페이지', icon: <CircleUser />, to: '/mypage' },
 ];
 export default function BottomNav() {
   const navigate = useNavigate();
