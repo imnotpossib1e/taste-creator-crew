@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../redux/authSlice';
+import { supabase } from '../../utils/superbase';
 import './myPageSettings.css';
 import { buttonStyle } from './myPageConstants';
 
@@ -61,7 +62,8 @@ function MyPageSettings({
           type="button"
           className="layer--19"
           style={buttonStyle}
-          onClick={() => {
+          onClick={async () => {
+            await supabase.auth.signOut();
             dispatch(logout());
             navigate('/login');
           }}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSession } from '../../auth';
+import { supabase } from '../../utils/superbase';
 import MyPageAppBar from './MyPageAppBar';
 import MyPageProfile from './MyPageProfile';
 import MyPageTabs from './MyPageTabs';
@@ -12,9 +12,9 @@ import { initialReviews } from './myPageConstants';
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
   const [activeTab, setActiveTab] = useState('reviews');
-  const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
+  const [nickname, setNickname] = useState('연남산책');
   const [neighborhood, setNeighborhood] = useState('내 동네 연남동');
-  const [profileImage] = useState(getSession()?.profileImage ?? null);
+  const [profileImage, setProfileImage] = useState(null);
   const [profileEditing, setProfileEditing] = useState(false);
   const [reviews, setReviews] = useState(initialReviews);
   const [editingReviewId, setEditingReviewId] = useState(null);
@@ -22,6 +22,26 @@ function MyPage() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [installPrompt, setInstallPrompt] = useState(null);
   const [feedback, setFeedback] = useState('');
+
+  // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
+  useEffect(() => {
+    const loadProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('users')
+        .select('nickname, profile_image')
+        .eq('auth_id', user.id)
+        .single();
+      if (error) {
+        setFeedback('회원 정보를 불러오지 못했습니다.');
+        return;
+      }
+      setNickname(data.nickname);
+      setProfileImage(data.profile_image);
+    };
+    loadProfile();
+  }, []);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
@@ -62,6 +82,7 @@ function MyPage() {
 
   const deleteReview = (reviewId) => {
     setReviews((current) => current.filter((review) => review.id !== reviewId));
+    if (editingReviewId === reviewId) setEditingReviewId(null);
     setFeedback('리뷰를 이 화면에서 삭제했습니다.');
   };
 

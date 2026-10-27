@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getSession, updateProfile } from '../../auth';
+import { supabase } from '../../utils/superbase';
+import { updateUser as updateUserRow } from '../../hook/user';
 import { updateUser } from '../../redux/authSlice';
 import ProfileEditAppBar from './ProfileEditAppBar';
 import ProfileEditAvatar from './ProfileEditAvatar';
@@ -14,14 +15,39 @@ import './profileEdit.css';
 function ProfileEdit() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [nickname, setNickname] = useState(getSession()?.nickname ?? '연남산책');
-  const [selectedFoods, setSelectedFoods] = useState(getSession()?.foods ?? ['한식', '일식']);
-  const [profileImage, setProfileImage] = useState(getSession()?.profileImage ?? null);
+  const [userId, setUserId] = useState(null);
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('연남산책');
+  const [selectedFoods, setSelectedFoods] = useState(['한식', '일식']);
+  const [profileImage, setProfileImage] = useState(null);
   const [passwordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [feedback, setFeedback] = useState('');
+
+  // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
+  useEffect(() => {
+    const loadProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      setEmail(user.email ?? '');
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, nickname, category, profile_image')
+        .eq('auth_id', user.id)
+        .single();
+      if (error) {
+        setFeedback('회원 정보를 불러오지 못했습니다.');
+        return;
+      }
+      setUserId(data.id);
+      setNickname(data.nickname);
+      if (Array.isArray(data.category)) setSelectedFoods(data.category);
+      setProfileImage(data.profile_image);
+    };
+    loadProfile();
+  }, []);
 
   const toggleFood = (food) => {
     setSelectedFoods((current) =>
@@ -56,21 +82,26 @@ function ProfileEdit() {
     setFeedback('비밀번호 변경 서버가 연결되지 않아 저장되지 않았습니다.');
   };
 
-  const handleProfileSave = () => {
+  const handleProfileSave = async () => {
     if (!nickname.trim()) {
       setFeedback('닉네임을 입력해 주세요.');
       return;
     }
-    const result = updateProfile({
-      nickname,
-      foods: selectedFoods,
-      profileImage,
-    });
-    if (!result.ok) {
-      setFeedback(result.message);
+    if (!userId) {
+      setFeedback('로그인이 필요합니다.');
       return;
     }
-    dispatch(updateUser({ nickname, foods: selectedFoods, profileImage }));
+    try {
+      await updateUserRow(userId, {
+        nickname: nickname.trim(),
+        category: selectedFoods,
+        profileImage,
+      });
+    } catch (err) {
+      setFeedback(err.message || '프로필 저장에 실패했습니다.');
+      return;
+    }
+    dispatch(updateUser({ nickname: nickname.trim(), foods: selectedFoods, profileImage }));
     window.alert('프로필이 저장되었습니다.');
     navigate('/mypage');
   };
@@ -91,7 +122,7 @@ function ProfileEdit() {
         </div>
         <div className="frame-10-2">
           <ProfileEditAccount
-            email={getSession()?.email ?? ''}
+            email={email}
             passwordPanelOpen={passwordPanelOpen}
             currentPassword={currentPassword}
             setCurrentPassword={setCurrentPassword}
