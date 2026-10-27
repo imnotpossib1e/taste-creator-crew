@@ -1,9 +1,9 @@
-/* 이번 주 좋아요 많은 곳 섹션 - 카드가 화면 끝까지 스크롤되도록 좌우 padding은 안쪽에서 */
+/* 많이 저장한 곳 섹션 - 카드가 화면 끝까지 스크롤되도록 좌우 padding은 안쪽에서 */
 .homeWeeklyBest {
   padding: 32px 0;
 }
 
-/* 제목 + 전체 */
+/* 제목 */
 .homeWeeklyBestHeader {
   display: flex;
   justify-content: space-between;
@@ -17,16 +17,6 @@
   font-size: 18px;
   font-weight: bold;
   color: #222;
-}
-
-.homeWeeklyBestHeader > button {
-  padding: 0;
-  font-family: inherit;
-  font-size: 14px;
-  color: #888;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 /* 카드 목록 - 가로 스크롤 */
@@ -71,4 +61,13 @@
   margin: 0;
   font-size: 13px;
   color: #888;
+}
+
+/* 저장된 가게가 없을 때 안내 - 인기 순위 빈 문구와 같은 모양 */
+.homeWeeklyBestEmpty {
+  padding: 24px 20px;
+  margin: 0;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
 }
