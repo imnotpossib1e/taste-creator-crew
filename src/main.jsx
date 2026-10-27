@@ -49,6 +49,23 @@ const pageRoutes = [
         Component: m.default,
       })),
   },
+  {
+    path: 'home',
+    lazy: () =>
+      import('./pages/home/Home.jsx').then(m => ({ Component: m.default })),
+  },
+  {
+    path: 'random',
+    lazy: () =>
+      import('./pages/random/Random.jsx').then(m => ({ Component: m.default })),
+  },
+  {
+    path: 'reviewWrite/:id',
+    lazy: () =>
+      import('./pages/reviewWriter/ReviewWrite.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
 ];
 
 // router 설계
