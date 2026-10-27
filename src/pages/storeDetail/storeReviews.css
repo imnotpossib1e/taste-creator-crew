@@ -101,3 +101,13 @@
   background: #f3f4f6;
   border-radius: 6px;
 }
+
+/* 리뷰가 하나도 없을 때 안내 - 날짜(.reviewAuthor > span)와 같은 회색 */
+.storeReviewsEmpty {
+  margin: 0;
+  padding: 24px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #6b7280;
+  text-align: center;
+}

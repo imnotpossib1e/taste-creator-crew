@@ -23,7 +23,7 @@ function StoreDetail() {
 
       <div className="storeDetailContent">
         <StoreInfo placeId={id} />
-        <StoreReviews onWriteReview={handleWriteReview} />
+        <StoreReviews placeId={id} onWriteReview={handleWriteReview} />
       </div>
 
       <StoreBottomBar
