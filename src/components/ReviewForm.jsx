@@ -9,6 +9,7 @@ import ReviewSubmit from './ReviewSubmit';
 import './reviewForm.css';
 import ReviewStoreNameInput from './ReviewStoreNameInput';
 import { stores } from '../data/stores.js';
+import { MIN_RATING } from './reviewConstants';
 
 // 배열에 있으면 빼고, 없으면 추가한 새 배열을 반환
 function toggleItem(list, item) {
@@ -26,6 +27,7 @@ function ReviewForm({ title, submitLabel, onSubmit }) {
   const [storeName, setStoreName] = useState('');
   const [category, setCategory] = useState(store.category);
   const [storeNameError, setStoreNameError] = useState(false);
+  const [ratingError, setRatingError] = useState(false);
 
   const handleToggleTag = tag => {
     setTags(prev => toggleItem(prev, tag));
@@ -37,13 +39,28 @@ function ReviewForm({ title, submitLabel, onSubmit }) {
     setStoreNameError(false);
   };
 
+  // 별을 고르면 안내 문구를 지운다
+  const handleRatingChange = value => {
+    setRating(value);
+    setRatingError(false);
+  };
+
   // 등록 버튼(type="submit")이나 입력창 Enter로 제출
   // 폼은 검사하고 값을 모으기만 하고, 추가할지 수정할지는 페이지(onSubmit)가 정한다
   const handleSubmit = e => {
     e.preventDefault(); // 브라우저 기본 동작(새로고침)을 막아야 입력값이 안 날아감
 
-    if (storeName.trim() === '') {
+    // 이름·별점을 각각 검사해서 비어 있는 안내를 한 번에 모두 보여준다
+    const isNameEmpty = storeName.trim() === '';
+    const isRatingEmpty = rating < MIN_RATING;
+
+    if (isNameEmpty) {
       setStoreNameError(true);
+    }
+    if (isRatingEmpty) {
+      setRatingError(true);
+    }
+    if (isNameEmpty || isRatingEmpty) {
       return;
     }
 
@@ -72,7 +89,11 @@ function ReviewForm({ title, submitLabel, onSubmit }) {
           category={category}
           setCategory={setCategory}
         />
-        <ReviewRating rating={rating} setRating={setRating} />
+        <ReviewRating
+          rating={rating}
+          setRating={handleRatingChange}
+          ratingError={ratingError}
+        />
         <ReviewTags tags={tags} onToggleTag={handleToggleTag} />
         <ReviewPhotos />
         <ReviewContent content={content} setContent={setContent} />
