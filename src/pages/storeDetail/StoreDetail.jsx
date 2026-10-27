@@ -6,18 +6,20 @@ import './storeDetail.css';
 import { useState } from 'react';
 import BookmarkSheet from './BookmarkSheet';
 import { stores } from '../../data/stores.js';
+import { useParams } from 'react-router-dom';
 
 function StoreDetail() {
   const [isBookmarkSheetOpen, setIsBookmarkSheetOpen] = useState(false);
+  const { id } = useParams();
 
   return (
     <div className="storeDetail">
       <StoreDetailHeader />
 
-      <main className="storeDetailContent">
-        <StoreInfo />
+      <div className="storeDetailContent">
+        <StoreInfo placeId={id} />
         <StoreReviews />
-      </main>
+      </div>
 
       <StoreBottomBar onBookmarkClick={() => setIsBookmarkSheetOpen(true)} />
       {isBookmarkSheetOpen && (

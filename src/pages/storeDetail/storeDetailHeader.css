@@ -1,11 +1,17 @@
 /* 상단 바 - 피그마 app-bar, 양쪽 44px 칸 사이에 제목 가운데 */
 .storeDetailHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 56px;
   padding: 0 8px;
   border-bottom: 1px solid #e5e7eb;
+  z-index: 1000;
+  background-color: white;
 }
 
 /* 닫기 - 아이콘은 22지만 누르는 영역은 44x44 */
