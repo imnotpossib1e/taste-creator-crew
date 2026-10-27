@@ -1,28 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getSession, logIn as authLogIn, logOut as authLogOut } from '../auth';
+import { getCurrentUser, logIn, logOut } from '../hook/user';
 
-// 비동기 로그인 thunk
+// 비동기 로그인 thunk (Supabase 세션 + users 테이블)
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const result = await authLogIn({ email, password });
-      if (!result.ok) {
-        return rejectWithValue(result.message || '로그인에 실패했습니다.');
-      }
-      const session = getSession();
-      return session;
+      return await logIn({ email, password });
     } catch (error) {
       return rejectWithValue(error.message || '로그인 중 오류가 발생했습니다.');
     }
   },
 );
 
-const initialSession = getSession();
+// 앱 시작 시 한 번 dispatch: Supabase 세션이 남아 있으면 로그인 상태 복원
+export const restoreUser = createAsyncThunk('auth/restoreUser', () => getCurrentUser());
 
 const initialState = {
-  isLoggedIn: Boolean(initialSession),
-  user: initialSession || null,
+  isLoggedIn: false,
+  user: null,
   loading: false,
   error: null,
 };
@@ -39,7 +35,7 @@ const authSlice = createSlice({
     },
     // 로그아웃
     logout(state) {
-      authLogOut();
+      logOut();
       state.user = null;
       state.isLoggedIn = false;
       state.loading = false;
@@ -61,6 +57,10 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(restoreUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = Boolean(action.payload);
+      })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;

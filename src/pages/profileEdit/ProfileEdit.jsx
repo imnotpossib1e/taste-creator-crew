@@ -114,7 +114,7 @@ function ProfileEdit() {
         profileImage,
       });
     } catch (err) {
-      setFeedback(err.message || '프로필 저장에 실패했습니다.');
+      window.alert('프로필 저장에 실패했습니다.');
       return;
     }
     dispatch(updateUser({ nickname: nickname.trim(), foods: selectedFoods, profileImage }));
@@ -133,7 +133,7 @@ function ProfileEdit() {
     try {
       await deleteUser(userId);
     } catch (err) {
-      setFeedback(err.message || '회원 탈퇴에 실패했습니다.');
+      window.alert('회원 탈퇴에 실패했습니다.');
       return;
     }
     await supabase.auth.signOut();
