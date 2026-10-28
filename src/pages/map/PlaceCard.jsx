@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './placeCard.css';
+import { Bookmark } from 'lucide-react';
 
 const CATEGORY_IMG = {
   한식: 'korean.svg',
@@ -36,6 +37,12 @@ export default function PlaceCard({ place }) {
                 <div style={{ display: 'flex', gap: '4px' }}>
                   <span style={{ color: '#F59E0B' }}>★</span>
                   <span>{place.rating_avg.toFixed(1)}</span>
+                </div>
+                <div
+                  style={{ display: 'flex', gap: '4px', alignItems: 'center' }}
+                >
+                  <Bookmark size={'14px'} />
+                  {place.bookmark_count}
                 </div>
               </div>
             </div>
