@@ -62,7 +62,7 @@ export function useBookmark() {
       removeSavedId(store.id);
       setBookmarkCount(store, Math.max(store.bookmark_count - 1, 0));
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert('저장을 취소하지 못했어요. 다시 시도해 주세요.');
     }
   };
