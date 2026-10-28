@@ -7,6 +7,7 @@ import {
   deleteBookmarkByPlace,
   getMyBookmarks,
   insertBookmark,
+  rememberBookmarkCategory,
 } from './bookmark';
 
 // Postgres 중복 에러 코드 - bookmarks의 (user_id, place_id) unique 제약 = 이미 저장한 가게
@@ -91,6 +92,7 @@ export function useBookmark() {
         placeName: sheetStore.name,
         content: memo,
       });
+      rememberBookmarkCategory(sheetStore.id, sheetStore.category_group);
       addSavedId(sheetStore.id);
       setBookmarkCount(sheetStore, sheetStore.bookmark_count + 1);
       closeSheet();
