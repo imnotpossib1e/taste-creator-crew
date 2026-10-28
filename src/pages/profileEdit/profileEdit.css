@@ -3,14 +3,16 @@
 .layer-1.page9 * {
   box-sizing: border-box;
 }
+
 .layer-1.page9 p {
   margin: 0;
 }
+
 .layer-1.page9 {
   position: relative;
   width: 100%;
   max-width: 430px;
-  min-height: max(851px, 100vh);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 21px;
@@ -19,6 +21,7 @@
   align-items: center;
   background: #ffffff;
 }
+
 .page9 .frame-10 {
   flex: 1 1 0;
   width: 100%;
@@ -29,6 +32,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .page9 .frame-11 {
   align-self: stretch;
   width: 100%;
@@ -39,6 +43,7 @@
   justify-content: flex-start;
   align-items: center;
 }
+
 .page9 .frame-8 {
   align-self: stretch;
   width: 100%;
@@ -49,6 +54,7 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .page9 .frame-10-2 {
   align-self: stretch;
   width: 100%;
@@ -59,6 +65,7 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .page9 .component-1 {
   align-self: stretch;
   width: 100%;
@@ -72,6 +79,7 @@
   border-radius: 10px;
   background: #0f766e;
 }
+
 .page9 .layer--14 {
   color: #ffffff;
   font-family: 'Noto Sans KR';
@@ -79,10 +87,12 @@
   font-weight: 700;
   text-align: center;
 }
+
 .layer-1.page9 button,
 .layer-1.page9 input {
   font-family: 'Noto Sans KR';
 }
+
 .layer-1.page9 input {
   font-size: 15px;
 }
