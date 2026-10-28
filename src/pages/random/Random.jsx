@@ -56,7 +56,7 @@ function Random() {
     navigate(`/store/${picked.id}`);
   };
 
-  console.log(selectedCategory, picked?.name);
+  // console.log(selectedCategory, picked?.name);
   return (
     <div className="random">
       <main>
