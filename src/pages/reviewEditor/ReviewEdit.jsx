@@ -41,13 +41,21 @@ function ReviewEdit() {
   const { id } = useParams();
   const { review, isError } = useReview(id);
   // 리뷰의 place_id(카카오 가게 id)로 redux에서 가게를 찾는다
+  // 마이페이지에서 들어오면 다른 동네 가게라 redux에 없을 수 있어서, 그때는 리뷰에 저장된 이름으로 대신 채운다
+  // (종류는 알 수 없어서 빈 값 → 가게 카드는 기본 아이콘)
   const restaurants = useSelector(selectRestaurants);
-  const restaurant = restaurants.find(item => item.id === review?.place_id);
+  const restaurant =
+    restaurants.find(item => item.id === review?.place_id) ??
+    (review && {
+      id: review.place_id,
+      name: review.place_name,
+      category_group: '',
+    });
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
 
-  // 수정한 리뷰를 Supabase에 저장하고, 성공하면 이 가게 상세로 돌아간다 (ReviewWrite와 같은 흐름)
+  // 수정한 리뷰를 Supabase에 저장하고, 성공하면 들어온 페이지(가게 상세 또는 마이페이지)로 돌아간다
   // 저장 중에 Enter 등으로 다시 제출되면 무시 (중복 저장 방지)
   const handleSubmit = async newReview => {
     if (!user) {
@@ -61,7 +69,7 @@ function ReviewEdit() {
     setIsSaving(true);
     try {
       await updateMyReview(id, newReview);
-      navigate(`/store/${review.place_id}`);
+      navigate(-1);
     } catch (err) {
       // 내 리뷰가 아니거나 RLS에 막히면 수정된 행이 없어서 .single()이 에러를 낸다
       console.error(err);
@@ -78,15 +86,6 @@ function ReviewEdit() {
   // 리뷰가 오기 전에 폼을 그리면 useState 시작값이 빈 값으로 굳어서, 다 불러온 뒤에 그린다
   if (!review) {
     return <p className="reviewFormEmpty">리뷰를 불러오는 중이에요.</p>;
-  }
-
-  // 못 찾으면 ReviewForm이 restaurant.category_group에서 에러 나지 않게 안내만
-  if (!restaurant) {
-    return (
-      <p className="reviewFormEmpty">
-        가게 정보를 불러올 수 없어요. 지도에서 다시 선택해 주세요.
-      </p>
-    );
   }
 
   return (
