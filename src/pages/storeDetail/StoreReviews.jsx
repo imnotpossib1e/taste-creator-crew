@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Star } from 'lucide-react';
+import { Star, User } from 'lucide-react';
 import { selectCurrentUser } from '../../redux/authSlice.js';
 import { deleteMyReview, getStoreReviews } from '../../hook/review.js';
 import './storeReviews.css';
@@ -43,7 +43,7 @@ function ReviewStars({ rating }) {
   );
 }
 
-// 리뷰 하나 - 작성자는 users(nickname)로 같이 가져온 값, 탈퇴 등으로 없으면 대체 문구
+// 리뷰 하나 - 작성자는 users(nickname, profile_image)로 같이 가져온 값, 탈퇴 등으로 없으면 대체 문구·기본 아이콘
 // 사진은 버킷(review-image)에 올라간 주소를 그대로 <img>로 그린다
 // isMine: 내가 쓴 리뷰일 때만 수정/삭제 버튼을 보여준다
 function ReviewItem({ review, isMine, onEdit, onDelete }) {
@@ -51,29 +51,42 @@ function ReviewItem({ review, isMine, onEdit, onDelete }) {
 
   return (
     <li className="reviewItem">
-      <div className="reviewAuthor">
-        <strong>{review.users?.nickname ?? '알 수 없음'}</strong>
-        <span>{formatDate(review.created_at)}</span>
+      {/* 왼쪽: 프로필 이미지 (없으면 회색 둥근 네모 + 사람 아이콘) */}
+      {/* 바로 옆에 닉네임이 있어서 화면 낭독기가 두 번 읽지 않게 alt는 비움 */}
+      {review.users?.profile_image ? (
+        <img src={review.users.profile_image} alt="" className="reviewAvatar" />
+      ) : (
+        <div className="reviewAvatar" aria-hidden="true">
+          <User size={24} color="#9ca3af" />
+        </div>
+      )}
+
+      {/* 오른쪽: 닉네임·날짜, 별점, 내용, 사진, 수정/삭제 */}
+      <div className="reviewBody">
+        <div className="reviewAuthor">
+          <strong>{review.users?.nickname ?? '알 수 없음'}</strong>
+          <span>{formatDate(review.created_at)}</span>
+        </div>
+        <ReviewStars rating={review.rating} />
+        <p className="reviewText">{review.content}</p>
+        {imageUrls.length > 0 && (
+          <div className="reviewItemPhotos">
+            {imageUrls.map((url, index) => (
+              <img key={url} src={url} alt={`리뷰 사진 ${index + 1}`} />
+            ))}
+          </div>
+        )}
+        {isMine && (
+          <div className="reviewActions">
+            <button type="button" onClick={() => onEdit(review.id)}>
+              수정
+            </button>
+            <button type="button" onClick={() => onDelete(review.id)}>
+              삭제
+            </button>
+          </div>
+        )}
       </div>
-      <ReviewStars rating={review.rating} />
-      <p className="reviewText">{review.content}</p>
-      {imageUrls.length > 0 && (
-        <div className="reviewItemPhotos">
-          {imageUrls.map((url, index) => (
-            <img key={url} src={url} alt={`리뷰 사진 ${index + 1}`} />
-          ))}
-        </div>
-      )}
-      {isMine && (
-        <div className="reviewActions">
-          <button type="button" onClick={() => onEdit(review.id)}>
-            수정
-          </button>
-          <button type="button" onClick={() => onDelete(review.id)}>
-            삭제
-          </button>
-        </div>
-      )}
     </li>
   );
 }
@@ -106,7 +119,7 @@ function useStoreReviews(placeId) {
   return { reviews, setReviews };
 }
 
-function StoreReviews({ placeId, onWriteReview }) {
+function StoreReviews({ placeId }) {
   const { reviews, setReviews } = useStoreReviews(placeId);
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
@@ -132,9 +145,6 @@ function StoreReviews({ placeId, onWriteReview }) {
     <section className="storeReviews">
       <div className="storeReviewsHeader">
         <h2>리뷰 {reviews.length}</h2>
-        <button type="button" onClick={onWriteReview}>
-          리뷰 쓰기
-        </button>
       </div>
 
       {reviews.length === 0 ? (
