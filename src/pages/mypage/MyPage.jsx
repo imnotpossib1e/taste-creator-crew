@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/superbase';
 import MyPageAppBar from './MyPageAppBar';
 import MyPageProfile from './MyPageProfile';
@@ -21,9 +22,18 @@ import {
 import { getKakaoCategoryGroup } from '../../hook/kakaoApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectRestaurants, updateStats } from '../../redux/store';
-
+function toImageUrls(imageUrl) {
+  if (!imageUrl) return [];
+  if (Array.isArray(imageUrl)) return imageUrl; // 이미 배열로 오는 경우
+  try {
+    return JSON.parse(imageUrl);
+  } catch {
+    return []; // 깨진 값이어도 화면은 안 죽게
+  }
+}
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('reviews');
   const [nickname, setNickname] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
@@ -88,6 +98,7 @@ function MyPage() {
               id: review.id,
               restaurant: review.place_name ?? '가게 정보 없음',
               text: review.content,
+              images: toImageUrls(review.image_url), // 추가
               date: `${created.getMonth() + 1}월 ${created.getDate()}일`,
             };
           }),
@@ -116,10 +127,11 @@ function MyPage() {
         Promise.all(
           myBookmarks
             .filter(b => !known[b.place_id] && b.place_name)
-            .map(b =>
-              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
-                .then(group => rememberBookmarkCategory(b.place_id, group))
-                .catch(() => {}), // 못 찾으면 기본 이미지
+            .map(
+              b =>
+                getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
+                  .then(group => rememberBookmarkCategory(b.place_id, group))
+                  .catch(() => {}), // 못 찾으면 기본 이미지
             ),
         ).then(() => {
           if (!ignore) setBookmarks(current => [...current]);
@@ -134,10 +146,9 @@ function MyPage() {
     };
   }, []);
 
+  // 수정 - 별점·사진까지 고칠 수 있게 리뷰 수정 페이지로 이동 (가게 상세의 수정 버튼과 같은 페이지)
   const beginEditing = review => {
-    setEditingReviewId(review.id);
-    setDraftReview(review.text);
-    setFeedback('');
+    navigate(`/reviewEdit/${review.id}`);
   };
 
   const saveReview = async reviewId => {

@@ -162,7 +162,7 @@ export async function deleteMyReview(reviewId) {
 export async function getMyReviews2(userId) {
   const { data: reviews, error } = await supabase
     .from('reviews')
-    .select('id, place_id,place_name, rating, content, created_at')
+    .select('id, place_id,place_name, rating, content,image_url, created_at')
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
