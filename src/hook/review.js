@@ -36,14 +36,14 @@ export async function uploadReviewImages(photos) {
 
 // 한 가게의 리뷰 목록 - 최신순, 작성자 닉네임 포함
 // user_id: 로그인한 사용자와 비교해서 내 리뷰에만 수정/삭제 버튼을 보여줄 때 사용
-// users(nickname): reviews.user_id → users.id 외래 키로 연결된 닉네임을 같이 가져옴
+// users(nickname, profile_image): reviews.user_id → users.id 외래 키로 연결된 작성자 닉네임·프로필 이미지를 같이 가져옴
 // (users.email은 조회 권한이 막혀 있어서 요청하면 안 됨)
 // image_url: 리뷰 사진 주소들 (JSON 글자)
 export async function getStoreReviews(placeId) {
   const { data, error } = await supabase
     .from('reviews')
     .select(
-      'id, user_id, rating, good_points, content, created_at, image_url, users(nickname)',
+      'id, user_id, rating, good_points, content, created_at, image_url, users(nickname, profile_image)',
     )
     .eq('place_id', placeId)
     .order('created_at', { ascending: false });

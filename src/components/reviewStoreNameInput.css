@@ -12,10 +12,10 @@
   gap: 8px;
 }
 
-/* 제목 - 내용 라벨과 같은 크기, 스크린샷 기준 굵기는 보통 */
+/* 제목 - 별점·좋았던 점 제목과 같은 굵기 */
 .reviewStoreNameInput > label > span {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.45;
   letter-spacing: -0.01em;
   color: #111827;

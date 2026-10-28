@@ -14,3 +14,15 @@
   min-width: 100%;
   min-height: 0;
 }
+
+/* 가게를 못 찾았을 때 안내 - 리뷰 폼 안내(.reviewFormEmpty)와 같은 모양 */
+/* flex: 1이 없으면 문구 높이만큼만 차지해서 하단 탭바가 화면 중간으로 올라온다 */
+.storeDetailEmpty {
+  flex: 1;
+  margin: 0;
+  padding: 80px 20px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #6b7280;
+  text-align: center;
+}

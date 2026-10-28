@@ -1,23 +1,10 @@
 /* 좋았던 점 - 피그마 good-points */
+/* 제목을 빼서 별점의 세부 항목처럼 보이게, 폼의 섹션 간격(28px)을 줄여 별점 바로 아래(12px)에 붙인다 */
 .reviewTags {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.reviewTags > h2 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-  color: #111827;
-}
-
-/* "선택" - 스크린샷 기준 회색 (피그마에서 확인 필요) */
-.reviewTags > h2 > span {
-  font-weight: 400;
-  color: #6b7280;
+  margin-top: -16px;
 }
 
 /* 칩 묶음 - 공간이 부족하면 다음 줄로 */
