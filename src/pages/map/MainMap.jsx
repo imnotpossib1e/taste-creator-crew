@@ -9,6 +9,7 @@ import './mainMap.css';
 import { getKakaoSearchCafe, getKakaoSearchRes } from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
+
 import CategoryButton from './CategoryButton';
 
 export default function MainMap() {
@@ -223,7 +224,6 @@ export default function MainMap() {
           };
         });
 
-        // restaurants.forEach(item => console.log(item));
 
         dispatch(setSearchRestaurant(restaurants));
       } catch (err) {

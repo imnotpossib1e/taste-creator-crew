@@ -8,7 +8,9 @@ import NotFound from './pages/NotFound';
 import { Provider } from 'react-redux';
 import store from './redux/store.js';
 import MainMap from './pages/map/MainMap';
-import StoreDetail from './pages/storeDetail/StoreDetail';
+
+// 새로 배포되면 옛 화면이 찾던 lazy 페이지 파일이 사라져 NotFound가 뜬다 - 새로고침해서 새 파일을 받는다
+window.addEventListener('vite:preloadError', () => window.location.reload());
 
 // 로그인/회원가입/마이페이지/프로필 수정/비밀번호 변경 라우트
 // (path는 각 페이지 폴더 이름과 같게 맞춘다)
@@ -73,6 +75,14 @@ const pageRoutes = [
         Component: m.default,
       })),
   },
+  {
+    // 쓰기의 :id는 가게 id, 수정의 :id는 리뷰 id (어느 리뷰를 고칠지)
+    path: 'reviewEdit/:id',
+    lazy: () =>
+      import('./pages/reviewEditor/ReviewEdit.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
 ];
 
 // router 설계
@@ -88,7 +98,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'store/:id',
-        element: <StoreDetail />,
+        lazy: () =>
+          import('./pages/storeDetail/StoreDetail.jsx').then(m => ({
+            Component: m.default,
+          })),
       },
       ...pageRoutes,
       {

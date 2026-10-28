@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Star } from 'lucide-react';
-import { getStoreReviews } from '../../hook/review.js';
+import { selectCurrentUser } from '../../redux/authSlice.js';
+import { deleteMyReview, getStoreReviews } from '../../hook/review.js';
 import './storeReviews.css';
 
 const MAX_STARS = 5;
@@ -12,6 +15,12 @@ const range = count => Array.from({ length: count }, (_, index) => index);
 function formatDate(createdAt) {
   const date = new Date(createdAt);
   return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+}
+
+// DB에 JSON 글자('["https://...", ...]')로 저장한 image_url을 주소 배열로
+// 사진 기능 전에 쓴 리뷰는 image_url이 null이라 빈 배열로
+function toImageUrls(imageUrl) {
+  return imageUrl ? JSON.parse(imageUrl) : [];
 }
 
 // 별 5개 중 rating개만 채움
@@ -35,8 +44,11 @@ function ReviewStars({ rating }) {
 }
 
 // 리뷰 하나 - 작성자는 users(nickname)로 같이 가져온 값, 탈퇴 등으로 없으면 대체 문구
-// 사진은 아직 저장 기능이 없어서 그리지 않음
-function ReviewItem({ review }) {
+// 사진은 버킷(review-image)에 올라간 주소를 그대로 <img>로 그린다
+// isMine: 내가 쓴 리뷰일 때만 수정/삭제 버튼을 보여준다
+function ReviewItem({ review, isMine, onEdit, onDelete }) {
+  const imageUrls = toImageUrls(review.image_url);
+
   return (
     <li className="reviewItem">
       <div className="reviewAuthor">
@@ -45,6 +57,23 @@ function ReviewItem({ review }) {
       </div>
       <ReviewStars rating={review.rating} />
       <p className="reviewText">{review.content}</p>
+      {imageUrls.length > 0 && (
+        <div className="reviewItemPhotos">
+          {imageUrls.map((url, index) => (
+            <img key={url} src={url} alt={`리뷰 사진 ${index + 1}`} />
+          ))}
+        </div>
+      )}
+      {isMine && (
+        <div className="reviewActions">
+          <button type="button" onClick={() => onEdit(review.id)}>
+            수정
+          </button>
+          <button type="button" onClick={() => onDelete(review.id)}>
+            삭제
+          </button>
+        </div>
+      )}
     </li>
   );
 }
@@ -73,11 +102,31 @@ function useStoreReviews(placeId) {
     };
   }, [placeId]);
 
-  return reviews;
+  // 삭제한 리뷰를 목록에서 바로 빼려고 setReviews도 같이 돌려준다
+  return { reviews, setReviews };
 }
 
 function StoreReviews({ placeId, onWriteReview }) {
-  const reviews = useStoreReviews(placeId);
+  const { reviews, setReviews } = useStoreReviews(placeId);
+  const user = useSelector(selectCurrentUser);
+  const navigate = useNavigate();
+
+  // 수정 페이지 주소에는 가게 id가 아니라 리뷰 id를 넣는다
+  const handleEdit = reviewId => {
+    navigate(`/reviewEdit/${reviewId}`);
+  };
+
+  // DB에서 지운 뒤 성공했을 때만 화면 목록에서도 뺀다 (다시 불러오지 않아도 바로 반영)
+  const handleDelete = async reviewId => {
+    if (!confirm('리뷰를 삭제할까요?')) return;
+    try {
+      await deleteMyReview(reviewId);
+      setReviews(prev => prev.filter(review => review.id !== reviewId));
+    } catch (err) {
+      console.error(err);
+      alert('리뷰를 삭제하지 못했어요. 다시 시도해 주세요.');
+    }
+  };
 
   return (
     <section className="storeReviews">
@@ -95,7 +144,14 @@ function StoreReviews({ placeId, onWriteReview }) {
       ) : (
         <ul>
           {reviews.map(review => (
-            <ReviewItem key={review.id} review={review} />
+            <ReviewItem
+              key={review.id}
+              review={review}
+              // 로그아웃 상태면 user가 null이라 ?.로 비교 (항상 false)
+              isMine={user?.id === review.user_id}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           ))}
         </ul>
       )}

@@ -104,3 +104,12 @@ export async function getKakaoSearchCafe({ query, x, y }) {
 
   return results;
 }
+
+// 가게 이름으로 검색해 id가 같은 가게의 종류(한식/중식 …)를 찾는다 - 북마크처럼 DB에 종류가 없을 때용
+export async function getKakaoCategoryGroup({ id, name }) {
+  const { data } = await kakao.get('/search/keyword.json', {
+    params: { query: name, size: '15' },
+  });
+  const place = data.documents.find(d => d.id === id);
+  return place?.category_name.split(' > ')[1];
+}

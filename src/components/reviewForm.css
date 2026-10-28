@@ -1,17 +1,35 @@
-/* 피그마 content: 섹션 사이 28px, 바깥 여백 20/20/24 + 하단 고정 버튼(79px)만큼 여백 */
+/* 리뷰 쓰기/수정 페이지 전체 - App(100dvh) 안에서 탭바를 뺀 남은 높이만 차지하고, 넘치면 여기서 스크롤 */
+.reviewForm {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 피그마 content: 섹션 사이 28px, 바깥 여백 20/20/24 */
 .reviewFormContent {
   display: flex;
   flex-direction: column;
+  flex: 1 0 auto; /* 내용이 짧아도 남는 공간을 채워서 등록 버튼을 맨 아래로 */
   gap: 28px;
-  padding: 20px 20px calc(24px + 79px);
+  padding: 20px 20px 24px;
 }
 
 /* 가게를 못 찾았을 때 안내 - 화면 가운데 회색 문구 */
 .reviewFormEmpty {
+  flex: 1; /* 남는 높이를 다 차지해서 하단 탭바를 맨 아래로 */
   margin: 0;
   padding: 80px 20px;
   font-size: 14px;
   line-height: 1.45;
   color: #6b7280;
   text-align: center;
+}
+
+.reviewFormEmpty {
+  flex: 1;
+  margin: 0;
+  padding: 80px 20px;
+  font-size: 14px;
 }

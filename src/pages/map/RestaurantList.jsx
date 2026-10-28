@@ -1,4 +1,4 @@
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './restaurantList.css';
 import RestaurantItem from './RestaurantItem';
 import { selectVisibleRestaurants } from '../../redux/store';
@@ -15,7 +15,6 @@ const SORTERS = {
 export default function RestaurantList({ place }) {
   const datas = useSelector(selectVisibleRestaurants);
   const [sort, setSort] = useState('distance');
-  // console.log(place);
 
   const sorted = useMemo(() => [...datas].sort(SORTERS[sort]), [datas, sort]);
 
