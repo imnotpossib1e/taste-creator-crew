@@ -14,16 +14,19 @@
 /* 바텀시트 - 위쪽 모서리만 둥글게, 좌우 여백은 하단 바와 같은 16px */
 /* fixed는 부모(.App)가 아니라 브라우저 화면 기준이라 폭 제한을 따로 걸어야 한다 */
 .bookmarkSheet {
+  border: none;
   display: flex;
   flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
   width: 100%;
-  max-width: 430px; /* App.css의 .App max-width와 같은 값 */
-  padding: 12px 16px 32px;
+  max-width: 430px;
+  /* App.css의 .App max-width와 같은 값 */
+  padding: 20px 16px 32px;
   background: #ffffff;
   border-radius: 16px 16px 0 0;
   animation: bookmarkSheetSlideUp 0.25s ease-out;
+  z-index: 102;
 }
 
 /* 상단 핸들 - 바텀시트임을 알려주는 장식, 세로 flex라 align-self로 가로 가운데 */
@@ -41,6 +44,7 @@
   from {
     transform: translateY(100%);
   }
+
   to {
     transform: translateY(0);
   }

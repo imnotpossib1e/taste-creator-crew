@@ -16,29 +16,6 @@ function MyPageSettings({
   return (
     <div className="settings-menu">
       <div className="frame-8-27">
-        <div className="frame-8-28">
-          <p className="layer--17">새 투표 알림</p>
-          <button
-            type="button"
-            className="frame-20"
-            style={{
-              ...buttonStyle,
-              background: notificationsEnabled ? '#0f766e' : '#9ca3af',
-              padding: notificationsEnabled
-                ? '3px 3px 3px 21px'
-                : '3px 21px 3px 3px',
-            }}
-            role="switch"
-            aria-checked={notificationsEnabled}
-            aria-label="새 투표 알림"
-            onClick={() => {
-              setNotificationsEnabled((enabled) => !enabled);
-
-            }}
-          >
-            <div className="vector-21"></div>
-          </button>
-        </div>
         <div className="vector-22"></div>
         <button
           type="button"

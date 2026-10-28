@@ -25,8 +25,8 @@ import { selectRestaurants, updateStats } from '../../redux/store';
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
   const [activeTab, setActiveTab] = useState('reviews');
-  const [nickname, setNickname] = useState('연남산책');
-  const [neighborhood, setNeighborhood] = useState('내 동네 연남동');
+  const [nickname, setNickname] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [profileEditing, setProfileEditing] = useState(false);
   const [reviews, setReviews] = useState([]);

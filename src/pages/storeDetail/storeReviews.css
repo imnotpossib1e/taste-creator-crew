@@ -10,7 +10,7 @@
   padding: 22px 20px 0;
   background: #ffffff;
   min-height: 0;
-  z-index: 1000000;
+  z-index: 101;
 }
 
 /* 리뷰 128 (리뷰 쓰기는 하단 바 버튼 하나만 남김) */
@@ -21,13 +21,26 @@
   padding: 10px 0;
 }
 
-.storeReviewsHeader > h2 {
+.storeReviewsHeader>h2 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.45;
   letter-spacing: -0.01em;
   color: #111827;
+}
+
+.storeReviewsHeader>button {
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #0f766e;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .storeReviews > ul {
@@ -78,7 +91,7 @@
   align-items: flex-start;
 }
 
-.reviewAuthor > strong {
+.reviewAuthor>strong {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.4;
@@ -86,7 +99,7 @@
   color: #111827;
 }
 
-.reviewAuthor > span {
+.reviewAuthor>span {
   font-size: 13px;
   line-height: 1.45;
   letter-spacing: -0.01em;
@@ -113,7 +126,7 @@
   gap: 12px;
 }
 
-.reviewActions > button {
+.reviewActions>button {
   padding: 0;
   font-family: inherit;
   font-size: 13px;
@@ -133,7 +146,7 @@
 }
 
 /* 사진 한 장 - 비율 유지하면서 칸을 꽉 채우게 자름, 불러오는 동안은 회색 */
-.reviewItemPhotos > img {
+.reviewItemPhotos>img {
   flex-shrink: 0;
   width: 76px;
   height: 76px;

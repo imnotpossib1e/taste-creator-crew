@@ -18,7 +18,6 @@ function BookmarkSheet({ restaurant, onClose, onSave }) {
   return (
     <div className="bookmarkSheetOverlay" onClick={handleOverlayClick}>
       <dialog className="bookmarkSheet" aria-modal="true">
-        <div className="bookmarkSheetHandle" aria-hidden="true" />
         <h2>{restaurant.name}</h2>
         <input
           type="text"
