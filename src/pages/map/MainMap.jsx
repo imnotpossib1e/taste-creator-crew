@@ -17,6 +17,8 @@ export default function MainMap() {
   const markers = useRef([]);
   const mapInstance = useRef(null);
   const [position, setPosition] = useState(null);
+  // 지도가 만들어졌는지 - ref(mapInstance)는 바뀌어도 useEffect를 다시 실행시키지 않아서 state로 따로 알린다
+  const [isMapReady, setIsMapReady] = useState(false);
   // MainMap.jsx
   const res = useSelector(selectVisibleRestaurants);
   const isSearching = useSelector(state => state.searchRestaurant !== null);
@@ -52,6 +54,8 @@ export default function MainMap() {
       scaleControl: false, // 축척 숨김
       mapDataControl: false,
     });
+    // 다른 탭에 갔다 오면 가게 목록(res)은 이미 있어서, 지도가 준비된 이 시점에 핀을 다시 그리게 한다
+    setIsMapReady(true);
   }, [position]);
 
   // 위치 바뀌면 중심 이동
@@ -189,7 +193,7 @@ export default function MainMap() {
       naver.maps.Event.removeListener(idleListener);
       naver.maps.Event.removeListener(mapClickListener);
     };
-  }, [res]);
+  }, [res, isMapReady]);
 
   const searchRes = () => {
     if (search === '') {
