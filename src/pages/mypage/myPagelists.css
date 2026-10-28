@@ -13,12 +13,10 @@
 }
 .page8 .place-thumb {
   align-self: flex-start;
-  flex: 0 0 14px;
-  width: 14px;
-  height: 14px;
-  margin-top: 2px;
-  background: #e5e7eb;
-  border-radius: 3px;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 .page8 .place-info {
   flex: 1;
@@ -51,4 +49,11 @@
   font-family: 'Noto Sans KR';
   font-size: 13px;
   font-weight: 700;
+}
+.page8 .place-bookmark {
+  flex: 0 0 auto;
+  padding: 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
 }

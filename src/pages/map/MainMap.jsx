@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  reset,
   resetSearch,
   selectVisibleRestaurants,
   setRestaurant,
   setSearchRestaurant,
 } from '../../redux/store';
 import './mainMap.css';
-import { ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
 import {
   getKakaoCafes,
   getKakaoRestaurants,
@@ -17,16 +15,8 @@ import {
 } from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
-import PlaceCard from './PlaceCard';
 import { getRestaurantStats } from '../../hook/restaurant';
 import CategoryButton from './CategoryButton';
-
-const CATEGORY_MAP = {
-  한식: <CookingPot />,
-  중식: <Soup />,
-  일식: <ChefHat />,
-  양식: <Utensils />,
-};
 
 export default function MainMap() {
   const mapRef = useRef(null);
@@ -110,8 +100,6 @@ export default function MainMap() {
         );
         // 응답 결과 저장
         if (ignore) return;
-
-        // restaurants.forEach(item => console.log(item));
 
         dispatch(setRestaurant(restaurants));
       } catch (err) {
@@ -286,7 +274,6 @@ export default function MainMap() {
           };
         });
 
-        // restaurants.forEach(item => console.log(item));
 
         dispatch(setSearchRestaurant(restaurants));
       } catch (err) {

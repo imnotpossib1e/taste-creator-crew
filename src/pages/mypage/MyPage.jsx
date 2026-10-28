@@ -12,7 +12,16 @@ import {
   updateMyReview2,
   deleteMyReview2,
 } from '../../hook/review';
-import { getMyBookmarks } from '../../hook/bookmark';
+import {
+  getMyBookmarks,
+  deleteBookmarkByPlace,
+  readBookmarkCategories,
+  rememberBookmarkCategory,
+} from '../../hook/bookmark';
+import { getKakaoCategoryGroup } from '../../hook/kakaoApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectRestaurants } from '../../redux/store';
+import { updateStats } from '../../redux/store';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
@@ -26,6 +35,17 @@ function MyPage() {
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [draftReview, setDraftReview] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const dispatch = useDispatch();
+  const restaurants = useSelector(selectRestaurants);
+  // 이미지용 종류: DB 컬럼 → 지도에서 불러둔 가게 목록 → 저장 때 기억해 둔 값 순서
+  const savedCategories = readBookmarkCategories();
+  const bookmarkItems = bookmarks.map(b => ({
+    ...b,
+    category:
+      b.category ??
+      restaurants.find(r => r.id === b.placeId)?.category_group ??
+      savedCategories[b.placeId],
+  }));
   // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
   const setFeedback = message => {
     if (message) window.alert(message);
@@ -69,10 +89,24 @@ function MyPage() {
 
       try {
         const myBookmarks = await getMyBookmarks(data.id);
+        // 종류를 모르는 북마크(예전에 저장했거나 다른 기기에서 저장)는 카카오에서 찾아 기억해 둔다
+        const known = readBookmarkCategories();
+        await Promise.all(
+          myBookmarks
+            .filter(b => !known[b.place_id] && b.place_name)
+            .map(b =>
+              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
+                .then(group => rememberBookmarkCategory(b.place_id, group))
+                .catch(() => {}), // 못 찾으면 기본 이미지
+            ),
+        );
         setBookmarks(
           myBookmarks.map(bookmark => ({
             id: bookmark.id,
             name: bookmark.place_name ?? '가게 정보 없음',
+            placeId: bookmark.place_id,
+            userId: bookmark.user_id,
+            category: bookmark.category_group,
             memo: bookmark.content,
           })),
         );
@@ -123,23 +157,29 @@ function MyPage() {
     setFeedback('리뷰를 삭제했습니다.');
   };
 
-  /* const handleInstall = async () => {
-    if (!installPrompt) {
-      setFeedback(
-        '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
-      );
+  const deleteBookmarkItem = async bookmark => {
+    if (!window.confirm('저장을 취소할까요?')) return;
+    try {
+      await deleteBookmarkByPlace({
+        userId: bookmark.userId,
+        placeId: bookmark.placeId,
+      });
+    } catch {
+      setFeedback('북마크 삭제에 실패했습니다.');
       return;
     }
-
-    await installPrompt.prompt();
-    const choice = await installPrompt.userChoice;
-    setFeedback(
-      choice.outcome === 'accepted'
-        ? '앱 설치를 진행합니다.'
-        : '앱 설치를 취소했습니다.',
-    );
-    setInstallPrompt(null);
-  }; */
+    rememberBookmarkCategory(bookmark.placeId, null);
+    const store = restaurants.find(r => r.id === bookmark.placeId);
+    if (store) {
+      dispatch(
+        updateStats({
+          id: store.id,
+          bookmark_count: Math.max(store.bookmark_count - 1, 0),
+        }),
+      );
+    }
+    setBookmarks(current => current.filter(b => b.id !== bookmark.id));
+  };
 
   // MyPage.jsx
   const handleInstall = async () => {
@@ -194,7 +234,10 @@ function MyPage() {
                 deleteReview={deleteReview}
               />
             ) : (
-              <MyPagePlaces bookmarks={bookmarks} />
+              <MyPagePlaces
+                bookmarks={bookmarkItems}
+                onDelete={deleteBookmarkItem}
+              />
             )}
           </div>
         </div>
