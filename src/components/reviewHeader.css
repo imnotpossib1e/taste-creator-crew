@@ -1,5 +1,7 @@
 /* 상단 바 - 피그마 app-bar, 양쪽 44px 칸 사이에 제목 가운데 */
+/* flex-shrink: 0 - 리뷰 폼(.reviewForm)이 세로 flex라, 내용이 길면 헤더가 56px보다 눌려 작아지는 것 방지 */
 .reviewHeader {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

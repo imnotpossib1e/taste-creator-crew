@@ -36,14 +36,14 @@ export async function uploadReviewImages(photos) {
 
 // 한 가게의 리뷰 목록 - 최신순, 작성자 닉네임 포함
 // user_id: 로그인한 사용자와 비교해서 내 리뷰에만 수정/삭제 버튼을 보여줄 때 사용
-// users(nickname): reviews.user_id → users.id 외래 키로 연결된 닉네임을 같이 가져옴
+// users(nickname, profile_image): reviews.user_id → users.id 외래 키로 연결된 작성자 닉네임·프로필 이미지를 같이 가져옴
 // (users.email은 조회 권한이 막혀 있어서 요청하면 안 됨)
 // image_url: 리뷰 사진 주소들 (JSON 글자)
 export async function getStoreReviews(placeId) {
   const { data, error } = await supabase
     .from('reviews')
     .select(
-      'id, user_id, rating, good_points, content, created_at, image_url, users(nickname)',
+      'id, user_id, rating, good_points, content, created_at, image_url, users(nickname, profile_image)',
     )
     .eq('place_id', placeId)
     .order('created_at', { ascending: false });
@@ -64,6 +64,23 @@ export async function getMyReviews(userId) {
 
   if (error) throw error;
   return data;
+}
+
+// 이 가게 리뷰 사진 중 가장 최근 1장의 주소 - 없으면 null (랜덤 추천 화면용)
+// image_url이 null(사진 기능 전 리뷰)인 건 DB에서 거르고,
+// "[]"(사진 없이 쓴 리뷰)도 있어서 최근 몇 개를 가져와 펼친 뒤 첫 사진을 쓴다
+export async function getStorePhoto(placeId) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('image_url')
+    .eq('place_id', placeId)
+    .not('image_url', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  if (error) throw error;
+  // [["a.jpg","b.jpg"], [], ["c.jpg"]] → ["a.jpg","b.jpg","c.jpg"] → 첫 번째
+  return data.flatMap(row => JSON.parse(row.image_url))[0] ?? null;
 }
 
 // 리뷰 하나 - 수정 페이지에서 기존 내용 채울 때
