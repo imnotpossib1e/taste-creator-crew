@@ -12,6 +12,7 @@ import {
   updateMyReview2,
   deleteMyReview2,
 } from '../../hook/review';
+import { getMyBookmarks } from '../../hook/bookmark';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
@@ -21,6 +22,7 @@ function MyPage() {
   const [profileImage, setProfileImage] = useState(null);
   const [profileEditing, setProfileEditing] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [draftReview, setDraftReview] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -63,6 +65,19 @@ function MyPage() {
         );
       } catch {
         setFeedback('리뷰를 불러오지 못했습니다.');
+      }
+
+      try {
+        const myBookmarks = await getMyBookmarks(data.id);
+        setBookmarks(
+          myBookmarks.map(bookmark => ({
+            id: bookmark.id,
+            name: bookmark.place_name ?? '가게 정보 없음',
+            memo: bookmark.content,
+          })),
+        );
+      } catch {
+        setFeedback('북마크를 불러오지 못했습니다.');
       }
     };
     loadProfile();
@@ -165,6 +180,7 @@ function MyPage() {
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               reviewCount={reviews.length}
+              bookmarkCount={bookmarks.length}
             />
             {activeTab === 'reviews' ? (
               <MyPageReviews
@@ -178,7 +194,7 @@ function MyPage() {
                 deleteReview={deleteReview}
               />
             ) : (
-              <MyPagePlaces activeTab={activeTab} />
+              <MyPagePlaces bookmarks={bookmarks} />
             )}
           </div>
         </div>
