@@ -13,10 +13,12 @@ export default defineConfig({
       // manifest: 웹앱의 메타정보 설정 (홈 화면에 표시될 이름, 아이콘 등)
       manifest: {
         // 앱의 전체 이름 (설치 후 앱 이름으로 표시됨)
-        name: 'My App',
+        name: '먹을지도',
 
         // 앱 이름이 길 경우 짧게 줄여서 표시
-        short_name: 'App',
+        short_name: '먹을지도',
+
+        lang: 'ko',
 
         // 앱이 시작될 URL (일반적으로 루트 경로로 설정)
         start_url: '/',
@@ -34,16 +36,16 @@ export default defineConfig({
         icons: [
           {
             // 아이콘 이미지 경로 (public 폴더에 있어야 함)
-            src: 'icon.png',
+            src: 'icon.svg',
             // 이미지 크기 (픽셀 단위)
             sizes: '192x192',
             // 이미지 타입
-            type: 'image/png',
+            type: 'image/svg',
           },
           {
-            src: 'icon.png',
+            src: 'icon.svg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg',
           },
         ],
       },

@@ -87,7 +87,8 @@ function ReviewPhotos({ photos, setPhotos }) {
   return (
     <div className="reviewPhotos">
       <h2>
-        사진 <span>최대 5장</span>
+        사진{' '}
+        <span style={{ fontSize: '12px', marginLeft: '4px' }}>최대 5장</span>
       </h2>
 
       <div className="reviewPhotosRow">

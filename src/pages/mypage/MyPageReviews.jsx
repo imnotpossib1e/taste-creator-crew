@@ -12,12 +12,19 @@ function MyPageReviews({
   saveReview,
   deleteReview,
 }) {
+  if (reviews.length === 0) {
+    return (
+      <div className="frame-8-10" role="tabpanel">
+        <p role="status">작성한 리뷰가 없습니다.</p>
+      </div>
+    );
+  }
   return (
     <div className="frame-8-10" role="tabpanel">
       {reviews.length === 0 ? (
         <p role="status">작성한 리뷰가 없습니다.</p>
       ) : (
-        reviews.map((review) => (
+        reviews.map(review => (
           <div className="frame-8-11" key={review.id}>
             <div className="frame-8-12">
               <div className="frame-8-13">
@@ -34,9 +41,7 @@ function MyPageReviews({
                 <textarea
                   aria-label="리뷰 수정"
                   value={draftReview}
-                  onChange={(event) =>
-                    setDraftReview(event.target.value)
-                  }
+                  onChange={event => setDraftReview(event.target.value)}
                   rows={3}
                   style={{
                     width: '100%',
@@ -45,7 +50,21 @@ function MyPageReviews({
                   }}
                 />
               ) : (
-                <p className="layer--6">{review.text}</p>
+                <div className="myPageReviewWrap">
+                  <p className="layer--6">{review.text}</p>
+                  {review.images?.length > 0 && (
+                    <div className="myPageReviewImageWrap">
+                      {review.images.map((url, index) => (
+                        <img
+                          key={url}
+                          src={url}
+                          alt={`리뷰 사진 ${index + 1}`}
+                          className="myPageReviewPhoto"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
             <div className="frame-8-15">
