@@ -20,8 +20,7 @@ import {
 } from '../../hook/bookmark';
 import { getKakaoCategoryGroup } from '../../hook/kakaoApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectRestaurants } from '../../redux/store';
-import { updateStats } from '../../redux/store';
+import { selectRestaurants, updateStats } from '../../redux/store';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
@@ -53,10 +52,14 @@ function MyPage() {
 
   // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
   useEffect(() => {
+    // 화면을 떠난 뒤 늦게 도착한 응답이 state를 바꾸지 않게 한다
+    let ignore = false;
     const loadProfile = async () => {
+      // getSession은 저장된 세션을 읽어 서버 왕복이 없다 (비로그인은 라우트 로더가 이미 막음)
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
+        data: { session },
+      } = await supabase.auth.getSession();
+      const user = session?.user;
       if (!user) return;
       const { data, error } = await supabase
         .from('users')
@@ -67,11 +70,17 @@ function MyPage() {
         setFeedback('회원 정보를 불러오지 못했습니다.');
         return;
       }
+      if (ignore) return;
       setNickname(data.nickname);
       setProfileImage(data.profile_image);
 
+      // 리뷰와 북마크는 서로 상관없으니 동시에 요청한다
+      const reviewsReq = getMyReviews2(data.id);
+      const bookmarksReq = getMyBookmarks(data.id);
+
       try {
-        const myReviews = await getMyReviews2(data.id);
+        const myReviews = await reviewsReq;
+        if (ignore) return;
         setReviews(
           myReviews.map(review => {
             const created = new Date(review.created_at);
@@ -88,18 +97,8 @@ function MyPage() {
       }
 
       try {
-        const myBookmarks = await getMyBookmarks(data.id);
-        // 종류를 모르는 북마크(예전에 저장했거나 다른 기기에서 저장)는 카카오에서 찾아 기억해 둔다
-        const known = readBookmarkCategories();
-        await Promise.all(
-          myBookmarks
-            .filter(b => !known[b.place_id] && b.place_name)
-            .map(b =>
-              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
-                .then(group => rememberBookmarkCategory(b.place_id, group))
-                .catch(() => {}), // 못 찾으면 기본 이미지
-            ),
-        );
+        const myBookmarks = await bookmarksReq;
+        if (ignore) return;
         setBookmarks(
           myBookmarks.map(bookmark => ({
             id: bookmark.id,
@@ -110,11 +109,29 @@ function MyPage() {
             memo: bookmark.content,
           })),
         );
+
+        // 종류를 모르는 북마크(예전에 저장했거나 다른 기기에서 저장)는 목록을 먼저 보여준 뒤
+        // 카카오에서 찾아 기억해 두고, 끝나면 이미지를 다시 그린다
+        const known = readBookmarkCategories();
+        Promise.all(
+          myBookmarks
+            .filter(b => !known[b.place_id] && b.place_name)
+            .map(b =>
+              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
+                .then(group => rememberBookmarkCategory(b.place_id, group))
+                .catch(() => {}), // 못 찾으면 기본 이미지
+            ),
+        ).then(() => {
+          if (!ignore) setBookmarks(current => [...current]);
+        });
       } catch {
         setFeedback('북마크를 불러오지 못했습니다.');
       }
     };
     loadProfile();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const beginEditing = review => {
