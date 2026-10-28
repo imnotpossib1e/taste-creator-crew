@@ -17,7 +17,6 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  flex: 0;
   gap: 0;
   padding: 0px 0px 0px 0px;
   justify-content: flex-start;
