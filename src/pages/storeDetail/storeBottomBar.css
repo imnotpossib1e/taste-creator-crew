@@ -1,0 +1,41 @@
+/* 하단 고정 바 - 피그마 bottom-bar, 흰 배경이 없으면 뒤 내용이 비침 */
+.storeBottomBar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: #ffffff;
+}
+
+/* 북마크 - 50x50 */
+.storeBottomBarSave {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 리뷰 쓰기 - 남은 폭 전부 */
+.storeBottomBarWrite {
+  flex: 1;
+  height: 50px;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  background: #0f766e;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}

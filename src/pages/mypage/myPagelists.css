@@ -1,0 +1,54 @@
+.page8 .place-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.page8 .place-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.page8 .place-thumb {
+  align-self: flex-start;
+  flex: 0 0 14px;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+.page8 .place-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.page8 .place-name {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 700;
+}
+.page8 .place-meta,
+.page8 .place-memo {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 12px;
+}
+.page8 .place-category {
+  margin-right: 6px;
+  color: #111827;
+}
+.page8 .place-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 700;
+}

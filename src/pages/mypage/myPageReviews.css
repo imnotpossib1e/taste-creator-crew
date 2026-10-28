@@ -1,0 +1,437 @@
+.page8 .frame-8-10 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-11 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-12 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-13 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer--5 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 16px;
+  font-weight: 700;
+}
+.page8 .frame-8-14 {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .vector-4 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-5 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-6 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-7 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-8 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .layer--6 {
+  align-self: stretch;
+  width: 100%;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 14px;
+  font-weight: 400;
+}
+.page8 .frame-8-15 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer-10-12 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-8-16 {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .frame-18 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--7 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-19 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--8 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .vector-9 {
+  width: 100%;
+  height: 1px;
+  background: #f3f4f6;
+  border: 0;
+}
+.page8 .frame-9 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-17 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-18 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer--9 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 16px;
+  font-weight: 700;
+}
+.page8 .frame-8-19 {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .vector-10 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-11 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-12 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-13 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-14 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .layer--10 {
+  align-self: stretch;
+  width: 100%;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 14px;
+  font-weight: 400;
+}
+.page8 .frame-8-20 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer-10-12-2 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-8-21 {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .frame-18-2 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--11 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-19-2 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--12 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .vector-15 {
+  width: 100%;
+  height: 1px;
+  background: #f3f4f6;
+  border: 0;
+}
+.page8 .frame-10-2 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-22 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page8 .frame-8-23 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer--13 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 16px;
+  font-weight: 700;
+}
+.page8 .frame-8-24 {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .vector-16 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-17 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-18 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-19 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .vector-20 {
+  width: 12px;
+  height: 12px;
+  background: #f59e0b;
+  clip-path: polygon(50% 0, 62% 35%, 98% 38%, 70% 60%, 80% 95%, 50% 75%, 20% 95%, 30% 60%, 2% 38%, 38% 35%);
+}
+.page8 .layer--14 {
+  align-self: stretch;
+  width: 100%;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 14px;
+  font-weight: 400;
+}
+.page8 .frame-8-25 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 0px 0px 0px 0px;
+  justify-content: space-between;
+  align-items: center;
+}
+.page8 .layer-10-12-3 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-8-26 {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.page8 .frame-18-3 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--15 {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .frame-19-3 {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 4px 4px 4px;
+  justify-content: center;
+  align-items: center;
+}
+.page8 .layer--16 {
+  color: #6b7280;
+  font-family: 'Noto Sans KR';
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+}
+.page8 .layer--5,
+.page8 .layer--9,
+.page8 .layer--13 {
+  white-space: nowrap;
+}/* 활성 탭 밑줄 (탭 3개 공통) */

@@ -1,0 +1,195 @@
+import { useEffect, useState } from 'react';
+import { supabase } from '../../utils/superbase';
+import MyPageAppBar from './MyPageAppBar';
+import MyPageProfile from './MyPageProfile';
+import MyPageTabs from './MyPageTabs';
+import MyPageReviews from './MyPageReviews';
+import MyPagePlaces from './MyPagelists';
+import MyPageSettings from './MyPageSettings';
+import './myPage.css';
+import {
+  getMyReviews2,
+  updateMyReview2,
+  deleteMyReview2,
+} from '../../hook/review';
+
+// 마이페이지 - 섹션 컴포넌트를 순서대로 조립
+function MyPage() {
+  const [activeTab, setActiveTab] = useState('reviews');
+  const [nickname, setNickname] = useState('연남산책');
+  const [neighborhood, setNeighborhood] = useState('내 동네 연남동');
+  const [profileImage, setProfileImage] = useState(null);
+  const [profileEditing, setProfileEditing] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const [editingReviewId, setEditingReviewId] = useState(null);
+  const [draftReview, setDraftReview] = useState('');
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
+  const setFeedback = message => {
+    if (message) window.alert(message);
+  };
+
+  // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
+  useEffect(() => {
+    const loadProfile = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, nickname, profile_image')
+        .eq('auth_id', user.id)
+        .single();
+      if (error) {
+        setFeedback('회원 정보를 불러오지 못했습니다.');
+        return;
+      }
+      setNickname(data.nickname);
+      setProfileImage(data.profile_image);
+
+      try {
+        const myReviews = await getMyReviews2(data.id);
+        setReviews(
+          myReviews.map(review => {
+            const created = new Date(review.created_at);
+            return {
+              id: review.id,
+              restaurant: review.place_name ?? '가게 정보 없음',
+              text: review.content,
+              date: `${created.getMonth() + 1}월 ${created.getDate()}일`,
+            };
+          }),
+        );
+      } catch {
+        setFeedback('리뷰를 불러오지 못했습니다.');
+      }
+    };
+    loadProfile();
+  }, []);
+
+  const beginEditing = review => {
+    setEditingReviewId(review.id);
+    setDraftReview(review.text);
+    setFeedback('');
+  };
+
+  const saveReview = async reviewId => {
+    if (!draftReview.trim()) {
+      setFeedback('리뷰 내용을 입력해 주세요.');
+      return;
+    }
+    try {
+      await updateMyReview2(reviewId, draftReview.trim());
+    } catch {
+      setFeedback('리뷰 수정에 실패했습니다.');
+      return;
+    }
+
+    setReviews(current =>
+      current.map(review =>
+        review.id === reviewId
+          ? { ...review, text: draftReview.trim() }
+          : review,
+      ),
+    );
+    setEditingReviewId(null);
+  };
+
+  const deleteReview = async reviewId => {
+    try {
+      await deleteMyReview2(reviewId);
+    } catch {
+      setFeedback('리뷰 삭제에 실패했습니다.');
+      return;
+    }
+    setReviews(current => current.filter(review => review.id !== reviewId));
+    if (editingReviewId === reviewId) setEditingReviewId(null);
+    setFeedback('리뷰를 삭제했습니다.');
+  };
+
+  /* const handleInstall = async () => {
+    if (!installPrompt) {
+      setFeedback(
+        '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
+      );
+      return;
+    }
+
+    await installPrompt.prompt();
+    const choice = await installPrompt.userChoice;
+    setFeedback(
+      choice.outcome === 'accepted'
+        ? '앱 설치를 진행합니다.'
+        : '앱 설치를 취소했습니다.',
+    );
+    setInstallPrompt(null);
+  }; */
+
+  // MyPage.jsx
+  const handleInstall = async () => {
+    const prompt = window.deferredInstallPrompt;
+    if (!prompt) {
+      setFeedback(
+        '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
+      );
+      return;
+    }
+    await prompt.prompt();
+    const choice = await prompt.userChoice;
+    setFeedback(
+      choice.outcome === 'accepted'
+        ? '앱 설치를 진행합니다.'
+        : '앱 설치를 취소했습니다.',
+    );
+    window.deferredInstallPrompt = null;
+  };
+
+  return (
+    <div className="layer-1 page8">
+      <div className="frame-8">
+        <MyPageAppBar />
+        <div className="frame-8-2">
+          <MyPageProfile
+            nickname={nickname}
+            setNickname={setNickname}
+            neighborhood={neighborhood}
+            setNeighborhood={setNeighborhood}
+            profileEditing={profileEditing}
+            setProfileEditing={setProfileEditing}
+            setFeedback={setFeedback}
+            profileImage={profileImage}
+          />
+          <div className="frame-8-6">
+            <MyPageTabs
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              reviewCount={reviews.length}
+            />
+            {activeTab === 'reviews' ? (
+              <MyPageReviews
+                reviews={reviews}
+                editingReviewId={editingReviewId}
+                setEditingReviewId={setEditingReviewId}
+                draftReview={draftReview}
+                setDraftReview={setDraftReview}
+                beginEditing={beginEditing}
+                saveReview={saveReview}
+                deleteReview={deleteReview}
+              />
+            ) : (
+              <MyPagePlaces activeTab={activeTab} />
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="divider"></div>
+      <MyPageSettings
+        notificationsEnabled={notificationsEnabled}
+        setNotificationsEnabled={setNotificationsEnabled}
+        handleInstall={handleInstall}
+      />
+    </div>
+  );
+}
+export default MyPage;

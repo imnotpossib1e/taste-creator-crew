@@ -1,0 +1,11 @@
+/* 인기 순위 페이지 전체 - App(100dvh) 안에서 탭바를 뺀 남은 높이만 차지하고, 넘치면 여기서 스크롤 */
+.ranking {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* 피그마 Content 프레임: 좌우 패딩 20 */
+.rankingContent {
+  padding: 0 20px;
+}

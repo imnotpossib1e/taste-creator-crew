@@ -1,0 +1,120 @@
+/* 리뷰 섹션 - 위쪽 8px 회색 띠는 피그마 divider */
+/* 카카오 iframe 맨 아래 "앱 열기" 배너(약 84px)를 덮도록 위로 끌어올림 - iframe 안은 직접 숨길 수 없음 */
+/* iframe 높이(storeInfo.css)를 바꾸면 이 값도 같이 확인 */
+.storeReviews {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-top: -85px;
+  padding: 22px 20px 0;
+  background: #ffffff;
+  min-height: 0;
+}
+
+/* 리뷰 128 + 리뷰 쓰기 */
+.storeReviewsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.storeReviewsHeader > h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.storeReviewsHeader > button {
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #0f766e;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.storeReviews > ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+/* 리뷰 하나 - 구분선은 스크린샷 기준 (export에는 없음) */
+.reviewItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 8px 16px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* 작성자 + 날짜 */
+.reviewAuthor {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.reviewAuthor > strong {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.reviewAuthor > span {
+  font-size: 13px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #6b7280;
+}
+
+.reviewStars {
+  display: flex;
+  gap: 2px;
+}
+
+.reviewText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+/* 리뷰 사진 (사진 연결 전까지 회색 박스) */
+.reviewPhotos {
+  display: flex;
+  gap: 6px;
+}
+
+.reviewPhotos > div {
+  width: 76px;
+  height: 76px;
+  background: #f3f4f6;
+  border-radius: 6px;
+}
+
+/* 리뷰가 하나도 없을 때 안내 - 날짜(.reviewAuthor > span)와 같은 회색 */
+.storeReviewsEmpty {
+  margin: 0;
+  padding: 24px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #6b7280;
+  text-align: center;
+}

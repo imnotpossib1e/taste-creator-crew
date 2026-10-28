@@ -1,0 +1,50 @@
+.resItemWrap {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.resItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.itemTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resInfo {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: gray;
+}
+.itemName {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.itemName span {
+  color: gray;
+  font-size: 12px;
+}
+
+.resItemwrap {
+  display: flex;
+  gap: 16px;
+}
+
+.itemImg {
+  width: 48px;
+  height: 48px;
+}
+.resItemLink {
+  color: inherit;
+  text-decoration: none;
+}

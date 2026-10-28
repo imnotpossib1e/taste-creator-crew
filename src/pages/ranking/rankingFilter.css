@@ -1,0 +1,67 @@
+/* 정렬 줄 - 기간 문구를 빼서 정렬 버튼만 오른쪽에 둔다 */
+.rankingFilter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* 드롭다운 위치 기준점 */
+.rankingSort {
+  position: relative;
+}
+
+/* 정렬 버튼 - 줄 높이는 위아래 padding 12px에서 나옴 */
+.rankingSortButton {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: inherit;
+  color: #111827;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 펼쳤을 때 화살표 위로 */
+.rankingSortButton.open > svg {
+  transform: rotate(180deg);
+}
+
+/* 펼쳐진 목록 - 아래 순위 목록을 밀지 않고 위에 떠 있음 (피그마 디자인 없음, 임시 스타일) */
+.rankingSortMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 120px;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid #ebebeb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.rankingSortMenu button {
+  width: 100%;
+  padding: 10px 16px;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: inherit;
+  color: #6b7280;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.rankingSortMenu button.active {
+  font-weight: 700;
+  color: #111827;
+}

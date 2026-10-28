@@ -1,0 +1,37 @@
+.page7 .frame-10-2 {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0px 0px 0px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.page7 .layer--2 {
+  align-self: stretch;
+  width: 100%;
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 14px;
+  font-weight: 400;
+}
+.page7 .frame-12 {
+  align-self: stretch;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 14px 14px 14px 14px;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+.page7 .yeonnam-example-com {
+  color: #111827;
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: 400;
+}
