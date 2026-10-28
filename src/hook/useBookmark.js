@@ -7,6 +7,7 @@ import {
   deleteBookmarkByPlace,
   getMyBookmarks,
   insertBookmark,
+  rememberBookmarkCategory,
 } from './bookmark';
 
 // Postgres 중복 에러 코드 - bookmarks의 (user_id, place_id) unique 제약 = 이미 저장한 가게
@@ -62,7 +63,7 @@ export function useBookmark() {
       removeSavedId(store.id);
       setBookmarkCount(store, Math.max(store.bookmark_count - 1, 0));
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert('저장을 취소하지 못했어요. 다시 시도해 주세요.');
     }
   };
@@ -91,6 +92,7 @@ export function useBookmark() {
         placeName: sheetStore.name,
         content: memo,
       });
+      rememberBookmarkCategory(sheetStore.id, sheetStore.category_group);
       addSavedId(sheetStore.id);
       setBookmarkCount(sheetStore, sheetStore.bookmark_count + 1);
       closeSheet();

@@ -1,32 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  reset,
   resetSearch,
   selectVisibleRestaurants,
-  setRestaurant,
   setSearchRestaurant,
 } from '../../redux/store';
 import './mainMap.css';
-import { ChefHat, CookingPot, Soup, Utensils } from 'lucide-react';
-import {
-  getKakaoCafes,
-  getKakaoRestaurants,
-  getKakaoSearchCafe,
-  getKakaoSearchRes,
-} from '../../hook/kakaoApi';
+import { getKakaoSearchCafe, getKakaoSearchRes } from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
-import PlaceCard from './PlaceCard';
-import { getRestaurantStats } from '../../hook/restaurant';
-import CategoryButton from './CategoryButton';
 
-const CATEGORY_MAP = {
-  한식: <CookingPot />,
-  중식: <Soup />,
-  일식: <ChefHat />,
-  양식: <Utensils />,
-};
+import CategoryButton from './CategoryButton';
 
 export default function MainMap() {
   const mapRef = useRef(null);
@@ -78,52 +62,6 @@ export default function MainMap() {
       new naver.maps.LatLng(position.y, position.x),
     );
   }, [position]);
-
-  // 상점 리스트 불러오기
-  useEffect(() => {
-    if (!position) return;
-    // 위치가 빨리 바뀌는 경우 이전 응답이 최신 결과를 덮어쓰는 것 방지
-    let ignore = false;
-
-    const fetchList = async () => {
-      try {
-        const [food, cafe] = await Promise.all([
-          getKakaoRestaurants({ x: position.x, y: position.y }),
-          getKakaoCafes({ x: position.x, y: position.y }),
-        ]);
-
-        const restaurants = await getRestaurantStats(
-          [...food, ...cafe].map(item => {
-            const [, group = '', desc = ''] = item.category_name.split(' > ');
-            return {
-              id: item.id,
-              name: item.place_name,
-              category: item.category_group_name, // 음식점 / 카페
-              category_group: group, // 한식/중식/
-              description: desc, // 커피전문점
-              address: item.road_address_name,
-              distance: item.distance,
-              x: item.x,
-              y: item.y,
-            };
-          }),
-        );
-        // 응답 결과 저장
-        if (ignore) return;
-
-        // restaurants.forEach(item => console.log(item));
-
-        dispatch(setRestaurant(restaurants));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchList();
-
-    return () => {
-      ignore = true;
-    };
-  }, [position, dispatch]);
 
   // 마크 그리기 (카카오맵 방식: 겹치는 이름표는 숨기고 점으로)
   useEffect(() => {
@@ -286,7 +224,6 @@ export default function MainMap() {
           };
         });
 
-        // restaurants.forEach(item => console.log(item));
 
         dispatch(setSearchRestaurant(restaurants));
       } catch (err) {
@@ -316,12 +253,6 @@ export default function MainMap() {
     }
     contentRef.current?.focus();
   };
-  // 선택 해제 (카드 닫기 버튼용)
-  /*   const closePlace = () => {
-    selectedMarker.current = null;
-    setSelectedPlace(null);
-    layoutRef.current?.(); // 마커 강조도 원래대로
-  }; */
 
   return (
     <main className="main-map-page">

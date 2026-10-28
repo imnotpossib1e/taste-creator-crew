@@ -1,27 +1,43 @@
 import { Bookmark } from 'lucide-react';
 import './myPagelists.css';
-import { bookmarkedPlaces } from './myPageConstants';
+
+// 카테고리 이미지는 RestaurantItem과 같은 매핑
+const CATEGORY_IMG = {
+  한식: 'korean.svg',
+  중식: 'chinese.svg',
+  일식: 'japanese.svg',
+  양식: 'american.svg',
+  카페: 'cafe.svg',
+  분식: 'snack.svg',
+  default: 'default.svg',
+};
 
 // 북마크 목록
-function MyPagelists() {
+function MyPagelists({ bookmarks, onDelete }) {
   return (
     <ul className="place-list" role="tabpanel">
-      {bookmarkedPlaces.map((place) => (
+      {bookmarks.length === 0 && <p role="status">북마크한 가게가 없습니다.</p>}
+      {bookmarks.map((place) => (
         <li className="place-item" key={place.id}>
-          <span className="place-thumb"></span>
+          <img
+            src={`/${CATEGORY_IMG[place.category] ?? CATEGORY_IMG.default}`}
+            alt={place.category ?? ''}
+            className="place-thumb"
+          />
           <div className="place-info">
             <p className="place-name">{place.name}</p>
-            <p className="place-meta">
-              <span className="place-category">
-                {place.category}
-              </span>
-              {place.area}
-            </p>
             {place.memo && (
               <p className="place-memo">{place.memo}</p>
             )}
           </div>
-          <Bookmark size={16} fill="#111827" />
+          <button
+            type="button"
+            className="place-bookmark"
+            aria-label="북마크 삭제"
+            onClick={() => onDelete(place)}
+          >
+            <Bookmark size={16} fill="#111827" />
+          </button>
         </li>
       ))}
     </ul>

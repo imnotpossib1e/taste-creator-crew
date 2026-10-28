@@ -1,16 +1,38 @@
 import { supabase } from '../utils/superbase';
 import { ensureRestaurant } from './restaurant';
-
 // 내 북마크 목록 - 최신순 (저장 탭용)
+// select('*')라 bookmarks 행의 모든 컬럼(종류 컬럼 포함)이 그대로 온다
 export async function getMyBookmarks(userId) {
   const { data, error } = await supabase
     .from('bookmarks')
-    .select('id, place_id, place_name, content, created_at')
+    .select('*')
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
   if (error) throw error;
   return data;
+}
+
+// bookmarks 테이블에 종류 컬럼이 없어서, 저장할 때 가게 종류를 브라우저에 기억해 마이페이지 이미지에 쓴다
+const CATEGORY_KEY = 'bookmarkCategory';
+
+export function readBookmarkCategories() {
+  try {
+    return JSON.parse(localStorage.getItem(CATEGORY_KEY)) ?? {};
+  } catch {
+    return {};
+  }
+}
+
+export function rememberBookmarkCategory(placeId, category) {
+  try {
+    const map = readBookmarkCategories();
+    if (category) map[placeId] = category;
+    else delete map[placeId];
+    localStorage.setItem(CATEGORY_KEY, JSON.stringify(map));
+  } catch {
+    // 저장소를 못 써도 이미지만 기본값이 될 뿐이라 무시
+  }
 }
 
 // insert

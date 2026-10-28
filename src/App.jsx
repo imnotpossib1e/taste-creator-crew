@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { restoreUser } from './redux/authSlice';
 import './App.css';
 import BottomNav from './components/BottomNav';
+import { useLoadRestaurants } from './hook/useLoadRestaurants';
 
 function App() {
   const dispatch = useDispatch();
@@ -12,6 +13,9 @@ function App() {
   useEffect(() => {
     dispatch(restoreUser());
   }, [dispatch]);
+
+  // 새로고침해도 주변 가게 목록을 다시 불러와 스토어에 채움
+  useLoadRestaurants();
 
   return (
     <div className="App">

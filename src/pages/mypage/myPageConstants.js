@@ -19,38 +19,6 @@ export const initialReviews = [
   },
 ];
 
-// 북마크 목록은 API 연결 전까지 시안용 고정 데이터
-export const bookmarkedPlaces = [
-  {
-    id: 1,
-    name: '소소한 스시',
-    category: '일식',
-    area: '연남동',
-    memo: '26일 날 저녁약속'
-  },
-  {
-    id: 2,
-    name: '합정 파스타',
-    category: '양식',
-    area: '합정동',
-    memo: '친구 생일에 가기',
-  },
-  {
-    id: 3,
-    name: '을지로 바',
-    category: '주점',
-    area: '을지로',
-    memo: '퇴근 후 가볍게 한 잔',
-  },
-  {
-    id: 4,
-    name: '한남 베이커리',
-    category: '디저트',
-    area: '한남동',
-    memo: '주말 아침에 방문하기',
-  },
-];
-
 export const buttonStyle = {
   border: 0,
   background: 'transparent',
