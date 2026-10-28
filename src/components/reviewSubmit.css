@@ -2,6 +2,7 @@
 /* sticky: 스크롤되는 폼(.reviewForm) 안에서 맨 아래에 붙어 있다 - 하단 탭바 위에 놓임 */
 /* (fixed는 화면 맨 아래 기준이라 탭바에 가려졌음) */
 .reviewSubmit {
+  flex-shrink: 0; /* 헤더와 같은 이유 - 내용이 길어도 버튼 바 높이 유지 */
   position: sticky;
   bottom: 0;
   box-sizing: border-box;
