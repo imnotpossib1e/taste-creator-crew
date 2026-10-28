@@ -12,7 +12,6 @@ import { selectCurrentUser } from '../../redux/authSlice.js';
 import { useEffect, useState } from 'react';
 import { getStoreReviews } from '../../hook/review.js';
 
-
 function StoreDetail() {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
@@ -57,17 +56,23 @@ function StoreDetail() {
     fetchReviews();
   }, []);
 
+  // 새로고침 등으로 redux 가게 목록이 비면 restaurant가 없어서, 아래에서 restaurant.name을 읽다가 화면이 깨진다
+  // 리뷰 쓰기/수정 페이지처럼 안내만 보여준다 - 훅 규칙 때문에 모든 훅 아래, return 위에 둔다
+  if (!restaurant) {
+    return (
+      <p className="storeDetailEmpty">
+        가게 정보를 불러올 수 없어요. 지도에서 다시 선택해 주세요.
+      </p>
+    );
+  }
+
   return (
     <div className="storeDetail">
       <StoreDetailHeader restaurantName={restaurant.name} />
 
       <div className="storeDetailContent">
         <StoreInfo placeId={id} reviews={reviews} restaurant={restaurant} />
-        <StoreReviews
-          placeId={id}
-          reviews={reviews}
-          onWriteReview={handleWriteReview}
-        />
+        <StoreReviews placeId={id} reviews={reviews} />
       </div>
 
       <StoreBottomBar
