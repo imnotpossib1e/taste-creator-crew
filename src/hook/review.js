@@ -66,6 +66,23 @@ export async function getMyReviews(userId) {
   return data;
 }
 
+// 이 가게 리뷰 사진 중 가장 최근 1장의 주소 - 없으면 null (랜덤 추천 화면용)
+// image_url이 null(사진 기능 전 리뷰)인 건 DB에서 거르고,
+// "[]"(사진 없이 쓴 리뷰)도 있어서 최근 몇 개를 가져와 펼친 뒤 첫 사진을 쓴다
+export async function getStorePhoto(placeId) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('image_url')
+    .eq('place_id', placeId)
+    .not('image_url', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(5);
+
+  if (error) throw error;
+  // [["a.jpg","b.jpg"], [], ["c.jpg"]] → ["a.jpg","b.jpg","c.jpg"] → 첫 번째
+  return data.flatMap(row => JSON.parse(row.image_url))[0] ?? null;
+}
+
 // 리뷰 하나 - 수정 페이지에서 기존 내용 채울 때
 export async function getReview(reviewId) {
   const { data, error } = await supabase
