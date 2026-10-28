@@ -1,11 +1,9 @@
 /* 하단 고정 바 - 피그마 bottom-bar, 흰 배경이 없으면 뒤 내용이 비침 */
+/* sticky: 스크롤되는 폼(.reviewForm) 안에서 맨 아래에 붙어 있다 - 하단 탭바 위에 놓임 */
+/* (fixed는 화면 맨 아래 기준이라 탭바에 가려졌음) */
 .reviewSubmit {
-  position: fixed;
-  right: 0;
+  position: sticky;
   bottom: 0;
-  left: 0;
-  max-width: 430px; /* App.css의 .App max-width와 같은 값 - fixed는 화면 기준이라 따로 제한 */
-  margin: 0 auto;
   box-sizing: border-box;
   padding: 10px 16px 18px;
   background: #ffffff;
