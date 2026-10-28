@@ -10,10 +10,11 @@
 .page6 .layer- {
   align-self: stretch;
   width: auto;
-  color: #111827;
-  font-family: 'Noto Sans KR';
-  font-size: 26px;
-  font-weight: 700;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 .page6 .frame-8 {
   align-self: stretch;
@@ -28,8 +29,8 @@
 .page6 .layer--2 {
   align-self: stretch;
   width: auto;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
   white-space: nowrap;
@@ -37,9 +38,19 @@
 .page6 .layer--3 {
   align-self: stretch;
   width: auto;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
   white-space: nowrap;
+}
+
+/* 제목 위 앱 로고 */
+.page6 .layer-::before {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  background: url('/icon.svg') center / contain no-repeat;
 }

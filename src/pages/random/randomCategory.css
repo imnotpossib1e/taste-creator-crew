@@ -8,10 +8,10 @@
 .randomCategory > h2 {
   margin: 0;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text);
 }
 
 /* 칩 묶음 - 공간이 부족하면 다음 줄로 (gap은 가로/세로 모두 적용) */
@@ -26,19 +26,21 @@
   padding: 0 14px;
   font-family: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: #111827;
-  background: #ffffff;
-  border: 1px solid #ebebeb;
-  border-radius: 6px;
+  color: var(--color-text-sub);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
   cursor: pointer;
 }
 
 /* 선택된 칩 - 피그마 export는 테두리 #000000이지만 배경색과 맞춤 */
 .randomCategoryChips > button.active {
   color: #ffffff;
-  background: #0f766e;
-  border-color: #0f766e;
+  background: var(--gradient-primary);
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: var(--shadow-button);
 }

@@ -5,9 +5,10 @@
   align-items: center;
   height: 56px;
   padding: 0 8px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
   z-index: 1000;
-  background-color: white;
+  flex-shrink: 0; /* 세로 flex 안에서 높이가 줄어들지 않게 */
+  background-color: var(--color-surface);
 }
 
 /* 닫기 - 아이콘은 22지만 누르는 영역은 44x44 */
@@ -18,7 +19,7 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  color: #111827;
+  color: var(--color-text);
   background: none;
   border: none;
   cursor: pointer;
@@ -31,9 +32,9 @@
 
 .storeDetailHeader > h1 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   line-height: 1.45;
-  letter-spacing: -0.01em;
-  color: #111827;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
 }

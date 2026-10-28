@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 20px;
+  padding: 20px 20px 32px;
   justify-content: flex-start;
   align-items: flex-start;
 }
@@ -12,10 +12,13 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0px 0px 0px 0px;
+  gap: 0;
+  padding: 4px 16px;
   justify-content: flex-start;
   align-items: flex-start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
 }
 .page8 .frame-8-28 {
   align-self: stretch;
@@ -28,8 +31,8 @@
   align-items: center;
 }
 .page8 .layer--17 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
 }
@@ -43,7 +46,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 50px;
-  background: #0f766e;
+  background: var(--color-primary);
 }
 .page8 .vector-21 {
   width: 20px;
@@ -51,11 +54,13 @@
   border-radius: 50%;
   background: #ffffff;
 }
+/* 카드 안이라 맨 위 선은 숨김 */
 .page8 .vector-22 {
   width: 100%;
   height: 1px;
-  background: #f3f4f6;
+  background: var(--color-surface-sub);
   border: 0;
+  display: none;
 }
 .page8 .frame-8-29 {
   align-self: stretch;
@@ -66,12 +71,13 @@
   padding: 0px 0px 0px 0px;
   justify-content: space-between;
   align-items: center;
+  height: 52px;
 }
 .page8 .layer--18 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
 }
 .page8 .group {
   display: block;
@@ -86,22 +92,23 @@
   width: 7px;
   height: 7px;
   border: 0;
-  border-top: 1.2px solid #6b7280;
-  border-right: 1.2px solid #6b7280;
+  border-top: 1.2px solid var(--color-text-sub);
+  border-right: 1.2px solid var(--color-text-sub);
   transform: rotate(45deg);
 }
 .page8 .vector-24 {
   width: 100%;
   height: 1px;
-  background: #f3f4f6;
+  background: var(--color-border);
   border: 0;
 }
 .page8 .layer--19 {
   align-self: stretch;
   width: 100%;
   text-align: left;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-danger);
+  font-family: inherit;
   font-size: 15px;
-  font-weight: 400;
-}/* 좋아요 / 북마크 목록 */
+  font-weight: 600;
+  height: 52px;
+} /* 좋아요 / 북마크 목록 */

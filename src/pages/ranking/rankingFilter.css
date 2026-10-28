@@ -15,16 +15,22 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 12px 0;
+  margin: 12px 0;
+  padding: 6px 10px 6px 14px;
   font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: inherit;
-  color: #111827;
-  background: none;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
   border: none;
+  border-radius: 999px;
   cursor: pointer;
+}
+
+.rankingSortButton > svg {
+  transition: transform 0.2s;
 }
 
 /* 펼쳤을 때 화살표 위로 */
@@ -42,10 +48,10 @@
   margin: 0;
   padding: 4px 0;
   list-style: none;
-  background: #ffffff;
-  border: 1px solid #ebebeb;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(31, 36, 33, 0.12);
 }
 
 .rankingSortMenu button {
@@ -54,7 +60,7 @@
   font-family: inherit;
   font-size: 14px;
   letter-spacing: inherit;
-  color: #6b7280;
+  color: var(--color-text-sub);
   text-align: left;
   background: none;
   border: none;
@@ -63,5 +69,5 @@
 
 .rankingSortMenu button.active {
   font-weight: 700;
-  color: #111827;
+  color: var(--color-primary);
 }

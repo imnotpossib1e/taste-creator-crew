@@ -80,7 +80,47 @@
     url('/fonts/Pretendard-Thin.woff2') format('woff2');
 }
 
+/* 디자인 색 - 각 CSS에서 var(--이름)으로 가져다 쓴다 (한 곳만 바꾸면 앱 전체가 바뀜) */
+:root {
+  /* 메인 청록 - 버튼, 선택된 탭·칩 */
+  --color-primary: #0f766e;
+  --color-primary-light: #14b8a6;
+  --color-primary-soft: #e6f4f1;
+  /* 따뜻한 포인트 주황 - 순위 배지, 강조 */
+  --color-accent: #ff7a45;
+  --color-accent-soft: #fff1ea;
+  --color-star: #ffb020;
+  --color-danger: #e5484d;
+
+  /* 글자 - 새까만 대신 살짝 따뜻한 진회색 */
+  --color-text: #1f2421;
+  --color-text-sub: #6f6a64;
+  --color-text-weak: #a8a29e;
+
+  /* 배경·선 */
+  --color-bg: #fbfaf7;
+  --color-surface: #ffffff;
+  --color-surface-sub: #f4f1ec;
+  --color-border: #ece7e0;
+
+  /* 그림자 - 청록빛이 살짝 도는 부드러운 그림자 */
+  --shadow-card: 0 4px 16px rgba(31, 36, 33, 0.06);
+  --shadow-button: 0 6px 14px rgba(15, 118, 110, 0.25);
+  --gradient-primary: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
+}
+
 body {
   font-family: 'Pretendard';
   margin: 0;
+  color: var(--color-text);
+  background: var(--color-surface-sub);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 제목은 자간을 좁혀 단단하게 */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.03em;
 }

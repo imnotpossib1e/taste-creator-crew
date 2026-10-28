@@ -3,14 +3,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 14px;
+  background: var(--color-primary-soft);
+  border-radius: 16px;
 }
 
 /* 썸네일 - 종류별 아이콘 (지도 목록과 같은 그림) */
 .reviewStoreThumb {
   flex-shrink: 0; /* 가게 이름이 길어도 아이콘이 찌그러지지 않게 */
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
+  width: 52px;
+  height: 52px;
+  padding: 6px;
+  box-sizing: border-box;
+  background: var(--color-surface);
+  border-radius: 14px;
 }
 
 /* 이름 위, 종류 아래 */
@@ -20,16 +26,16 @@
 }
 
 .reviewStoreInfo > strong {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #111827;
+  color: var(--color-text);
 }
 
 .reviewStoreInfo > span {
   font-size: 13px;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }

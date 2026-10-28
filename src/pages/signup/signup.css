@@ -70,7 +70,7 @@
   width: calc(100% + 40px);
   margin: 0 -20px;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
   border: 0;
 }
 .page7 .component-1 {
@@ -82,32 +82,38 @@
   padding: 0;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  background: #0f766e;
+  border-radius: 14px;
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-button);
 }
 .page7 .layer--16 {
   color: #ffffff;
-  font-family: 'Noto Sans KR';
+  font-family: inherit;
   font-size: 16px;
   font-weight: 700;
   text-align: center;
-}/* 체크박스: 입력창이 곧 20x20 박스, 체크되면 진한 배경 + 흰 체크 */
+} /* 체크박스: 입력창이 곧 20x20 박스, 체크되면 진한 배경 + 흰 체크 */
 .layer-1.page7 input[type='checkbox'] {
   appearance: none;
   width: 20px !important;
   height: 20px !important;
-  border: 1.5px solid #d1d5db;
+  border: 1.5px solid var(--color-border);
   border-radius: 4px;
   background: #ffffff center / 12px 12px no-repeat;
 }
 .layer-1.page7 input[type='checkbox']:checked {
-  border-color: #111827;
-  background-color: #111827;
+  border-color: var(--color-text);
+  background-color: var(--color-text);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3.5'/%3E%3C/svg%3E");
 }
 .layer-1.page7 input::placeholder {
-  color: #9ca3af;
+  color: var(--color-text-weak);
 }
 .layer-1.page7 button {
-  font-family: 'Noto Sans KR';
+  font-family: inherit;
+}
+
+/* 입력창 배경은 감싸는 칸(.frame-12 등)이 칠해서 안쪽 input은 투명 */
+.layer-1.page7 input:not([type='checkbox']) {
+  background: transparent;
 }

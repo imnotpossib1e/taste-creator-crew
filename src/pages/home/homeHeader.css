@@ -1,11 +1,28 @@
+/* 위는 연한 청록, 아래로 갈수록 배경색 → 아래 탭과 자연스럽게 이어진다 */
 .homeHeader {
-  padding: 20px;
+  padding: 28px 20px 16px;
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-soft) 0%,
+    var(--color-bg) 100%
+  );
 }
 
-/* 페이지 제목 - 기존 위치 버튼(연남동)과 같은 글자 크기 */
+/* 페이지 제목 - 위에 작은 라벨(CSS로 붙임) + 굵은 제목 */
 .homeTitle {
   margin: 0;
-  font-size: 24px;
-  line-height: 1.4;
-  font-weight: bold;
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.homeTitle::before {
+  content: '오늘의 먹을지도 PICK';
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
 }
