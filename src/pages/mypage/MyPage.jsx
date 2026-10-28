@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/superbase';
 import MyPageAppBar from './MyPageAppBar';
 import MyPageProfile from './MyPageProfile';
@@ -24,6 +25,7 @@ import { selectRestaurants, updateStats } from '../../redux/store';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('reviews');
   const [nickname, setNickname] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
@@ -134,10 +136,9 @@ function MyPage() {
     };
   }, []);
 
+  // 수정 - 별점·사진까지 고칠 수 있게 리뷰 수정 페이지로 이동 (가게 상세의 수정 버튼과 같은 페이지)
   const beginEditing = review => {
-    setEditingReviewId(review.id);
-    setDraftReview(review.text);
-    setFeedback('');
+    navigate(`/reviewEdit/${review.id}`);
   };
 
   const saveReview = async reviewId => {
