@@ -17,9 +17,9 @@ import {
 } from '../../hook/kakaoApi';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
-import CategoryButton from './categoryButton';
 import PlaceCard from './PlaceCard';
 import { getRestaurantStats } from '../../hook/restaurant';
+import CategoryButton from './CategoryButton';
 
 const CATEGORY_MAP = {
   한식: <CookingPot />,
