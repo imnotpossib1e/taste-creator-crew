@@ -2,7 +2,7 @@ import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './storeDetailHeader.css';
 
-function StoreDetailHeader() {
+function StoreDetailHeader({ restaurantName }) {
   const navigate = useNavigate();
 
   return (
@@ -15,7 +15,7 @@ function StoreDetailHeader() {
       >
         <X size={22} />
       </button>
-      <h1>연남 국밥집</h1>
+      <h1>{restaurantName}</h1>
       <div className="storeDetailSpacer" aria-hidden="true" />
     </header>
   );

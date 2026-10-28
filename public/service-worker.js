@@ -2,7 +2,7 @@
  * 1. 서비스 워커 설치 (최초 1회 실행)
  */
 self.addEventListener('install', event => {
-  console.log('서비스 워커가 설치되었습니다!');
+  // console.log('서비스 워커가 설치되었습니다!');
   // 대기 중인 서비스 워커를 즉시 활성화
   self.skipWaiting();
 });
@@ -11,7 +11,7 @@ self.addEventListener('install', event => {
  * 2. 서비스 워커 활성화
  */
 self.addEventListener('activate', event => {
-  console.log('서비스 워커가 활성화되었습니다!');
+  // console.log('서비스 워커가 활성화되었습니다!');
 });
 
 /**

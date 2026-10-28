@@ -1,0 +1,35 @@
+/* starRating.css */
+.starRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.starItem {
+  position: relative;
+  display: inline-block;
+}
+
+.starEmpty {
+  color: #d1d5db;
+}
+
+.starFillWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden; /* 비율만큼만 보이게 잘라냄 */
+}
+
+.starFilled {
+  color: #f59e0b;
+  fill: #f59e0b;
+}
+
+.starValue {
+  margin-left: 4px;
+  font-size: 0.875rem;
+  /* font-weight: 600; */
+  color: gray;
+}
