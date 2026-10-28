@@ -81,6 +81,8 @@ export async function updateMyReview(reviewId, review) {
   return data;
 }
 
+// ============
+
 // 내 리뷰 목록 - 최신순, 가게 이름 포함 (reviews.user_id = users.id)
 // 가게 이름은 외래 키 조인 대신 restaurants를 따로 조회해서 붙임 (조인 설정이 없어도 동작)
 export async function getMyReviews2(userId) {
@@ -92,21 +94,29 @@ export async function getMyReviews2(userId) {
 
   if (error) throw error;
 
-  const placeIds = [...new Set(reviews.map((review) => review.place_id))];
+  const placeIds = [...new Set(reviews.map(review => review.place_id))];
   const { data: places } = placeIds.length
     ? await supabase.from('restaurants').select('*').in('id', placeIds)
     : { data: [] };
-  const names = Object.fromEntries((places ?? []).map((place) => [place.id, place.place_name]));
+  const names = Object.fromEntries(
+    (places ?? []).map(place => [place.id, place.place_name]),
+  );
 
-  return reviews.map((review) => ({ ...review, restaurantName: names[review.place_id] }));
+  return reviews.map(review => ({
+    ...review,
+    restaurantName: names[review.place_id],
+  }));
 }
 
-export async function updateMyReview(reviewId, content) {
-  const { error } = await supabase.from('reviews').update({ content }).eq('id', reviewId);
+export async function updateMyReview2(reviewId, content) {
+  const { error } = await supabase
+    .from('reviews')
+    .update({ content })
+    .eq('id', reviewId);
   if (error) throw error;
 }
 // delete
-export async function deleteMyReview(reviewId) {
+export async function deleteMyReview2(reviewId) {
   const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
 
   if (error) throw error;

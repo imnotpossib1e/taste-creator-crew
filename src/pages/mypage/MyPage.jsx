@@ -7,7 +7,11 @@ import MyPageReviews from './MyPageReviews';
 import MyPagePlaces from './MyPagelists';
 import MyPageSettings from './MyPageSettings';
 import './myPage.css';
-import { getMyReviews, updateMyReview, deleteMyReview } from '../../hook/review';
+import {
+  getMyReviews2,
+  updateMyReview2,
+  deleteMyReview2,
+} from '../../hook/review';
 
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
@@ -20,16 +24,17 @@ function MyPage() {
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [draftReview, setDraftReview] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [installPrompt, setInstallPrompt] = useState(null);
   // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
-  const setFeedback = (message) => {
+  const setFeedback = message => {
     if (message) window.alert(message);
   };
 
   // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
   useEffect(() => {
     const loadProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
       const { data, error } = await supabase
         .from('users')
@@ -44,9 +49,9 @@ function MyPage() {
       setProfileImage(data.profile_image);
 
       try {
-        const myReviews = await getMyReviews(data.id);
+        const myReviews = await getMyReviews2(data.id);
         setReviews(
-          myReviews.map((review) => {
+          myReviews.map(review => {
             const created = new Date(review.created_at);
             return {
               id: review.id,
@@ -63,41 +68,26 @@ function MyPage() {
     loadProfile();
   }, []);
 
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault();
-      setInstallPrompt(event);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    return () => {
-      window.removeEventListener(
-        'beforeinstallprompt',
-        handleBeforeInstallPrompt,
-      );
-    };
-  }, []);
-
-  const beginEditing = (review) => {
+  const beginEditing = review => {
     setEditingReviewId(review.id);
     setDraftReview(review.text);
     setFeedback('');
   };
 
-  const saveReview = async (reviewId) => {
+  const saveReview = async reviewId => {
     if (!draftReview.trim()) {
       setFeedback('리뷰 내용을 입력해 주세요.');
       return;
     }
     try {
-      await updateMyReview(reviewId, draftReview.trim());
+      await updateMyReview2(reviewId, draftReview.trim());
     } catch {
       setFeedback('리뷰 수정에 실패했습니다.');
       return;
     }
 
-    setReviews((current) =>
-      current.map((review) =>
+    setReviews(current =>
+      current.map(review =>
         review.id === reviewId
           ? { ...review, text: draftReview.trim() }
           : review,
@@ -106,19 +96,19 @@ function MyPage() {
     setEditingReviewId(null);
   };
 
-  const deleteReview = async (reviewId) => {
+  const deleteReview = async reviewId => {
     try {
-      await deleteMyReview(reviewId);
+      await deleteMyReview2(reviewId);
     } catch {
       setFeedback('리뷰 삭제에 실패했습니다.');
       return;
     }
-    setReviews((current) => current.filter((review) => review.id !== reviewId));
+    setReviews(current => current.filter(review => review.id !== reviewId));
     if (editingReviewId === reviewId) setEditingReviewId(null);
     setFeedback('리뷰를 삭제했습니다.');
   };
 
-  const handleInstall = async () => {
+  /* const handleInstall = async () => {
     if (!installPrompt) {
       setFeedback(
         '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
@@ -134,6 +124,25 @@ function MyPage() {
         : '앱 설치를 취소했습니다.',
     );
     setInstallPrompt(null);
+  }; */
+
+  // MyPage.jsx
+  const handleInstall = async () => {
+    const prompt = window.deferredInstallPrompt;
+    if (!prompt) {
+      setFeedback(
+        '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
+      );
+      return;
+    }
+    await prompt.prompt();
+    const choice = await prompt.userChoice;
+    setFeedback(
+      choice.outcome === 'accepted'
+        ? '앱 설치를 진행합니다.'
+        : '앱 설치를 취소했습니다.',
+    );
+    window.deferredInstallPrompt = null;
   };
 
   return (

@@ -3,8 +3,11 @@ import { bookmarkedPlaces, buttonStyle } from './myPageConstants';
 
 // 탭 - 내 리뷰 / 북마크
 function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
-  const tabStyle = (selected) => ({
-    ...buttonStyle,
+  const tabStyle = selected => ({
+    border: 0,
+    background: 'transparent',
+    padding: 12,
+    cursor: 'pointer',
     color: selected ? '#0f766e' : undefined,
     fontWeight: selected ? 700 : undefined,
   });
@@ -25,8 +28,7 @@ function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
               <span
                 className="layer-3"
                 style={{
-                  color:
-                    activeTab === 'reviews' ? '#0f766e' : '#6b7280',
+                  color: activeTab === 'reviews' ? '#0f766e' : '#6b7280',
                   fontWeight: activeTab === 'reviews' ? 700 : 400,
                 }}
               >
