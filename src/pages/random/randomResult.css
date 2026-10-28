@@ -4,7 +4,6 @@
   flex-direction: column;
   gap: 6px;
   padding: 20px 0;
-  border-top: 1px solid #e5e7eb;
 }
 
 .randomResultCount {
@@ -15,11 +14,22 @@
   color: #6b7280;
 }
 
-/* 이미지 자리 - 세로 flex라 폭은 자동으로 꽉 참 */
+/* 이미지 자리 - 세로 flex라 폭은 자동으로 꽉 참, 사진이 없으면 아이콘을 가운데에 */
 .randomResultThumb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 200px;
+  overflow: hidden; /* 사진이 둥근 모서리 밖으로 안 나가게 */
   background: #f3f4f6;
   border-radius: 8px;
+}
+
+/* 리뷰 사진 - 비율 유지하면서 칸을 꽉 채우게 자름 */
+.randomResultThumb > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .randomResult > h2 {
@@ -34,7 +44,7 @@
 /* 메뉴 · 도보 · 별점 - 메뉴만 진하게 */
 .randomResultMeta {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   margin: 0;
   font-size: 14px;
   line-height: 1.6;

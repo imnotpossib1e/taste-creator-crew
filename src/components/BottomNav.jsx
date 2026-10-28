@@ -1,7 +1,5 @@
 import { CircleUser, House, MapIcon, Shuffle } from 'lucide-react';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { selectIsLoggedIn } from '../redux/authSlice';
 import './bottomNav.css';
 
 const MENUS = [
@@ -13,10 +11,11 @@ const MENUS = [
 export default function BottomNav() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  // 로그인 검사는 하지 않고 이동만 - 지도/홈/랜덤은 누구나 볼 수 있고,
+  // 마이페이지는 main.jsx의 loader가 Supabase 세션을 확인해서 로그인 화면으로 보낸다
   const handleMenu = to => {
     if (!to) return;
-    navigate(to === '/' || isLoggedIn ? to : '/login');
+    navigate(to);
   };
 
   // '/'는 정확히 일치할 때만, 나머지는 하위 경로(/mypage/edit 등)도 포함
