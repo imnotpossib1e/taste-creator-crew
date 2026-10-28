@@ -1,8 +1,8 @@
 import './myPageTabs.css';
-import { bookmarkedPlaces, buttonStyle } from './myPageConstants';
+import { buttonStyle } from './myPageConstants';
 
 // 탭 - 내 리뷰 / 북마크
-function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
+function MyPageTabs({ activeTab, setActiveTab, reviewCount, bookmarkCount }) {
   const tabStyle = selected => ({
     border: 0,
     background: 'transparent',
@@ -43,7 +43,7 @@ function MyPageTabs({ activeTab, setActiveTab, reviewCount }) {
               style={tabStyle(activeTab === 'bookmarks')}
               onClick={() => setActiveTab('bookmarks')}
             >
-              북마크 {bookmarkedPlaces.length}
+              북마크 {bookmarkCount}
             </button>
           </div>
         </div>

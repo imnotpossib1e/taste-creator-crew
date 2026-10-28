@@ -1,22 +1,16 @@
 import { Bookmark } from 'lucide-react';
 import './myPagelists.css';
-import { bookmarkedPlaces } from './myPageConstants';
 
 // 북마크 목록
-function MyPagelists() {
+function MyPagelists({ bookmarks }) {
   return (
     <ul className="place-list" role="tabpanel">
-      {bookmarkedPlaces.map((place) => (
+      {bookmarks.length === 0 && <p role="status">북마크한 가게가 없습니다.</p>}
+      {bookmarks.map((place) => (
         <li className="place-item" key={place.id}>
           <span className="place-thumb"></span>
           <div className="place-info">
             <p className="place-name">{place.name}</p>
-            <p className="place-meta">
-              <span className="place-category">
-                {place.category}
-              </span>
-              {place.area}
-            </p>
             {place.memo && (
               <p className="place-memo">{place.memo}</p>
             )}
