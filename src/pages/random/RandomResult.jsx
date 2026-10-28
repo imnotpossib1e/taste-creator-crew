@@ -26,7 +26,8 @@ function RandomResult({ count, onRetry, restaurant, onView }) {
       <div className="randomResultThumb" />
       <h2>{restaurant.name}</h2>
       <p className="randomResultMeta">
-        <span>{restaurant.description}</span>
+        {/* <span>{restaurant.description}</span> */}
+        {restaurant.descroption && <span>{restaurant.descroption}</span>}
         <span>도보 {toWalkMinutes(restaurant.distance)}분</span>
       </p>
       <div className="randomResultActions">

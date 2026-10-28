@@ -1,9 +1,5 @@
 /* 상단 바 - 피그마 app-bar, 양쪽 44px 칸 사이에 제목 가운데 */
 .storeDetailHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
