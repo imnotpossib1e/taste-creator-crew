@@ -17,13 +17,34 @@ function toggleItem(list, item) {
     : [...list, item];
 }
 
-function ReviewForm({ title, submitLabel, onSubmit, restaurant, isSaving }) {
+// DB에 JSON 글자('["https://...", ...]')로 저장한 image_url을 사진 배열로 - 비어 있으면 []
+// 이미 올라간 사진이라 file은 없고 주소만 있다
+function toPhotos(imageUrl) {
+  return imageUrl ? JSON.parse(imageUrl).map(url => ({ url })) : [];
+}
+
+// DB에 'a,b'처럼 콤마로 이어 저장한 good_points를 태그 배열로 - 비어 있으면 []
+function toTags(goodPoints) {
+  return goodPoints ? goodPoints.split(',') : [];
+}
+
+// initialReview: 수정할 때 DB에서 불러온 기존 리뷰 (쓰기에서는 안 넘겨서 빈 값으로 시작)
+function ReviewForm({
+  title,
+  submitLabel,
+  onSubmit,
+  restaurant,
+  isSaving,
+  initialReview,
+}) {
   // 등록할 때 한꺼번에 모아야 해서 폼에서 관리
-  const [rating, setRating] = useState(0);
-  const [tags, setTags] = useState([]);
-  const [content, setContent] = useState('');
-  const [storeName, setStoreName] = useState('');
+  const [rating, setRating] = useState(initialReview?.rating ?? 0);
+  const [tags, setTags] = useState(toTags(initialReview?.good_points));
+  const [content, setContent] = useState(initialReview?.content ?? '');
+  const [storeName, setStoreName] = useState(initialReview?.place_name ?? '');
   const [category, setCategory] = useState(restaurant.category_group);
+  // 사진 - 새로 고른 건 { file, url(미리보기 임시 주소) }, 수정할 때 기존 사진은 { url }만
+  const [photos, setPhotos] = useState(toPhotos(initialReview?.image_url));
   const [storeNameError, setStoreNameError] = useState(false);
   const [ratingError, setRatingError] = useState(false);
 
@@ -69,6 +90,8 @@ function ReviewForm({ title, submitLabel, onSubmit, restaurant, isSaving }) {
       rating,
       tags,
       content,
+      // 새 사진은 업로드할 파일, 기존 사진은 이미 올라간 주소를 넘긴다
+      photos: photos.map(photo => photo.file ?? photo.url),
     };
     onSubmit(review);
   };
@@ -93,7 +116,7 @@ function ReviewForm({ title, submitLabel, onSubmit, restaurant, isSaving }) {
           ratingError={ratingError}
         />
         <ReviewTags tags={tags} onToggleTag={handleToggleTag} />
-        <ReviewPhotos />
+        <ReviewPhotos photos={photos} setPhotos={setPhotos} />
         <ReviewContent content={content} setContent={setContent} />
       </main>
 

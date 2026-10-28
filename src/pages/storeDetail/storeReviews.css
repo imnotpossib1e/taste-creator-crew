@@ -96,15 +96,38 @@
   color: #111827;
 }
 
-/* 리뷰 사진 (사진 연결 전까지 회색 박스) */
-.reviewPhotos {
+/* 내 리뷰의 수정 / 삭제 - 날짜와 같은 회색 작은 글씨, 오른쪽 정렬 */
+.reviewActions {
   display: flex;
-  gap: 6px;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
-.reviewPhotos > div {
+.reviewActions > button {
+  padding: 0;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 리뷰 사진 - 5장이 화면보다 넓으면 가로 스크롤 */
+/* 리뷰 쓰기 폼의 .reviewPhotos(ReviewPhotos.jsx)와 이름이 겹치면 CSS가 서로 섞여서 이름을 따로 씀 */
+.reviewItemPhotos {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+/* 사진 한 장 - 비율 유지하면서 칸을 꽉 채우게 자름, 불러오는 동안은 회색 */
+.reviewItemPhotos > img {
+  flex-shrink: 0;
   width: 76px;
   height: 76px;
+  object-fit: cover;
   background: #f3f4f6;
   border-radius: 6px;
 }

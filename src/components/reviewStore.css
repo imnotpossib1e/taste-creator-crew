@@ -5,11 +5,11 @@
   gap: 12px;
 }
 
-/* 썸네일 (사진 연결 전까지 회색 박스) */
+/* 썸네일 - 종류별 아이콘 (지도 목록과 같은 그림) */
 .reviewStoreThumb {
+  flex-shrink: 0; /* 가게 이름이 길어도 아이콘이 찌그러지지 않게 */
   width: 44px;
   height: 44px;
-  background: #f3f4f6;
   border-radius: 6px;
 }
 

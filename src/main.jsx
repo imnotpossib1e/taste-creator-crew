@@ -75,6 +75,14 @@ const pageRoutes = [
         Component: m.default,
       })),
   },
+  {
+    // 쓰기의 :id는 가게 id, 수정의 :id는 리뷰 id (어느 리뷰를 고칠지)
+    path: 'reviewEdit/:id',
+    lazy: () =>
+      import('./pages/reviewEditor/ReviewEdit.jsx').then(m => ({
+        Component: m.default,
+      })),
+  },
 ];
 
 // router 설계
