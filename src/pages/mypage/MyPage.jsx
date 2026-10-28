@@ -22,7 +22,15 @@ import {
 import { getKakaoCategoryGroup } from '../../hook/kakaoApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectRestaurants, updateStats } from '../../redux/store';
-
+function toImageUrls(imageUrl) {
+  if (!imageUrl) return [];
+  if (Array.isArray(imageUrl)) return imageUrl; // 이미 배열로 오는 경우
+  try {
+    return JSON.parse(imageUrl);
+  } catch {
+    return []; // 깨진 값이어도 화면은 안 죽게
+  }
+}
 // 마이페이지 - 섹션 컴포넌트를 순서대로 조립
 function MyPage() {
   const navigate = useNavigate();
@@ -90,6 +98,7 @@ function MyPage() {
               id: review.id,
               restaurant: review.place_name ?? '가게 정보 없음',
               text: review.content,
+              images: toImageUrls(review.image_url), // 추가
               date: `${created.getMonth() + 1}월 ${created.getDate()}일`,
             };
           }),
@@ -118,10 +127,11 @@ function MyPage() {
         Promise.all(
           myBookmarks
             .filter(b => !known[b.place_id] && b.place_name)
-            .map(b =>
-              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
-                .then(group => rememberBookmarkCategory(b.place_id, group))
-                .catch(() => {}), // 못 찾으면 기본 이미지
+            .map(
+              b =>
+                getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
+                  .then(group => rememberBookmarkCategory(b.place_id, group))
+                  .catch(() => {}), // 못 찾으면 기본 이미지
             ),
         ).then(() => {
           if (!ignore) setBookmarks(current => [...current]);
