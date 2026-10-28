@@ -6,8 +6,8 @@ import './bottomNav.css';
 
 const MENUS = [
   { label: '지도', icon: <MapIcon />, to: '/' },
-  { label: '홈', icon: <House /> },
-  { label: '랜덤', icon: <Shuffle /> },
+  { label: '홈', icon: <House />, to: '/home' },
+  { label: '랜덤', icon: <Shuffle />, to: '/random' },
   { label: '마이페이지', icon: <CircleUser />, to: '/mypage' },
 ];
 export default function BottomNav() {

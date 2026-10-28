@@ -1,41 +1,49 @@
+import { Link } from 'react-router-dom';
 import './homeWeeklyBest.css';
 
-// 이번 주 좋아요 많은 곳 - API 연결 전까지 임시 데이터
-const weeklyBestStores = [
-  { id: 1, name: '연남 국밥집', category: '한식', weeklyLikes: 48 },
-  { id: 2, name: '온기 카페', category: '카페', weeklyLikes: 41 },
-  { id: 3, name: '소소한 스시', category: '일식', weeklyLikes: 37 },
-  { id: 4, name: '파스타 공방', category: '양식', weeklyLikes: 29 },
-  { id: 5, name: '떡볶이 연구소', category: '분식', weeklyLikes: 22 },
-];
+// 한 번이라도 저장된 가게만 저장 수 많은 순으로 정렬
+// sort는 원본 배열을 바꾸는데, filter가 새 배열을 만들어서 redux 원본은 안전하다
+function getMostBookmarked(restaurants) {
+  return restaurants
+    .filter(store => store.bookmark_count > 0)
+    .sort((a, b) => b.bookmark_count - a.bookmark_count)
+    .slice(0, 5);
+}
 
-// 가로 스크롤 카드 하나
+// 가로 스크롤 카드 하나 - 누르면 상세(/store/:id)로 이동
 function WeeklyBestCard({ store }) {
   return (
-    <li className="homeWeeklyBestCard">
-      <div className="homeWeeklyBestThumb" />
-      <strong>{store.name}</strong>
-      <p>
-        <span>{store.category}</span>
-        <span>좋아요 {store.weeklyLikes}</span>
-      </p>
+    <li>
+      <Link to={`/store/${store.id}`} className="homeWeeklyBestCard">
+        <div className="homeWeeklyBestThumb" />
+        <strong>{store.name}</strong>
+        <p>
+          <span>{store.category_group}</span>
+          <span>저장 {store.bookmark_count}</span>
+        </p>
+      </Link>
     </li>
   );
 }
 
-function HomeWeeklyBest() {
+function HomeWeeklyBest({ restaurants }) {
+  const bookmarkedStores = getMostBookmarked(restaurants);
+
   return (
     <section className="homeWeeklyBest">
       <div className="homeWeeklyBestHeader">
-        <h2>이번 주 좋아요 많은 곳</h2>
-        <button type="button">전체</button>
+        <h2>많이 저장한 곳</h2>
       </div>
 
-      <ul>
-        {weeklyBestStores.map(store => (
-          <WeeklyBestCard key={store.id} store={store} />
-        ))}
-      </ul>
+      {bookmarkedStores.length === 0 ? (
+        <p className="homeWeeklyBestEmpty">아직 저장된 가게가 없어요.</p>
+      ) : (
+        <ul>
+          {bookmarkedStores.map(store => (
+            <WeeklyBestCard key={store.id} store={store} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

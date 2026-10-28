@@ -23,7 +23,7 @@ function ReviewForm({ title, submitLabel, onSubmit, restaurant, isSaving }) {
   const [tags, setTags] = useState([]);
   const [content, setContent] = useState('');
   const [storeName, setStoreName] = useState('');
-  const [category, setCategory] = useState(restaurant.description);
+  const [category, setCategory] = useState(restaurant.category_group);
   const [storeNameError, setStoreNameError] = useState(false);
   const [ratingError, setRatingError] = useState(false);
 

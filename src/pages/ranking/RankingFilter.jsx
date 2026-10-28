@@ -6,7 +6,9 @@ import './rankingFilter.css';
 // 정렬 드롭다운
 function SortDropdown({ sortBy, setSortBy }) {
   const [isOpen, setIsOpen] = useState(false);
-  const selected = sortOptions.find(option => option.value === sortBy);
+  // 목록에 없는 값이면(옵션이 바뀌는 등) 첫 번째 옵션을 보여줘서 화면이 깨지지 않게
+  const selected =
+    sortOptions.find(option => option.value === sortBy) ?? sortOptions[0];
 
   const handleSelect = value => {
     setSortBy(value);
@@ -46,7 +48,6 @@ function SortDropdown({ sortBy, setSortBy }) {
 function RankingFilter({ sortBy, setSortBy }) {
   return (
     <div className="rankingFilter">
-      <p>10월 13일부터 19일까지</p>
       <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
     </div>
   );

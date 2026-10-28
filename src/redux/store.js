@@ -18,6 +18,11 @@ const restaurantSlice = createSlice({
     reset() {
       return initialState;
     },
+    updateStats(state, action) {
+      const { id, ...stats } = action.payload;
+      const target = state.find(p => p.id === id);
+      if (target) Object.assign(target, stats);
+    },
   },
 });
 
@@ -42,7 +47,7 @@ const categorySlice = createSlice({
 });
 
 export const { setCategory } = categorySlice.actions;
-export const { setRestaurant, reset } = restaurantSlice.actions;
+export const { setRestaurant, reset, updateStats } = restaurantSlice.actions;
 export const { setSearchRestaurant, resetSearch } =
   restaurantSearchSlice.actions;
 const selectBaseRestaurants = state =>

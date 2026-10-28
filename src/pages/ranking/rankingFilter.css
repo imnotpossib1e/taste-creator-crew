@@ -1,16 +1,8 @@
-/* 기간 + 정렬 줄 - 피그마 sort-row */
+/* 정렬 줄 - 기간 문구를 빼서 정렬 버튼만 오른쪽에 둔다 */
 .rankingFilter {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-}
-
-.rankingFilter > p {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.45;
-  color: #6b7280;
 }
 
 /* 드롭다운 위치 기준점 */
