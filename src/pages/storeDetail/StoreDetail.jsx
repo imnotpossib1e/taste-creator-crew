@@ -18,6 +18,7 @@ function StoreDetail() {
   const restaurants = useSelector(selectRestaurants);
   const restaurant = restaurants.find(item => item.id === id);
   console.log(restaurant);
+
   // 홈 인기 순위와 같은 북마크 로직 - 저장 여부, 바텀시트, 저장/취소
   const {
     savedIds,
@@ -53,7 +54,7 @@ function StoreDetail() {
       <StoreDetailHeader />
 
       <div className="storeDetailContent">
-        <StoreInfo placeId={id} reviews={reviews} />
+        <StoreInfo placeId={id} reviews={reviews} restaurant={restaurant} />
         <StoreReviews
           placeId={id}
           reviews={reviews}

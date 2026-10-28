@@ -1,7 +1,9 @@
+import { Bookmark } from 'lucide-react';
 import ReviewKeyword from './ReviewKeyword';
+import StarRating from './StarRating';
 import './storeInfo.css';
 
-function StoreInfo({ placeId, reviews }) {
+function StoreInfo({ placeId, reviews, restaurant }) {
   const goodPoints = [
     ...new Set(
       reviews.flatMap(r =>
@@ -21,12 +23,21 @@ function StoreInfo({ placeId, reviews }) {
         title="가게 정보"
         tabIndex={-1}
       />
-      <div className="storeInfoBlocker">
-        <div className="storeReviewPoint">
-          {goodPoints.length > 0 &&
-            goodPoints.map(point => (
-              <ReviewKeyword key={point} point={point} />
-            ))}
+      <div className="storeReviewBlocker">
+        <div className="storeDetailInfoWrap">
+          <div className="storeDataInfo">
+            <StarRating rating={restaurant.rating_avg} />
+            <div className="bookmarkWrap">
+              <Bookmark size={'14px'} />
+              <span>{restaurant.bookmark_count}</span>
+            </div>
+          </div>
+          <div className="storeReviewPoint">
+            {goodPoints.length > 0 &&
+              goodPoints.map(point => (
+                <ReviewKeyword key={point} point={point} />
+              ))}
+          </div>
         </div>
       </div>
     </section>

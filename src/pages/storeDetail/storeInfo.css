@@ -16,24 +16,61 @@
   position: relative;
 }
 
+.storeReviewBlocker {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end; /* 글씨 위치: flex-start(위) / center(가운데) / flex-end(아래) */
+  padding: 16px 0 230px 16px;
+  justify-content: center;
+  /* padding: 16px; */
+}
+
+.storeDetailInfoWrap {
+  background-color: white;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.storeReviewPoint {
+  margin: 0;
+  color: black;
+  font-size: 0.875rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
 .storeInfoBlocker {
   position: absolute;
   inset: 0;
   z-index: 1;
   display: flex;
   align-items: flex-end; /* 글씨 위치: flex-start(위) / center(가운데) / flex-end(아래) */
-  padding: 16px 16px 300px;
+  padding: 16px 16px 385px;
   justify-content: center;
-  /* padding: 16px; */
 }
-.storeReviewPoint {
+.storeDataInfo {
   margin: 0;
   width: 100%;
-  height: 50px;
+  height: 24px;
   background: white;
-  color: black;
+  color: gray;
   font-size: 0.875rem;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.storeDataInfo .bookmarkWrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 4px;
 }
