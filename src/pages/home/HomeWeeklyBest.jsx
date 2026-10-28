@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
 import './homeWeeklyBest.css';
 
+const CATEGORY_IMG = {
+  한식: 'korean.svg',
+  중식: 'chinese.svg',
+  일식: 'japanese.svg',
+  양식: 'american.svg',
+  카페: 'cafe.svg',
+  분식: 'snack.svg',
+  default: 'default.svg',
+};
+
 // 한 번이라도 저장된 가게만 저장 수 많은 순으로 정렬
 // sort는 원본 배열을 바꾸는데, filter가 새 배열을 만들어서 redux 원본은 안전하다
 function getMostBookmarked(restaurants) {
@@ -15,12 +25,16 @@ function WeeklyBestCard({ store }) {
   return (
     <li>
       <Link to={`/store/${store.id}`} className="homeWeeklyBestCard">
-        <div className="homeWeeklyBestThumb" />
-        <strong>{store.name}</strong>
-        <p>
+        <img
+          src={`/${CATEGORY_IMG[store.category_group] ?? 'default.svg'}`}
+          alt={store.category_group}
+          className="homeWeeklyBestThumb"
+        />
+        <span>{store.name}</span>
+        <div>
           <span>{store.category_group}</span>
           <span>저장 {store.bookmark_count}</span>
-        </p>
+        </div>
       </Link>
     </li>
   );

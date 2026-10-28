@@ -9,8 +9,16 @@ import './homeRanking.css';
 // 인기 순위에 보여줄 최대 개수
 const RANKING_LIMIT = 3;
 const ALL_CATEGORY = categories[0];
-// 별점 소수점 자리수 (4.6)
-const RATING_DIGITS = 1;
+
+const CATEGORY_IMG = {
+  한식: 'korean.svg',
+  중식: 'chinese.svg',
+  일식: 'japanese.svg',
+  양식: 'american.svg',
+  카페: 'cafe.svg',
+  분식: 'snack.svg',
+  default: 'default.svg',
+};
 
 // 거리(m) → 도보 분 (랜덤 페이지와 같은 계산)
 function toWalkMinutes(distance) {
@@ -39,18 +47,29 @@ function RankingItem({ store, isSaved, onBookmarkClick }) {
   return (
     <li className="homeRankingItem">
       <Link to={`/store/${store.id}`} className="homeRankingInfo">
-        <div className="homeRankingTitle">
-          <div className="homeRankingThumb" />
-          <strong>{store.name}</strong>
+        <img
+          src={`/${CATEGORY_IMG[store.category_group] ?? 'default.svg'}`}
+          alt={store.category_group}
+          className="itemImg"
+        />
+        <div className="rankingInfoGroup">
+          <div className="homeRankingTitle">{store.name}</div>
+          <div className="rankingItem">
+            <span>{store.category_group}</span>
+            <span>{store.distance}m</span>
+            <span>도보 {toWalkMinutes(store.distance)}분</span>
+          </div>
+          <div className="rankingItem">
+            <div style={{ display: 'flex', gap: '4px' }}>
+              <span style={{ color: '#F59E0B' }}>★</span>
+              {store.rating_avg.toFixed(1)}
+            </div>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <Bookmark size={'14px'} />
+              {store.bookmark_count}
+            </div>
+          </div>
         </div>
-        <p>
-          <span>{store.category_group}</span>
-          <span>도보 {toWalkMinutes(store.distance)}분</span>
-        </p>
-        <p>
-          <span>별점 {store.rating_avg.toFixed(RATING_DIGITS)}</span>
-          <span>리뷰 {store.review_count}</span>
-        </p>
       </Link>
       <button
         type="button"
