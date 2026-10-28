@@ -6,4 +6,7 @@
   margin: 0 auto;
   height: 100dvh;
   overflow: hidden;
+  /* 앱 영역은 흰색, 바깥(넓은 화면의 양옆)은 body의 따뜻한 회색 */
+  background: var(--color-surface);
+  box-shadow: 0 0 40px rgba(31, 36, 33, 0.06);
 }

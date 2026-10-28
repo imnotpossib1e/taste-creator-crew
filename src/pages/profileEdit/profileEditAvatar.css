@@ -10,7 +10,7 @@
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: #f3f4f6;
+  background: var(--color-surface-sub);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -31,7 +31,9 @@
   height: 36px;
   cursor: pointer;
   outline: none;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
 }
 .page9 .group-8:hover,
 .page9 .group-8:focus-visible {
@@ -45,7 +47,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #111827;
+  background: var(--color-text);
   border: 2px solid #ffffff;
 }
 .page9 .camera-icon {

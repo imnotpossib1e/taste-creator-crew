@@ -3,4 +3,5 @@
   flex: 1;
   min-height: 0; /* 이게 없으면 내용 높이만큼 늘어나서 탭바를 화면 밖으로 밀어냄 */
   overflow-y: auto;
+  background: var(--color-bg);
 }

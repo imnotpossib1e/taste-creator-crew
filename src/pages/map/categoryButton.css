@@ -11,19 +11,21 @@
 
 .chip {
   flex-shrink: 0;
-  padding: 6px 12px;
-  border: 1px solid #e5e7eb;
+  padding: 7px 14px;
+  border: 1px solid transparent;
   border-radius: 999px;
   background: #fff;
   font-size: 12px;
   font-weight: 600;
-  color: #374151;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  color: var(--color-text-sub);
+  box-shadow: 0 2px 8px rgba(31, 36, 33, 0.12);
   cursor: pointer;
+  font-family: inherit;
 }
 
 .chip.active {
-  background: #0f766e;
-  border-color: #0f766e;
+  background: var(--gradient-primary);
+  border-color: transparent;
   color: #fff;
+  box-shadow: var(--shadow-button);
 }

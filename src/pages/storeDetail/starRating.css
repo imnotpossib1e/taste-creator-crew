@@ -11,7 +11,7 @@
 }
 
 .starEmpty {
-  color: #d1d5db;
+  color: var(--color-border);
 }
 
 .starFillWrap {
@@ -23,13 +23,13 @@
 }
 
 .starFilled {
-  color: #f59e0b;
-  fill: #f59e0b;
+  color: var(--color-star);
+  fill: var(--color-star);
 }
 
 .starValue {
   margin-left: 4px;
   font-size: 0.875rem;
-  /* font-weight: 600; */
-  color: gray;
+  font-weight: 700;
+  color: var(--color-text);
 }

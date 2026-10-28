@@ -3,6 +3,12 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  /* 위쪽만 연한 청록이 깔리고 아래는 배경색 */
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-soft) 0%,
+    var(--color-bg) 220px
+  );
 }
 
 /* 피그마 content: 섹션 사이 22px, 바깥 여백 22/20/24 */

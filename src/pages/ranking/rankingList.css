@@ -1,30 +1,44 @@
 /* 순위 목록 - 기본 번호와 여백 제거 (순위는 직접 그림) */
 .rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* 순위 한 줄 - 피그마 rankrow, 구분선은 위쪽 */
-.rankingItem {
+/* 순위 한 줄 - 흰 카드
+   홈의 .rankingItem(별점 줄)과 이름이 같아서 이 목록 안에서만 적용되게 범위를 좁힌다 */
+.rankingList > .rankingItem {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 0;
-  border-top: 1px solid #ebebeb;
+  padding: 16px;
+  background: var(--color-surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
 }
 
-/* 순위 숫자 - 4위부터 회색, 1~3위만 진하게 */
+/* 순위 숫자 - 동그란 배지, 1~3위는 주황 */
 .rankingRank {
-  width: 20px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.45;
-  color: #6b7280;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-text-sub);
+  background: var(--color-surface-sub);
 }
 
 .rankingRank.top {
-  color: #111827;
+  color: #fff;
+  background: linear-gradient(135deg, #ffa36c 0%, var(--color-accent) 100%);
+  box-shadow: 0 4px 10px rgba(255, 122, 69, 0.3);
 }
 
 /* 이름 + 종류/상세 - 남는 폭을 모두 차지해서 북마크를 오른쪽 끝으로 */
@@ -32,7 +46,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
+  min-width: 0;
   color: inherit; /* 링크 기본 파란 글씨 제거 */
   text-decoration: none; /* 링크 기본 밑줄 제거 */
 }
@@ -43,18 +58,19 @@
   gap: 8px;
 }
 
+/* 아직 이미지가 없는 회색 자리 - 디자인이 정해질 때까지 숨김 */
 .rankingThumb {
-  width: 22px;
-  height: 22px;
-  background: #f3f4f6;
-  border-radius: 2px;
+  display: none;
 }
 
 .rankingTitle > strong {
+  overflow: hidden;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.45;
-  color: #111827;
+  color: var(--color-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .rankingInfo > p {
@@ -63,18 +79,20 @@
   margin: 0;
   font-size: 13px;
   line-height: 1.45;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 
+/* 첫 칸(종류)은 청록 */
 .rankingInfo > p > span:first-child {
-  color: #111827;
+  font-weight: 600;
+  color: var(--color-primary);
 }
 
 /* 북마크 버튼 (예전 좋아요 자리) - 버튼 기본 모양 제거 */
 .rankingBookmark {
   display: flex;
   padding: 0;
-  color: #111827;
+  color: var(--color-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -85,6 +103,6 @@
   padding: 24px 0;
   margin: 0;
   font-size: 14px;
-  color: #888;
+  color: var(--color-text-sub);
   text-align: center;
 }

@@ -5,7 +5,9 @@
   align-items: center;
   gap: 8px;
   padding: 16px;
-  background: #ffffff;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 16px rgba(31, 36, 33, 0.05);
 }
 
 /* 북마크 - 50x50 */
@@ -16,10 +18,10 @@
   width: 50px;
   height: 50px;
   padding: 0;
-  color: #111827;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  border: 1px solid transparent;
+  border-radius: 14px;
   cursor: pointer;
 }
 
@@ -34,8 +36,9 @@
   line-height: 1.4;
   letter-spacing: -0.01em;
   color: #ffffff;
-  background: #0f766e;
+  background: var(--gradient-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-button);
   cursor: pointer;
 }

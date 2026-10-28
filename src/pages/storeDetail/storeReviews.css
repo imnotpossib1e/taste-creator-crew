@@ -21,23 +21,23 @@
   padding: 10px 0;
 }
 
-.storeReviewsHeader>h2 {
+.storeReviewsHeader > h2 {
   margin: 0;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   line-height: 1.45;
-  letter-spacing: -0.01em;
-  color: #111827;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
 }
 
-.storeReviewsHeader>button {
+.storeReviewsHeader > button {
   padding: 0;
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: #0f766e;
+  color: var(--color-primary);
   background: none;
   border: none;
   cursor: pointer;
@@ -59,7 +59,7 @@
   display: flex;
   gap: 12px; /* 왼쪽 프로필 이미지 | 오른쪽 내용 */
   padding: 16px 8px 16px 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* 프로필 이미지 - 둥근 네모, 사진이 없으면 회색 칸 가운데에 아이콘 */
@@ -71,8 +71,9 @@
   width: 48px;
   height: 48px;
   object-fit: cover;
-  background: #f3f4f6;
-  border-radius: 10px;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  border-radius: 14px;
 }
 
 /* 리뷰 내용 - 남는 폭을 다 차지, min-width: 0이 있어야 사진 줄이 넘칠 때 가로 스크롤됨 */
@@ -91,19 +92,19 @@
   align-items: flex-start;
 }
 
-.reviewAuthor>strong {
-  font-size: 14px;
-  font-weight: 500;
+.reviewAuthor > strong {
+  font-size: 15px;
+  font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: #111827;
+  color: var(--color-text);
 }
 
-.reviewAuthor>span {
+.reviewAuthor > span {
   font-size: 13px;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 
 .reviewStars {
@@ -116,7 +117,7 @@
   font-size: 14px;
   line-height: 1.6;
   letter-spacing: -0.01em;
-  color: #111827;
+  color: var(--color-text);
 }
 
 /* 내 리뷰의 수정 / 삭제 - 날짜와 같은 회색 작은 글씨, 오른쪽 정렬 */
@@ -126,15 +127,21 @@
   gap: 12px;
 }
 
-.reviewActions>button {
+.reviewActions > button {
   padding: 0;
   font-family: inherit;
   font-size: 13px;
   line-height: 1.45;
-  color: #6b7280;
+  font-weight: 600;
+  color: var(--color-text-sub);
   background: none;
   border: none;
   cursor: pointer;
+}
+
+/* 삭제는 빨간색으로 구분 */
+.reviewActions > button:last-child {
+  color: var(--color-danger);
 }
 
 /* 리뷰 사진 - 5장이 화면보다 넓으면 가로 스크롤 */
@@ -146,13 +153,13 @@
 }
 
 /* 사진 한 장 - 비율 유지하면서 칸을 꽉 채우게 자름, 불러오는 동안은 회색 */
-.reviewItemPhotos>img {
+.reviewItemPhotos > img {
   flex-shrink: 0;
   width: 76px;
   height: 76px;
   object-fit: cover;
-  background: #f3f4f6;
-  border-radius: 6px;
+  background: var(--color-surface-sub);
+  border-radius: 10px;
 }
 
 /* 리뷰가 하나도 없을 때 안내 - 날짜(.reviewAuthor > span)와 같은 회색 */
@@ -161,6 +168,6 @@
   padding: 24px 0;
   font-size: 14px;
   line-height: 1.45;
-  color: #6b7280;
+  color: var(--color-text-sub);
   text-align: center;
 }

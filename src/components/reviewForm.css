@@ -5,6 +5,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  background: var(--color-surface);
 }
 
 /* 피그마 content: 섹션 사이 28px, 바깥 여백 20/20/24 */
@@ -23,7 +24,7 @@
   padding: 80px 20px;
   font-size: 14px;
   line-height: 1.45;
-  color: #6b7280;
+  color: var(--color-text-sub);
   text-align: center;
 }
 

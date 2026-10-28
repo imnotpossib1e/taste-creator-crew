@@ -3,9 +3,10 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  background: var(--color-bg);
 }
 
 /* 피그마 Content 프레임: 좌우 패딩 20 */
 .rankingContent {
-  padding: 0 20px;
+  padding: 0 20px 24px;
 }

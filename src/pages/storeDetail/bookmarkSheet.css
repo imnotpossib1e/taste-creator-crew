@@ -23,8 +23,9 @@
   max-width: 430px;
   /* App.css의 .App max-width와 같은 값 */
   padding: 20px 16px 32px;
-  background: #ffffff;
-  border-radius: 16px 16px 0 0;
+  background: var(--color-surface);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 32px rgba(31, 36, 33, 0.12);
   animation: bookmarkSheetSlideUp 0.25s ease-out;
   z-index: 102;
 }
@@ -35,7 +36,7 @@
   width: 40px;
   height: 4px;
   margin-bottom: 8px;
-  background: #d1d5db;
+  background: var(--color-border);
   border-radius: 2px;
 }
 
@@ -53,30 +54,30 @@
 /* 가게 이름 - h2 기본 margin 제거 */
 .bookmarkSheet h2 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
   line-height: 1.4;
-  color: #111827;
+  color: var(--color-text);
 }
 
 /* 카테고리 */
 .bookmarkSheet span {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 
 /* 주소 - p 기본 margin 제거, 메모와 간격을 조금 더 둔다 */
 .bookmarkSheet p {
   margin: 0 0 8px;
   font-size: 14px;
-  color: #374151;
+  color: var(--color-text);
 }
 
 /* 메모 라벨 */
 .bookmarkSheet label {
   font-size: 14px;
   font-weight: 700;
-  color: #111827;
+  color: var(--color-text);
 }
 
 /* 가게 이름·메모 입력 공통 - box-sizing이 없으면 padding만큼 옆으로 삐져나온다 */
@@ -88,8 +89,8 @@
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5;
-  color: #111827;
-  border: 1px solid #e5e7eb;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -108,7 +109,7 @@
 .bookmarkSheet input:focus,
 .bookmarkSheet textarea:focus {
   outline: none;
-  border-color: #0f766e;
+  border-color: var(--color-primary);
 }
 
 /* 저장 버튼 - 하단 바 리뷰 쓰기 버튼(.storeBottomBarWrite)과 같은 모양, textarea와 간격을 조금 더 둔다 */
@@ -123,8 +124,9 @@
   line-height: 1.4;
   letter-spacing: -0.01em;
   color: #ffffff;
-  background: #0f766e;
+  background: var(--gradient-primary);
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-button);
   cursor: pointer;
 }

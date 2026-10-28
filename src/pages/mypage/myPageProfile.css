@@ -1,11 +1,19 @@
+/* 프로필 - 연한 청록 카드 */
 .page8 .frame-8-3 {
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 12px;
-  padding: 0px 0px 0px 0px;
+  padding: 20px;
   justify-content: space-between;
   align-items: center;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-soft) 0%,
+    #f3fbf9 100%
+  );
+  border: 1px solid #d5eee8;
 }
 .page8 .frame-8-4 {
   display: flex;
@@ -16,14 +24,17 @@
   align-items: center;
 }
 .page8 .avatar {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: #f3f4f6;
+  background: var(--color-surface);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  border: 3px solid var(--color-surface);
+  box-shadow: 0 4px 12px rgba(15, 118, 110, 0.18);
 }
 .page8 .avatar .avatar-image {
   width: 100%;
@@ -45,36 +56,38 @@
   align-self: stretch;
   width: auto;
   white-space: nowrap;
-  color: #111827;
-  font-family: 'Noto Sans KR';
-  font-size: 20px;
-  font-weight: 700;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 .page8 .layer--3 {
   align-self: stretch;
   width: auto;
   white-space: nowrap;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-primary);
+  font-family: inherit;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
 }
 .page8 .frame-21 {
-  width: 88px;
-  height: 35px;
+  width: auto;
+  height: 34px;
   display: flex;
   flex-direction: row;
   gap: 4px;
-  padding: 4px 4px 4px 4px;
+  padding: 0 14px;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  border: 1px solid var(--color-primary);
+  flex-shrink: 0;
 }
 .page8 .layer--4 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-primary);
+  font-family: inherit;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 700;
   text-align: center;
 }

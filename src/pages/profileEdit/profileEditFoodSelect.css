@@ -19,16 +19,16 @@
 .page9 .layer--3 {
   align-self: stretch;
   width: auto;
-  color: #000000;
-  font-family: 'Noto Sans KR';
-  font-size: 14px;
-  font-weight: 400;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
 }
 .page9 .layer--4 {
   align-self: stretch;
   width: auto;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 400;
 }
@@ -53,11 +53,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 6px;
-  background: #0f766e;
+  background: var(--color-primary);
 }
 .page9 .layer--5 {
   color: #ffffff;
-  font-family: 'Noto Sans KR';
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -73,11 +73,11 @@
   align-items: center;
   border-radius: 6px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 .page9 .layer--6 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -93,11 +93,11 @@
   align-items: center;
   border-radius: 6px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 .page9 .layer--7 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -112,11 +112,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 6px;
-  background: #0f766e;
+  background: var(--color-primary);
 }
 .page9 .layer--8 {
   color: #ffffff;
-  font-family: 'Noto Sans KR';
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -132,11 +132,11 @@
   align-items: center;
   border-radius: 6px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 .page9 .layer--9 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -152,12 +152,17 @@
   align-items: center;
   border-radius: 6px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
 }
 .page9 .layer--10 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
+}
+
+/* 음식 칩 - 색은 JSX에서 정하고, 모양만 알약으로 */
+.page9 .frame-8-6 > button {
+  border-radius: 999px;
 }

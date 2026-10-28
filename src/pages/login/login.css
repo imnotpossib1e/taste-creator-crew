@@ -48,8 +48,9 @@
   padding: 0;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  background: #0f766e;
+  border-radius: 14px;
+  background: var(--gradient-primary);
+  box-shadow: var(--shadow-button);
 }
 .page6 .frame-10-3 > .component-2 {
   border: 0;
@@ -57,7 +58,7 @@
 }
 .page6 .layer--6 {
   color: #ffffff;
-  font-family: 'Noto Sans KR';
+  font-family: inherit;
   font-size: 16px;
   font-weight: 700;
   text-align: center;
@@ -65,8 +66,8 @@
 .page6 .layer--7 {
   align-self: stretch;
   width: 100%;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -97,7 +98,7 @@
   width: 11px;
   height: 11px;
   margin-left: 4px;
-  border-left: 1.8px solid #111827;
-  border-bottom: 1.8px solid #111827;
+  border-left: 1.8px solid var(--color-text);
+  border-bottom: 1.8px solid var(--color-text);
   transform: rotate(45deg);
 }
