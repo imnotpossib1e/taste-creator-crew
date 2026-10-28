@@ -18,6 +18,7 @@ import {
   readBookmarkCategories,
   rememberBookmarkCategory,
 } from '../../hook/bookmark';
+import { getKakaoCategoryGroup } from '../../hook/kakaoApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectRestaurants } from '../../redux/store';
 import { updateStats } from '../../redux/store';
@@ -88,13 +89,24 @@ function MyPage() {
 
       try {
         const myBookmarks = await getMyBookmarks(data.id);
+        // 종류를 모르는 북마크(예전에 저장했거나 다른 기기에서 저장)는 카카오에서 찾아 기억해 둔다
+        const known = readBookmarkCategories();
+        await Promise.all(
+          myBookmarks
+            .filter(b => !known[b.place_id] && b.place_name)
+            .map(b =>
+              getKakaoCategoryGroup({ id: b.place_id, name: b.place_name })
+                .then(group => rememberBookmarkCategory(b.place_id, group))
+                .catch(() => {}), // 못 찾으면 기본 이미지
+            ),
+        );
         setBookmarks(
           myBookmarks.map(bookmark => ({
             id: bookmark.id,
             name: bookmark.place_name ?? '가게 정보 없음',
             placeId: bookmark.place_id,
             userId: bookmark.user_id,
-            category: bookmark.category_group ?? bookmark.category,
+            category: bookmark.category_group,
             memo: bookmark.content,
           })),
         );
@@ -168,24 +180,6 @@ function MyPage() {
     }
     setBookmarks(current => current.filter(b => b.id !== bookmark.id));
   };
-
-  /* const handleInstall = async () => {
-    if (!installPrompt) {
-      setFeedback(
-        '이 브라우저에서 설치 안내를 사용할 수 없습니다. 브라우저 메뉴에서 홈 화면에 추가를 선택해 주세요.',
-      );
-      return;
-    }
-
-    await installPrompt.prompt();
-    const choice = await installPrompt.userChoice;
-    setFeedback(
-      choice.outcome === 'accepted'
-        ? '앱 설치를 진행합니다.'
-        : '앱 설치를 취소했습니다.',
-    );
-    setInstallPrompt(null);
-  }; */
 
   // MyPage.jsx
   const handleInstall = async () => {
