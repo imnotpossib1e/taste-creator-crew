@@ -9,6 +9,11 @@ const CATEGORY_IMG = {
   양식: 'american.svg',
   카페: 'cafe.svg',
   분식: 'snack.svg',
+  술집: 'bar.svg',
+  간식: 'bakery.svg',
+  치킨: 'chicken.svg',
+  패스트푸드: 'fastfood.svg',
+  샐러드: 'salad.svg',
   default: 'default.svg',
 };
 
@@ -17,7 +22,7 @@ function MyPagelists({ bookmarks, onDelete }) {
   return (
     <ul className="place-list" role="tabpanel">
       {bookmarks.length === 0 && <p role="status">북마크한 가게가 없습니다.</p>}
-      {bookmarks.map((place) => (
+      {bookmarks.map(place => (
         <li className="place-item" key={place.id}>
           <img
             src={`/${CATEGORY_IMG[place.category] ?? CATEGORY_IMG.default}`}
@@ -26,9 +31,7 @@ function MyPagelists({ bookmarks, onDelete }) {
           />
           <div className="place-info">
             <p className="place-name">{place.name}</p>
-            {place.memo && (
-              <p className="place-memo">{place.memo}</p>
-            )}
+            {place.memo && <p className="place-memo">{place.memo}</p>}
           </div>
           <button
             type="button"

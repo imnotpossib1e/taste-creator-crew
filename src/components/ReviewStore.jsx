@@ -8,6 +8,12 @@ const CATEGORY_IMG = {
   양식: 'american.svg',
   카페: 'cafe.svg',
   분식: 'snack.svg',
+  술집: 'bar.svg',
+  간식: 'bakery.svg',
+  치킨: 'chicken.svg',
+  패스트푸드: 'fastfood.svg',
+  샐러드: 'salad.svg',
+  default: 'default.svg',
 };
 
 // 리뷰 대상 가게 카드 - redux 가게 데이터라 종류는 category(음식점)가 아니라 category_group(한식 등)

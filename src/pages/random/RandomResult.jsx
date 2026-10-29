@@ -13,6 +13,11 @@ const CATEGORY_IMG = {
   양식: 'american.svg',
   카페: 'cafe.svg',
   분식: 'snack.svg',
+  술집: 'bar.svg',
+  간식: 'bakery.svg',
+  치킨: 'chicken.svg',
+  패스트푸드: 'fastfood.svg',
+  샐러드: 'salad.svg',
   default: 'default.svg',
 };
 
