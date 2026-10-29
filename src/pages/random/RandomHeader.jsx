@@ -4,7 +4,7 @@ function RandomHeader() {
   return (
     <header className="randomHeader">
       <h1>오늘 뭐 먹지?</h1>
-      <p>오늘 기분에 맞는 종류만 골라주세요.</p>
+      <p>끌리는 걸 고르면 근처 맛집을 찾아드려요.</p>
     </header>
   );
 }
