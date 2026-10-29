@@ -5,17 +5,19 @@ import StoreBottomBar from './StoreBottomBar';
 import './storeDetail.css';
 import BookmarkSheet from './BookmarkSheet';
 import { useNavigate, useParams } from 'react-router-dom';
-import { selectRestaurants } from '../../redux/store.js';
-import { useSelector } from 'react-redux';
+import { selectRestaurants, updateStats } from '../../redux/store.js';
+import { useDispatch, useSelector } from 'react-redux';
 import { useBookmark } from '../../hook/useBookmark.js';
 import { selectCurrentUser } from '../../redux/authSlice.js';
 import { useEffect, useState } from 'react';
 import { getStoreReviews } from '../../hook/review.js';
+import { getRestaurantStats } from '../../hook/restaurant.js';
 
 function StoreDetail() {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const restaurants = useSelector(selectRestaurants);
   const restaurant = restaurants.find(item => item.id === id);
   const user = useSelector(selectCurrentUser);
@@ -54,7 +56,24 @@ function StoreDetail() {
       }
     };
     fetchReviews();
-  }, []);
+
+    // 리뷰를 쓰고 돌아온 경우 등을 위해 별점/북마크 수를 DB 최신값으로 다시 맞춘다
+    const refreshStats = async () => {
+      try {
+        const [stats] = await getRestaurantStats([{ id }]);
+        if (ignore) return;
+        const { rating_avg, review_count, bookmark_count } = stats;
+        dispatch(updateStats({ id, rating_avg, review_count, bookmark_count }));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    refreshStats();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id, dispatch]);
 
   // 새로고침 등으로 redux 가게 목록이 비면 restaurant가 없어서, 아래에서 restaurant.name을 읽다가 화면이 깨진다
   // 리뷰 쓰기/수정 페이지처럼 안내만 보여준다 - 훅 규칙 때문에 모든 훅 아래, return 위에 둔다
