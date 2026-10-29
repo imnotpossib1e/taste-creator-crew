@@ -35,6 +35,7 @@ export default function MainMap() {
   const markers = useRef([]);
   const mapInstance = useRef(null);
   const [position, setPosition] = useState(null);
+  const myMarker = useRef(null);
   // 지도가 만들어졌는지 - ref(mapInstance)는 바뀌어도 useEffect를 다시 실행시키지 않아서 state로 따로 알린다
   const [isMapReady, setIsMapReady] = useState(false);
   // MainMap.jsx
@@ -85,14 +86,19 @@ export default function MainMap() {
     );
   }, [position]);
 
-  // 내 위치 마커 (파란 점 + 퍼지는 원)
+  // 내 위치 마커 (파란 점 + 퍼지는 원) - position이 바뀌면 같은 마커를 옮긴다
   useEffect(() => {
     const { naver } = window;
     const map = mapInstance.current;
     if (!naver || !map || !position) return;
 
-    const marker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(position.y, position.x),
+    const latLng = new naver.maps.LatLng(position.y, position.x);
+    if (myMarker.current) {
+      myMarker.current.setPosition(latLng);
+      return;
+    }
+    myMarker.current = new naver.maps.Marker({
+      position: latLng,
       map,
       icon: {
         content:
@@ -102,9 +108,15 @@ export default function MainMap() {
       zIndex: 2000, // 가게 마커(최대 1000)보다 항상 위
       clickable: false,
     });
-
-    return () => marker.setMap(null);
   }, [position, isMapReady]);
+
+  // 지도에서 나갈 때 내 위치 마커 정리
+  useEffect(() => {
+    return () => {
+      myMarker.current?.setMap(null);
+      myMarker.current = null;
+    };
+  }, []);
 
   // 마크 그리기 (카카오맵 방식: 겹치는 이름표는 숨기고 점으로)
   useEffect(() => {
