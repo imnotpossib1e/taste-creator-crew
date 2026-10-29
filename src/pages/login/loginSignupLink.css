@@ -1,6 +1,6 @@
 .page6 .layer--11 {
-  color: #6b6b6b;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;

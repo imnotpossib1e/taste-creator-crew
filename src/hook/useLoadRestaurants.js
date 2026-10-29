@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setRestaurant } from '../redux/store';
+import { setRestaurant, setRestaurantLoaded } from '../redux/store';
 import { getKakaoCafes, getKakaoRestaurants } from './kakaoApi';
 import { getRestaurantStats } from './restaurant';
 
@@ -42,6 +42,8 @@ export function useLoadRestaurants() {
         dispatch(setRestaurant(restaurants));
       } catch (err) {
         console.error(err);
+        // 실패해도 '불러오기 끝'으로 표시 - 스켈레톤 대신 빈 목록 안내가 나오게
+        if (!ignore) dispatch(setRestaurantLoaded());
       }
     };
 

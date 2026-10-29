@@ -1,0 +1,30 @@
+/* 회색 상자 위로 밝은 띠가 왼쪽 → 오른쪽으로 지나간다 */
+.skeleton {
+  display: block;
+  flex-shrink: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-sub) 25%,
+    var(--color-border) 50%,
+    var(--color-surface-sub) 75%
+  );
+  /* 배경을 상자보다 2배 넓게 깔고 위치를 옮겨서 띠가 움직이는 것처럼 */
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* 움직임 줄이기를 켠 사용자는 반짝임 없이 회색 상자만 */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

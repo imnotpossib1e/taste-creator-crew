@@ -14,15 +14,17 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #0f766e;
+  background: var(--color-primary);
   border: 2px solid #fff;
   color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 6px rgba(15, 118, 110, 0.4);
 }
 
 .kmarker-label {
-  font: 600 12px sans-serif;
-  color: #222;
+  font:
+    700 12px Pretendard,
+    sans-serif;
+  color: var(--color-text);
   text-shadow:
     -1px -1px 0 #fff,
     1px -1px 0 #fff,
@@ -30,13 +32,15 @@
     1px 1px 0 #fff;
 }
 
+/* 선택한 가게는 주황 핀으로 눈에 띄게 */
 .kmarker.is-selected .kmarker-pin {
-  background: #0f766e;
+  background: var(--color-accent);
   transform: scale(1.2);
+  box-shadow: 0 2px 8px rgba(255, 122, 69, 0.5);
 }
 
 .kmarker.is-selected .kmarker-label {
-  color: #0f766e;
+  color: var(--color-accent);
 }
 
 .map-dot {
@@ -44,7 +48,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0f766e;
+  background: var(--color-primary);
   border: 1.5px solid #fff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   cursor: pointer;

@@ -1,14 +1,15 @@
 .resItemWrap {
-  padding: 10px 0;
+  padding: 14px 0;
   display: flex;
   align-items: center;
   gap: 16px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .resItem {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .itemTitle {
@@ -20,19 +21,21 @@
 .resInfo {
   display: flex;
   gap: 8px;
-  font-size: 14px;
-  color: gray;
+  font-size: 13px;
+  color: var(--color-text-sub);
 }
 .itemName {
   display: flex;
   align-items: end;
   gap: 8px;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .itemName span {
-  color: gray;
+  color: var(--color-primary);
   font-size: 12px;
+  font-weight: 600;
 }
 
 .resItemwrap {
@@ -43,6 +46,7 @@
 .itemImg {
   width: 48px;
   height: 48px;
+  border-radius: 12px;
 }
 .resItemLink {
   color: inherit;

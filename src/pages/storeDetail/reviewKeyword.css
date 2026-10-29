@@ -1,7 +1,7 @@
 /* .reviewKeyword {
   font-size: 12px;
-  border: 2px solid #0f766e;
-  background-color: #5a9c95;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-primary);
   padding: 2px 6px;
   border-radius: 10px;
   color: white;
@@ -13,14 +13,13 @@
   gap: 4px;
   box-sizing: border-box;
   padding: 0 8px;
-  border: 2px solid #99d5cd;
+  border: 2px solid var(--color-primary-soft);
   border-radius: 999px;
-  background-color: #ecfaf8;
-  color: #0f766e;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
   font-size: 12px;
   font-weight: 600;
   height: 24px;
   line-height: 1;
   white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

@@ -21,11 +21,11 @@
 .page6 .vector-3 {
   flex: 1;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 .page6 .layer--8 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 400;
   text-align: center;
@@ -33,7 +33,7 @@
 .page6 .vector-4 {
   flex: 1;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
 }
 .page6 .component-2-2 {
   align-self: stretch;
@@ -45,13 +45,13 @@
   padding: 0;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid #0f766e;
+  border-radius: 14px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
 }
 .page6 .layer--9 {
-  color: #0f766e;
-  font-family: 'Noto Sans KR';
+  color: var(--color-primary);
+  font-family: inherit;
   font-size: 16px;
   font-weight: 700;
   text-align: center;
@@ -59,8 +59,8 @@
 .page6 .layer--10 {
   align-self: stretch;
   width: 100%;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: center;

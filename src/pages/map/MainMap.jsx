@@ -12,11 +12,30 @@ import SearchInput from '../../components/SearchInput';
 
 import CategoryButton from './CategoryButton';
 
+const getCategoryCode = place =>
+  place.category_group_name ||
+  (place.category?.includes('카페') ? 'CE7' : 'FD6');
+const svg = paths =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+
+const CATEGORY_ICONS = {
+  // 음식점 (포크·나이프)
+  FD6: svg(
+    `<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>`,
+  ),
+  // 카페 (커피잔)
+  CE7: svg(
+    `<path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/>`,
+  ),
+};
+
 export default function MainMap() {
   const mapRef = useRef(null);
   const markers = useRef([]);
   const mapInstance = useRef(null);
   const [position, setPosition] = useState(null);
+  // 지도가 만들어졌는지 - ref(mapInstance)는 바뀌어도 useEffect를 다시 실행시키지 않아서 state로 따로 알린다
+  const [isMapReady, setIsMapReady] = useState(false);
   // MainMap.jsx
   const res = useSelector(selectVisibleRestaurants);
   const isSearching = useSelector(state => state.searchRestaurant !== null);
@@ -52,6 +71,8 @@ export default function MainMap() {
       scaleControl: false, // 축척 숨김
       mapDataControl: false,
     });
+    // 다른 탭에 갔다 오면 가게 목록(res)은 이미 있어서, 지도가 준비된 이 시점에 핀을 다시 그리게 한다
+    setIsMapReady(true);
   }, [position]);
 
   // 위치 바뀌면 중심 이동
@@ -82,16 +103,30 @@ export default function MainMap() {
       anchor: new naver.maps.Point(DOT / 2, DOT / 2),
     };
 
-    const labelIcon = (place, selected) => ({
+    const labelIcon = (place, selected) => {
+      const code = getCategoryCode(place);
+      const icon = CATEGORY_ICONS[code] ?? CATEGORY_ICONS.FD6; // 기본값: 음식점
+
+      return {
+        content: `
+          <div class="kmarker kmarker--${code} ${selected ? 'is-selected' : ''}">
+            <span class="kmarker-pin">${icon}</span>
+            <span class="kmarker-label">${place.name}</span>
+          </div>`,
+        anchor: new naver.maps.Point(PIN / 2, PIN / 2),
+      };
+    };
+
+    /* const labelIcon = (place, selected) => ({
       content: `
         <div class="kmarker ${selected ? 'is-selected' : ''}">
           <span class="kmarker-pin">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+            ${icon}
           </span>
           <span class="kmarker-label">${place.name}</span>
         </div>`,
       anchor: new naver.maps.Point(PIN / 2, PIN / 2), // 핀 중앙이 좌표에 오게
-    });
+    }); */
 
     // 이름표 너비 계산용 (CSS 폰트와 맞춤)
     const ctx = document.createElement('canvas').getContext('2d');
@@ -189,7 +224,7 @@ export default function MainMap() {
       naver.maps.Event.removeListener(idleListener);
       naver.maps.Event.removeListener(mapClickListener);
     };
-  }, [res]);
+  }, [res, isMapReady]);
 
   const searchRes = () => {
     if (search === '') {
@@ -223,7 +258,6 @@ export default function MainMap() {
             y: item.y,
           };
         });
-
 
         dispatch(setSearchRestaurant(restaurants));
       } catch (err) {

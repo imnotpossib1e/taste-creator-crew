@@ -19,14 +19,14 @@
   align-items: center;
 }
 .page7 .layer--7 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page7 .layer-4-10 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 12px;
   font-weight: 400;
   text-align: right;
@@ -34,19 +34,30 @@
 .page7 .frame-12-6 {
   align-self: stretch;
   width: 100%;
-  height: 48px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   gap: 4px;
   padding: 14px 14px 14px 14px;
   justify-content: flex-start;
   align-items: center;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 .page7 .yeonnam-example-com-4 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
+}
+
+/* 입력 중 - 청록 테두리 + 연한 링 (안쪽 input의 포커스를 감지) */
+.page7 .frame-12-6:focus-within {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
 }

@@ -1,6 +1,6 @@
 .page6 .name-example-com::placeholder,
 .page6 .layer-8::placeholder {
-  color: #9ca3af;
+  color: var(--color-text-weak);
 }
 .page6 .frame-10-4 {
   align-self: stretch;
@@ -22,23 +22,26 @@
   align-items: flex-start;
 }
 .page6 .layer--4 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page6 .frame-11 {
   width: 100%;
-  height: 48px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   gap: 4px;
   padding: 0 14px;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 .page6 .frame-11 .name-example-com {
   width: 100%;
@@ -50,8 +53,8 @@
   background: transparent;
 }
 .page6 .name-example-com {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
 }
@@ -68,23 +71,26 @@
 .page6 .layer--5 {
   align-self: stretch;
   width: 100%;
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page6 .frame-10-6 {
   width: 100%;
-  height: 48px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   gap: 12px;
   padding: 0 16px 0 14px;
   justify-content: space-between;
   align-items: center;
-  border-radius: 10px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 .page6 .frame-10-6 .layer-8 {
   width: 100%;
@@ -96,8 +102,8 @@
   background: transparent;
 }
 .page6 .layer-8 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
 }
@@ -105,7 +111,7 @@
   width: 24px;
   height: 24px;
   position: relative;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 .page6 .frame-10-6 > button.group {
   flex: 0 0 24px;
@@ -116,4 +122,18 @@
   padding: 0;
   background: transparent;
   cursor: pointer;
+}
+
+/* 입력 중 - 청록 테두리 + 연한 링 (안쪽 input의 포커스를 감지) */
+.page6 .frame-11:focus-within {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+/* 입력 중 - 청록 테두리 + 연한 링 (안쪽 input의 포커스를 감지) */
+.page6 .frame-10-6:focus-within {
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
 }

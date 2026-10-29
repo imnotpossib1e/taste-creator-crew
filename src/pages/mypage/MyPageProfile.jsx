@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { User } from 'lucide-react';
 import './myPageProfile.css';
 
 // 프로필 카드 - 아바타, 닉네임/동네, 프로필 수정 버튼
@@ -23,7 +24,10 @@ function MyPageProfile({
               alt={nickname}
               className="avatar-image"
             />
-          ) : null}
+          ) : (
+            // 프로필 이미지가 없으면 사람 아이콘 (StoreReviews 리뷰 작성자와 같은 방식)
+            <User size={36} color="#9ca3af" aria-hidden="true" />
+          )}
         </div>
         <div className="frame-8-5">
           {profileEditing ? (

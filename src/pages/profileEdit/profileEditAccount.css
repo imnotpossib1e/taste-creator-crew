@@ -11,7 +11,7 @@
 .page9 .vector-6 {
   width: 100%;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
   border: 0;
 }
 .page9 .frame-8-8 {
@@ -25,14 +25,14 @@
   align-items: center;
 }
 .page9 .layer--11 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
 }
 .page9 .yeonnam-example-com-2 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-align: right;
@@ -40,7 +40,7 @@
 .page9 .vector-7 {
   width: 100%;
   height: 1px;
-  background: #f3f4f6;
+  background: var(--color-surface-sub);
   border: 0;
 }
 .page9 .frame-8-9 {
@@ -54,8 +54,8 @@
   align-items: center;
 }
 .page9 .layer--12 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 400;
 }
@@ -72,22 +72,22 @@
   width: 7px;
   height: 7px;
   border: 0;
-  border-top: 1.2px solid #6b7280;
-  border-right: 1.2px solid #6b7280;
+  border-top: 1.2px solid var(--color-text-sub);
+  border-right: 1.2px solid var(--color-text-sub);
   transform: rotate(45deg);
 }
 .page9 .vector-9 {
   width: 100%;
   height: 1px;
-  background: #f3f4f6;
+  background: var(--color-surface-sub);
   border: 0;
 }
 .page9 .layer--13 {
   align-self: stretch;
   width: 100%;
   text-align: left;
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
   text-decoration: underline;

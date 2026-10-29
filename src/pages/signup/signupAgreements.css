@@ -10,8 +10,8 @@
 .page7 .layer--8 {
   align-self: stretch;
   width: 100%;
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
@@ -46,15 +46,15 @@
   background: transparent;
 }
 .page7 .layer--9 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 15px;
   font-weight: 700;
 }
 .page7 .vector-7 {
   width: 100%;
   height: 1px;
-  background: #e5e7eb;
+  background: var(--color-border);
   border: 0;
 }
 .page7 .frame-10-11 {
@@ -98,14 +98,14 @@
   background: transparent;
 }
 .page7 .layer--10 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page7 .layer--11 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 400;
   text-align: right;
@@ -142,14 +142,14 @@
   background: transparent;
 }
 .page7 .layer--12 {
-  color: #111827;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page7 .layer--13 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 400;
   text-align: right;
@@ -186,14 +186,14 @@
   background: transparent;
 }
 .page7 .layer--14 {
-  color: #000000;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 400;
 }
 .page7 .layer--15 {
-  color: #6b7280;
-  font-family: 'Noto Sans KR';
+  color: var(--color-text-sub);
+  font-family: inherit;
   font-size: 13px;
   font-weight: 400;
   text-align: right;

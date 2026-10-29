@@ -2,8 +2,11 @@
 .randomResult {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 20px 0;
+  gap: 8px;
+  padding: 16px 16px 4px;
+  background: var(--color-surface);
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
 }
 
 .randomResultCount {
@@ -11,7 +14,7 @@
   font-size: 13px;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 
 /* 이미지 자리 - 세로 flex라 폭은 자동으로 꽉 참, 사진이 없으면 아이콘을 가운데에 */
@@ -21,8 +24,13 @@
   align-items: center;
   height: 200px;
   overflow: hidden; /* 사진이 둥근 모서리 밖으로 안 나가게 */
-  background: #f3f4f6;
-  border-radius: 8px;
+  margin-bottom: 8px;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-soft) 0%,
+    #fff8e6 100%
+  );
+  border-radius: 14px;
 }
 
 /* 리뷰 사진 - 비율 유지하면서 칸을 꽉 채우게 자름 */
@@ -34,11 +42,11 @@
 
 .randomResult > h2 {
   margin: 0;
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  color: #111827;
+  color: var(--color-text);
 }
 
 /* 메뉴 · 도보 · 별점 - 메뉴만 진하게 */
@@ -49,11 +57,12 @@
   font-size: 14px;
   line-height: 1.6;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text-sub);
 }
 
 .randomResultMeta > span:first-child {
-  color: #111827;
+  font-weight: 600;
+  color: var(--color-primary);
 }
 
 /* 버튼 두 개 - flex: 1로 반반 */
@@ -71,22 +80,23 @@
   font-size: 15px;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  border-radius: 10px;
+  border-radius: 14px;
   cursor: pointer;
 }
 
 .randomResultRetry {
-  font-weight: 500;
-  color: #111827;
-  background: #ffffff;
-  border: 1px solid #cfcfcf;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  border: none;
 }
 
 .randomResultView {
   font-weight: 700;
   color: #ffffff;
-  background: #0f766e;
+  background: var(--gradient-primary);
   border: none;
+  box-shadow: var(--shadow-button);
 }
 
 /* 후보가 없을 때 안내 - 추천 개수 문구와 같은 회색, 결과 영역 가운데 */
@@ -96,6 +106,6 @@
   font-size: 14px;
   line-height: 1.45;
   letter-spacing: -0.01em;
-  color: #6b7280;
+  color: var(--color-text-sub);
   text-align: center;
 }

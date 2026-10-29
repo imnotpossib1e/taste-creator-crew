@@ -2,8 +2,9 @@
   width: 100%;
   z-index: 2000;
   display: flex;
-  background-color: #fff;
-  border-top: 1px solid #e5e7eb;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 16px rgba(31, 36, 33, 0.04);
   flex-shrink: 0;
   padding-bottom: env(safe-area-inset-bottom); /* 홈 인디케이터 영역 */
 }
@@ -17,7 +18,7 @@
   padding: 0.5rem 0 0.625rem;
   border: 0;
   background: none;
-  color: #9ca3af;
+  color: var(--color-text-weak);
   font-size: 0.6875rem;
   font-weight: 600;
   cursor: pointer;
@@ -28,6 +29,22 @@
   height: 1.25rem;
 }
 
+.bottom-menu-item {
+  position: relative;
+  transition: color 0.2s;
+}
+
+/* 선택된 메뉴 - 청록 + 위쪽 작은 막대 */
 .bottom-menu-item.active {
-  color: #111827;
+  color: var(--color-primary);
+}
+
+.bottom-menu-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--color-primary);
 }
