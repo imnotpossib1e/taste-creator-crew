@@ -9,7 +9,7 @@ const SORTERS = {
   distance: (a, b) => Number(a.distance) - Number(b.distance),
   bookmark: (a, b) => (b.bookmark_count ?? 0) - (a.bookmark_count ?? 0),
   review_count: (a, b) => (b.review_count ?? 0) - (a.review_count ?? 0),
-  review: (a, b) => (b.review_avg ?? 0) - (a.review_avg ?? 0),
+  review: (a, b) => (b.rating_avg ?? 0) - (a.rating_avg ?? 0),
 };
 
 export default function RestaurantList({ place }) {
