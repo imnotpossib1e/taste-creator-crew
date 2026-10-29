@@ -21,7 +21,7 @@ export default function RestaurantList({ place }) {
   return (
     <div className="resList">
       <div className="listTitle">
-        <span>주변 식당 목록</span>
+        <span>여기서 먹을지도?</span>
         <select
           name="sort"
           id="sort"

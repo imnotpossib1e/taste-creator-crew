@@ -67,7 +67,7 @@ function HomeWeeklyBest({ restaurants }) {
   return (
     <section className="homeWeeklyBest">
       <div className="homeWeeklyBestHeader">
-        <h2>많이 저장한 곳</h2>
+        <h2>다들 찜할지도</h2>
       </div>
 
       {!isLoaded && <WeeklyBestSkeleton />}
