@@ -35,7 +35,10 @@ function ReviewWrite() {
         userId: user.id,
         placeName: restaurant.name,
       });
-      navigate(`/store/${id}`);
+      // 상세에서 들어온 경우 뒤로 가야 X 버튼이 리뷰 쓰기가 아니라 지도로 돌아간다
+      // 주소로 바로 들어와 돌아갈 곳이 없으면 상세로 이동
+      if (window.history.state?.idx > 0) navigate(-1);
+      else navigate(`/store/${id}`, { replace: true });
     } catch (err) {
       console.error(err);
       alert('리뷰를 저장하지 못했어요. 다시 시도해 주세요.');
