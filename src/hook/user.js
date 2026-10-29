@@ -40,6 +40,27 @@ export async function getUserByAuthId(authId) {
   return data;
 }
 
+// 프로필 이미지를 Storage 버킷(profile-image)에 올리고 볼 수 있는 주소를 반환
+// 폴더 첫 칸을 auth id로 해야 "내 폴더에만 업로드" 보안 정책을 걸 수 있음
+export async function uploadProfileImage(file) {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const authId = session?.user?.id;
+  if (!authId) throw new Error('로그인이 필요합니다.');
+
+  const ext = file.name.split('.').pop();
+  const path = `${authId}/${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage
+    .from('profile-image')
+    .upload(path, file, { contentType: file.type });
+  if (error) throw error;
+
+  const { data } = supabase.storage.from('profile-image').getPublicUrl(path);
+  return data.publicUrl;
+}
+
 // users 행 + 로그인 이메일을 화면에서 쓰는 모양으로 변환
 const toProfile = (row, email) => ({
   id: row.id,

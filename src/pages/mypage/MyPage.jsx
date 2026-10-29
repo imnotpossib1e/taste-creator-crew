@@ -97,6 +97,7 @@ function MyPage() {
             return {
               id: review.id,
               restaurant: review.place_name ?? '가게 정보 없음',
+              rating: review.rating,
               text: review.content,
               images: toImageUrls(review.image_url), // 추가
               date: `${created.getMonth() + 1}월 ${created.getDate()}일`,
