@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { selectIsRestaurantLoaded } from '../../redux/store';
+import Skeleton from '../../components/Skeleton';
 import './homeWeeklyBest.css';
 
 const CATEGORY_IMG = {
@@ -40,7 +43,25 @@ function WeeklyBestCard({ store }) {
   );
 }
 
+// 가게 목록을 불러오는 동안 - 카드(정사각형 썸네일 + 이름 + 정보) 모양으로 3장
+function WeeklyBestSkeleton() {
+  return (
+    <ul aria-busy="true" aria-label="많이 저장한 곳 불러오는 중">
+      {[1, 2, 3].map(n => (
+        <li key={n}>
+          <div className="homeWeeklyBestCard">
+            <Skeleton height="116px" radius="12px" />
+            <Skeleton width="80%" height="15px" />
+            <Skeleton width="50%" height="12px" />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function HomeWeeklyBest({ restaurants }) {
+  const isLoaded = useSelector(selectIsRestaurantLoaded);
   const bookmarkedStores = getMostBookmarked(restaurants);
 
   return (
@@ -49,9 +70,11 @@ function HomeWeeklyBest({ restaurants }) {
         <h2>많이 저장한 곳</h2>
       </div>
 
-      {bookmarkedStores.length === 0 ? (
+      {!isLoaded && <WeeklyBestSkeleton />}
+      {isLoaded && bookmarkedStores.length === 0 && (
         <p className="homeWeeklyBestEmpty">아직 저장된 가게가 없어요.</p>
-      ) : (
+      )}
+      {isLoaded && bookmarkedStores.length > 0 && (
         <ul>
           {bookmarkedStores.map(store => (
             <WeeklyBestCard key={store.id} store={store} />

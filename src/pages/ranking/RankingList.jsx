@@ -1,7 +1,10 @@
 import { Bookmark } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BookmarkSheet from '../storeDetail/BookmarkSheet';
 import { useBookmark } from '../../hook/useBookmark';
+import { selectIsRestaurantLoaded } from '../../redux/store';
+import Skeleton from '../../components/Skeleton';
 import './rankingList.css';
 
 // 순위 숫자를 진하게 보여줄 상위 등수
@@ -46,7 +49,30 @@ function RankingItem({ store, rank, isSaved, onBookmarkClick }) {
   );
 }
 
+// 가게 목록을 불러오는 동안 - 순위 줄(동그라미 + 이름·정보 + 북마크) 모양으로 5줄
+function RankingListSkeleton() {
+  return (
+    <ol
+      className="rankingList"
+      aria-busy="true"
+      aria-label="인기 순위 불러오는 중"
+    >
+      {[1, 2, 3, 4, 5].map(n => (
+        <li key={n} className="rankingItem">
+          <Skeleton width="30px" height="30px" radius="50%" />
+          <div className="rankingInfo">
+            <Skeleton width="50%" height="16px" />
+            <Skeleton width="70%" height="13px" />
+          </div>
+          <Skeleton width="24px" height="24px" />
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function RankingList({ restaurants, sortBy }) {
+  const isLoaded = useSelector(selectIsRestaurantLoaded);
   // 홈/상세와 같은 북마크 로직 - 빈 아이콘은 저장, 채워진 아이콘은 저장 취소
   const {
     savedIds,
@@ -57,6 +83,10 @@ function RankingList({ restaurants, sortBy }) {
   } = useBookmark();
   // redux 원본이 바뀌지 않도록 복사한 뒤 정렬
   const sortedStores = [...restaurants].sort((a, b) => b[sortBy] - a[sortBy]);
+
+  if (!isLoaded) {
+    return <RankingListSkeleton />;
+  }
 
   if (sortedStores.length === 0) {
     return <p className="rankingEmpty">아직 등록된 가게가 없어요.</p>;

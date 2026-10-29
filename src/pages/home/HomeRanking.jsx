@@ -1,9 +1,12 @@
 import { Bookmark } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { categories } from './homeConstants';
 import { WALK_METERS_PER_MINUTE } from '../random/randomConstants';
 import BookmarkSheet from '../storeDetail/BookmarkSheet';
 import { useBookmark } from '../../hook/useBookmark';
+import { selectIsRestaurantLoaded } from '../../redux/store';
+import Skeleton from '../../components/Skeleton';
 import './homeRanking.css';
 
 // 인기 순위에 보여줄 최대 개수
@@ -83,7 +86,28 @@ function RankingItem({ store, isSaved, onBookmarkClick }) {
   );
 }
 
+// 가게 목록을 불러오는 동안 - 실제 카드와 같은 모양(썸네일 + 3줄)으로 3개
+function HomeRankingSkeleton() {
+  return (
+    <ul aria-busy="true" aria-label="인기 순위 불러오는 중">
+      {[1, 2, 3].map(n => (
+        <li key={n} className="homeRankingItem">
+          <div className="homeRankingSkeleton">
+            <Skeleton width="60px" height="60px" radius="14px" />
+            <div className="rankingInfoGroup">
+              <Skeleton width="120px" height="16px" />
+              <Skeleton width="160px" height="13px" />
+              <Skeleton width="80px" height="13px" />
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function HomeRanking({ restaurants, selectedTab, selectedCategory }) {
+  const isLoaded = useSelector(selectIsRestaurantLoaded);
   const rankedStores = getRankedStores(
     restaurants,
     selectedTab,
@@ -104,9 +128,11 @@ function HomeRanking({ restaurants, selectedTab, selectedCategory }) {
         <Link to="/ranking">전체보기</Link>
       </div>
 
-      {rankedStores.length === 0 ? (
+      {!isLoaded && <HomeRankingSkeleton />}
+      {isLoaded && rankedStores.length === 0 && (
         <p className="homeRankingEmpty">아직 등록된 가게가 없어요.</p>
-      ) : (
+      )}
+      {isLoaded && rankedStores.length > 0 && (
         <ul>
           {rankedStores.map(store => (
             <RankingItem

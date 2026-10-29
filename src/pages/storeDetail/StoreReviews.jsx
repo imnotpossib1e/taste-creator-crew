@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Star, User } from 'lucide-react';
 import { selectCurrentUser } from '../../redux/authSlice.js';
+import Skeleton from '../../components/Skeleton.jsx';
 import { deleteMyReview, getStoreReviews } from '../../hook/review.js';
 import './storeReviews.css';
 
@@ -46,6 +47,25 @@ function ReviewStars({ rating }) {
 // 리뷰 하나 - 작성자는 users(nickname, profile_image)로 같이 가져온 값, 탈퇴 등으로 없으면 대체 문구·기본 아이콘
 // 사진은 버킷(review-image)에 올라간 주소를 그대로 <img>로 그린다
 // isMine: 내가 쓴 리뷰일 때만 수정/삭제 버튼을 보여준다
+// 리뷰를 불러오는 동안 보여줄 자리 - 실제 리뷰(.reviewItem)와 같은 모양: 프로필 네모 + 이름·별점·내용 줄
+function ReviewSkeletonList() {
+  return (
+    <ul aria-busy="true" aria-label="리뷰 불러오는 중">
+      {[1, 2, 3].map(n => (
+        <li key={n} className="reviewItem">
+          <Skeleton width="48px" height="48px" radius="14px" />
+          <div className="reviewBody">
+            <Skeleton width="30%" height="15px" />
+            <Skeleton width="40%" height="12px" />
+            <Skeleton height="14px" />
+            <Skeleton width="70%" height="14px" />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function ReviewItem({ review, isMine, onEdit, onDelete }) {
   const imageUrls = toImageUrls(review.image_url);
 
@@ -92,8 +112,9 @@ function ReviewItem({ review, isMine, onEdit, onDelete }) {
 }
 
 // 가게(placeId)가 바뀔 때마다 Supabase에서 리뷰 목록을 다시 불러온다 (MainMap 상점 불러오기와 같은 패턴)
+// reviews: 불러오기 전 null(스켈레톤) / 불러왔는데 없으면 [] / 있으면 목록
 function useStoreReviews(placeId) {
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
     // 응답이 오기 전에 다른 가게로 바뀌면 이전 응답이 덮어쓰지 않게
@@ -106,6 +127,8 @@ function useStoreReviews(placeId) {
         setReviews(data);
       } catch (err) {
         console.error(err);
+        // 실패하면 빈 목록으로 - 스켈레톤이 계속 돌지 않게
+        if (!ignore) setReviews([]);
       }
     };
     fetchReviews();
@@ -144,14 +167,17 @@ function StoreReviews({ placeId }) {
   return (
     <section className="storeReviews">
       <div className="storeReviewsHeader">
-        <h2>리뷰 {reviews.length}</h2>
+        {/* 불러오는 중(null)에는 개수 없이 '리뷰'만 */}
+        <h2>리뷰 {reviews?.length}</h2>
       </div>
 
-      {reviews.length === 0 ? (
+      {reviews === null && <ReviewSkeletonList />}
+      {reviews?.length === 0 && (
         <p className="storeReviewsEmpty">
           아직 리뷰가 없어요. 첫 리뷰를 남겨 주세요!
         </p>
-      ) : (
+      )}
+      {reviews?.length > 0 && (
         <ul>
           {reviews.map(review => (
             <ReviewItem
