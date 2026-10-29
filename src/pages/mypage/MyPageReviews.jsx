@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import './myPageReviews.css';
 import { buttonStyle } from './myPageConstants';
 
@@ -29,12 +30,23 @@ function MyPageReviews({
             <div className="frame-8-12">
               <div className="frame-8-13">
                 <p className="layer--5">{review.restaurant}</p>
-                <div className="frame-8-14" aria-label="별점 5점">
-                  <div className="vector-4"></div>
-                  <div className="vector-5"></div>
-                  <div className="vector-6"></div>
-                  <div className="vector-7"></div>
-                  <div className="vector-8"></div>
+                {/* DB 별점(rating)만큼 채움 - StoreReviews의 ReviewStars와 같은 색 */}
+                <div
+                  className="frame-8-14"
+                  aria-label={`별점 ${review.rating}점`}
+                >
+                  {[0, 1, 2, 3, 4].map(index => {
+                    const color = index < review.rating ? '#f59e0b' : '#e5e7eb';
+                    return (
+                      <Star
+                        key={index}
+                        size={14}
+                        color={color}
+                        fill={color}
+                        aria-hidden="true"
+                      />
+                    );
+                  })}
                 </div>
               </div>
               {editingReviewId === review.id ? (
