@@ -7,6 +7,7 @@ import {
 } from '../../redux/store';
 import './mainMap.css';
 import { getKakaoSearchCafe, getKakaoSearchRes } from '../../hook/kakaoApi';
+import { getRestaurantStats } from '../../hook/restaurant';
 import RestaurantList from './RestaurantList';
 import SearchInput from '../../components/SearchInput';
 
@@ -241,25 +242,33 @@ export default function MainMap() {
           getKakaoSearchRes({ query: search, x: position.x, y: position.y }),
           getKakaoSearchCafe({ query: search, x: position.x, y: position.y }),
         ]);
+        const restaurants = await getRestaurantStats(
+          [...food, ...cafe].map(item => {
+            const [, group = '', desc = ''] = item.category_name.split(' > ');
+            return {
+              id: item.id,
+              name: item.place_name,
+              category: item.category_group_name,
+              category_group: group,
+              description: desc,
+              address: item.road_address_name,
+              distance: item.distance,
+              x: item.x,
+              y: item.y,
+            };
+          }),
+        );
         // 응답 결과 저장
         if (ignore) return;
 
-        const restaurants = [...food, ...cafe].map(item => {
-          const [, group = '', desc = ''] = item.category_name.split(' > ');
-          return {
-            id: item.id,
-            name: item.place_name,
-            category: item.category_group_name,
-            category_group: group,
-            description: desc,
-            address: item.road_address_name,
-            distance: item.distance,
-            x: item.x,
-            y: item.y,
-          };
-        });
-
         dispatch(setSearchRestaurant(restaurants));
+
+        // 검색 결과의 첫 번째 가게로 지도 중심 이동
+        const { naver } = window;
+        const [first] = restaurants;
+        if (naver && mapInstance.current && first) {
+          mapInstance.current.panTo(new naver.maps.LatLng(first.y, first.x));
+        }
       } catch (err) {
         console.error(err);
       }

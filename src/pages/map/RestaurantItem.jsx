@@ -21,7 +21,9 @@ export default function RestaurantItem({ data }) {
         />
         <div className="resItem">
           <div className="itemName">
-            {data.name}
+            <div style={{ maxWidth: '170px', wordBreak: 'normal' }}>
+              {data.name}
+            </div>
             {data.descroption ?? <span>{data.description}</span>}
           </div>
           <div className="resInfo">

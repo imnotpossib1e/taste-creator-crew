@@ -124,7 +124,7 @@ function HomeRanking({ restaurants, selectedTab, selectedCategory }) {
   return (
     <section className="homeRanking">
       <div className="homeRankingHeader">
-        <h2>인기 순위</h2>
+        <h2>다들 먹을지도</h2>
         <Link to="/ranking">전체보기</Link>
       </div>
 
