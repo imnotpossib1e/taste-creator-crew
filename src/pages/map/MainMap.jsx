@@ -85,6 +85,27 @@ export default function MainMap() {
     );
   }, [position]);
 
+  // 내 위치 마커 (파란 점 + 퍼지는 원)
+  useEffect(() => {
+    const { naver } = window;
+    const map = mapInstance.current;
+    if (!naver || !map || !position) return;
+
+    const marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(position.y, position.x),
+      map,
+      icon: {
+        content:
+          '<div class="my-location"><span class="my-location-dot"></span></div>',
+        anchor: new naver.maps.Point(12, 12), // 점 중앙이 좌표에 오게
+      },
+      zIndex: 2000, // 가게 마커(최대 1000)보다 항상 위
+      clickable: false,
+    });
+
+    return () => marker.setMap(null);
+  }, [position, isMapReady]);
+
   // 마크 그리기 (카카오맵 방식: 겹치는 이름표는 숨기고 점으로)
   useEffect(() => {
     const { naver } = window;
