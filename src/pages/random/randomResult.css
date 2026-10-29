@@ -52,7 +52,7 @@
 /* 메뉴 · 도보 · 별점 - 메뉴만 진하게 */
 .randomResultMeta {
   display: flex;
-  gap: 16px;
+  gap: 8px;
   margin: 0;
   font-size: 14px;
   line-height: 1.6;
