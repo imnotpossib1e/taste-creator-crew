@@ -4,8 +4,6 @@ import './randomCategory.css';
 function RandomCategory({ selectedCategory, setSelectedCategory }) {
   return (
     <div className="randomCategory">
-      <h2>종류</h2>
-
       <div className="randomCategoryChips">
         {randomCategories.map(item => (
           <button
