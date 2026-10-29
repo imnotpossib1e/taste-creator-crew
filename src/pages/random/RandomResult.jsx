@@ -5,6 +5,7 @@ import {
   WALK_METERS_PER_MINUTE,
 } from './randomConstants';
 import './randomResult.css';
+import { Bookmark } from 'lucide-react';
 
 const CATEGORY_IMG = {
   한식: 'korean.svg',
@@ -13,6 +14,11 @@ const CATEGORY_IMG = {
   양식: 'american.svg',
   카페: 'cafe.svg',
   분식: 'snack.svg',
+  술집: 'bar.svg',
+  간식: 'bakery.svg',
+  치킨: 'chicken.svg',
+  패스트푸드: 'fastfood.svg',
+  샐러드: 'salad.svg',
   default: 'default.svg',
 };
 
@@ -87,9 +93,14 @@ function RandomResult({ onRetry, restaurant, onView }) {
         {/* 설명(예: 국밥)은 카카오 분류 3번째 칸이라 없는 가게도 있어서 있을 때만 */}
         {restaurant.description && <span>{restaurant.description}</span>}
         <span>도보 {toWalkMinutes(restaurant.distance)}분</span>
+        <span>{restaurant.distance}m</span>
         <div style={{ display: 'flex', gap: '4px' }}>
           <span style={{ color: '#F59E0B' }}>★</span>
           <span>{restaurant.rating_avg.toFixed(1)}</span>
+        </div>
+        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <Bookmark size={'14px'} />
+          {restaurant.bookmark_count}
         </div>
       </div>
       <div className="randomResultActions">
