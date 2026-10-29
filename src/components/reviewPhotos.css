@@ -24,6 +24,7 @@
   display: flex;
   gap: 8px;
   overflow-x: auto; /* 5장 + 추가 칸이 화면보다 넓으면 가로 스크롤 */
+  overflow-y: clip;
 }
 
 /* 추가 칸 - export는 실선, 스크린샷은 점선 (디자인 확인 필요) */
