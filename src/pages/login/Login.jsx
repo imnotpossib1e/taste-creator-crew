@@ -18,11 +18,11 @@ function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
-  const setFeedback = (message) => {
+  const setFeedback = message => {
     if (message) window.alert(message);
   };
 
-  const handleLogin = async (event) => {
+  const handleLogin = async event => {
     event.preventDefault();
 
     if (!email.trim() || !password) {
@@ -49,7 +49,7 @@ function Login() {
 
       const { data: profile, error: profileError } = await supabase
         .from('users')
-        .select('id, nickname, category, profile_image')
+        .select('id, nickname,  profile_image')
         .eq('auth_id', data.user.id)
         .single();
       if (profileError) {
@@ -62,7 +62,6 @@ function Login() {
           id: profile.id,
           email: data.user.email,
           nickname: profile.nickname,
-          foods: profile.category,
           profileImage: profile.profile_image,
         }),
       );
@@ -107,7 +106,9 @@ function Login() {
             className="component-2"
             type="submit"
             disabled={loading}
-            style={loading ? { opacity: 0.7, cursor: 'not-allowed' } : undefined}
+            style={
+              loading ? { opacity: 0.7, cursor: 'not-allowed' } : undefined
+            }
           >
             <p className="layer--6">{loading ? '로그인 중...' : '로그인'}</p>
           </button>
