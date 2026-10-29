@@ -7,22 +7,8 @@ import { updateUser, logout } from '../../redux/authSlice';
 import ProfileEditAppBar from './ProfileEditAppBar';
 import ProfileEditAvatar from './ProfileEditAvatar';
 import ProfileEditNickname from './ProfileEditNickname';
-import ProfileEditFoodSelect from './ProfileEditFoodSelect';
 import ProfileEditAccount from './ProfileEditAccount';
 import './profileEdit.css';
-
-// category 컬럼이 text면 배열이 '["한식","일식"]' 문자열로 돌아오므로 배열로 변환
-function parseCategory(category) {
-  if (Array.isArray(category)) return category;
-  if (typeof category !== 'string' || !category) return [];
-  try {
-    const parsed = JSON.parse(category);
-    if (Array.isArray(parsed)) return parsed;
-  } catch {
-    // postgres 배열 문자열 '{한식,일식}' 형태
-  }
-  return category.replace(/^\{|\}$/g, '').split(',').map((item) => item.replace(/"/g, '').trim()).filter(Boolean);
-}
 
 // 프로필 수정 페이지 - 섹션 컴포넌트를 순서대로 조립
 function ProfileEdit() {
@@ -31,26 +17,27 @@ function ProfileEdit() {
   const [userId, setUserId] = useState(null);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
-  const [selectedFoods, setSelectedFoods] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [passwordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   // 피드백 메시지는 화면 문구 대신 사이트 알림(alert)으로 표시
-  const setFeedback = (message) => {
+  const setFeedback = message => {
     if (message) window.alert(message);
   };
 
   // 로그인한 사용자의 프로필을 supabase users 테이블에서 불러온다
   useEffect(() => {
     const loadProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
       setEmail(user.email ?? '');
       const { data, error } = await supabase
         .from('users')
-        .select('id, nickname, category, profile_image')
+        .select('id, nickname, profile_image')
         .eq('auth_id', user.id)
         .single();
       if (error) {
@@ -59,19 +46,10 @@ function ProfileEdit() {
       }
       setUserId(data.id);
       setNickname(data.nickname);
-      setSelectedFoods(parseCategory(data.category));
       setProfileImage(data.profile_image);
     };
     loadProfile();
   }, []);
-
-  const toggleFood = (food) => {
-    setSelectedFoods((current) =>
-      current.includes(food)
-        ? current.filter((item) => item !== food)
-        : [...current, food],
-    );
-  };
 
   const handlePasswordChange = () => {
     if (!currentPassword) {
@@ -110,14 +88,13 @@ function ProfileEdit() {
     try {
       await updateUserRow(userId, {
         nickname: nickname.trim(),
-        category: selectedFoods,
         profileImage,
       });
     } catch (err) {
       window.alert('프로필 저장에 실패했습니다.');
       return;
     }
-    dispatch(updateUser({ nickname: nickname.trim(), foods: selectedFoods, profileImage }));
+    dispatch(updateUser({ nickname: nickname.trim(), profileImage }));
     window.alert('프로필이 저장되었습니다.');
     navigate('/mypage');
   };
@@ -129,7 +106,10 @@ function ProfileEdit() {
       setFeedback('로그인이 필요합니다.');
       return;
     }
-    if (!window.confirm('정말 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.')) return;
+    if (
+      !window.confirm('정말 탈퇴하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.')
+    )
+      return;
     try {
       await deleteUser(userId);
     } catch (err) {
@@ -152,8 +132,10 @@ function ProfileEdit() {
             onImageChange={setProfileImage}
           />
           <div className="frame-8">
-            <ProfileEditNickname nickname={nickname} setNickname={setNickname} />
-            <ProfileEditFoodSelect selectedFoods={selectedFoods} toggleFood={toggleFood} />
+            <ProfileEditNickname
+              nickname={nickname}
+              setNickname={setNickname}
+            />
           </div>
         </div>
         <div className="frame-10-2">
