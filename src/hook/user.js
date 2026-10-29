@@ -5,7 +5,7 @@ import { supabase } from '../utils/superbase';
 export async function getUsers() {
   const { data, error } = await supabase
     .from('users')
-    .select('id, auth_id, nickname, category, profile_image, created_at, updated_at')
+    .select('id, auth_id, nickname, profile_image, created_at, updated_at')
     .order('created_at', { ascending: false });
 
   if (error) throw error;
@@ -18,7 +18,7 @@ export async function getUser(userId) {
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, auth_id, nickname, category, profile_image, created_at, updated_at')
+    .select('id, auth_id, nickname, profile_image, created_at, updated_at')
     .eq('id', userId)
     .single();
 
@@ -32,7 +32,7 @@ export async function getUserByAuthId(authId) {
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, auth_id, nickname, category, profile_image, created_at, updated_at')
+    .select('id, auth_id, nickname, profile_image, created_at, updated_at')
     .eq('auth_id', authId)
     .single();
 
@@ -66,7 +66,6 @@ const toProfile = (row, email) => ({
   id: row.id,
   email,
   nickname: row.nickname,
-  foods: row.category,
   profileImage: row.profile_image,
 });
 
@@ -80,7 +79,10 @@ export async function getCurrentUser() {
 
 // 로그인: 성공하면 프로필, 실패하면 Error
 export async function logIn({ email, password }) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
   if (error) throw new Error('이메일 또는 비밀번호가 올바르지 않습니다.');
   return toProfile(await getUserByAuthId(data.user.id), data.user.email);
 }
@@ -92,7 +94,6 @@ export async function createUser({
   authId,
   email,
   nickname,
-  category = null,
   profileImage = null,
 }) {
   if (!authId || !email || !nickname) {
@@ -105,10 +106,9 @@ export async function createUser({
       auth_id: authId,
       email,
       nickname,
-      category,
       profile_image: profileImage,
     })
-    .select('id, auth_id, nickname, category, profile_image, created_at, updated_at')
+    .select('id, auth_id, nickname, profile_image, created_at, updated_at')
     .single();
 
   if (error) throw error;
@@ -116,17 +116,12 @@ export async function createUser({
 }
 
 // 4. 회원 정보 수정
-export async function updateUser(userId, {
-  nickname,
-  category,
-  profileImage,
-}) {
+export async function updateUser(userId, { nickname, profileImage }) {
   if (!userId) throw new Error('사용자 ID가 필요합니다.');
 
   const updateData = {};
 
   if (nickname !== undefined) updateData.nickname = nickname;
-  if (category !== undefined) updateData.category = category;
   if (profileImage !== undefined) updateData.profile_image = profileImage;
 
   if (Object.keys(updateData).length === 0) {
@@ -137,7 +132,7 @@ export async function updateUser(userId, {
     .from('users')
     .update(updateData)
     .eq('id', userId)
-    .select('id, auth_id, nickname, category, profile_image, created_at, updated_at')
+    .select('id, auth_id, nickname, profile_image, created_at, updated_at')
     .single();
 
   if (error) throw error;
