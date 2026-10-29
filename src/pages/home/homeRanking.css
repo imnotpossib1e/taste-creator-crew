@@ -157,3 +157,15 @@
   color: var(--color-text-sub);
   text-align: center;
 }
+
+/* 불러오는 중 카드 - 링크(.homeRankingInfo)가 아니라서 순위 배지가 붙지 않는다 */
+.homeRankingSkeleton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.homeRankingSkeleton .rankingInfoGroup {
+  gap: 8px;
+}

@@ -42,7 +42,8 @@ function ReviewForm({
   const [tags, setTags] = useState(toTags(initialReview?.good_points));
   const [content, setContent] = useState(initialReview?.content ?? '');
   const [storeName, setStoreName] = useState(initialReview?.place_name ?? '');
-  const [category, setCategory] = useState(restaurant.category_group);
+  // 카테고리는 미리 고르지 않고 사용자가 직접 선택 (음식점·카페 모두)
+  const [category, setCategory] = useState('');
   // 사진 - 새로 고른 건 { file, url(미리보기 임시 주소) }, 수정할 때 기존 사진은 { url }만
   const [photos, setPhotos] = useState(toPhotos(initialReview?.image_url));
   const [storeNameError, setStoreNameError] = useState(false);
